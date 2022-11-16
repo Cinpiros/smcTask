@@ -7,9 +7,9 @@ public class Main extends JavaPlugin {
     public void onEnable() {
         System.out.println("Start smcTask");
     }
-
     @Override
     public void onDisable() {
         System.out.println("stop smcTask");
     }
+
 }
