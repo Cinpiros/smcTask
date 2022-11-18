@@ -4,15 +4,15 @@ import fr.cinpiros.handlers.playerJoinHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class Main extends JavaPlugin {
+public class smcTask extends JavaPlugin {
     @Override
     public void onEnable() {
-        Bukkit.getLogger().info("Enable");
+        Bukkit.getLogger().info("smcTask Enable");
         new playerJoinHandler(this);
     }
     @Override
     public void onDisable() {
-        Bukkit.getLogger().info("Disable");
+        Bukkit.getLogger().info("smcTask Disable");
     }
 
 }
