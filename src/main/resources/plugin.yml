@@ -1,6 +1,6 @@
 main: fr.cinpiros.smcTask
 name: smcTask
-version: '${project.version}'
+version: 1.0
 api-version: 1.19
 commands:
   test:

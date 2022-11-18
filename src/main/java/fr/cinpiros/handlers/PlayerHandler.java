@@ -8,12 +8,12 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import fr.cinpiros.smcTask;
 
-public class playerJoinHandler implements Listener {
-    public playerJoinHandler(smcTask plugin) {
+public class PlayerHandler implements Listener {
+    public PlayerHandler(smcTask plugin) {
         Bukkit.getPluginManager().registerEvents(this, plugin);
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void onPlayerJoin(PlayerJoinEvent event) {
         if (!event.getPlayer().hasPermission("smcTask.playerjoin.info")) {
             return;
