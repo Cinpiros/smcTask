@@ -1,4 +1,11 @@
 main: fr.cinpiros.smcTask
 name: smcTask
-version: 1.0
+version: '${project.version}'
 api-version: 1.19
+commands:
+  test:
+    description: just a test command
+    usage: /test
+    aliases: [t, tests]
+    permission: smcTask.commands.test
+    permission-message: "Vous n'avez pas les permission néssésaire pour exécuter cette commande"
