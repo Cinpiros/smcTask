@@ -9,3 +9,13 @@ commands:
     aliases: [t, tests]
     permission: smcTask.commands.test
     permission-message: "Vous n'avez pas les permission néssésaire pour exécuter cette commande"
+  giveitemtest:
+    description: give player a task
+    usage: /giveitemtest
+    permission: smcTask.commands.giveitemtest
+    permission-message: "Vous n'avez pas les permission néssésaire pour exécuter cette commande"
+  menutask:
+    description: open task menu for player
+    usage: /menutask
+    permission: smcTask.commands.menutask
+    permission-message: "Vous n'avez pas les permission néssésaire pour exécuter cette commande"
