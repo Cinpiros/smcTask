@@ -1,12 +1,16 @@
 package fr.cinpiros.handlers;
 
+import fr.cinpiros.utils.DelayedTask;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import fr.cinpiros.SmcTask;
+import org.bukkit.inventory.ItemStack;
 
 public class PlayerHandler implements Listener {
     public PlayerHandler(SmcTask plugin) {
@@ -22,5 +26,19 @@ public class PlayerHandler implements Listener {
         Player Player = event.getPlayer();
 
         Bukkit.getLogger().info(Player.getName()+" a rejoin le server");
+    }
+
+    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
+    public void onEntityDamage(EntityDamageEvent event) {
+        if (!(event.getEntity() instanceof Player && event.getCause()== EntityDamageEvent.DamageCause.FALL)) {
+            return;
+        }
+
+        Player player = (Player) event.getEntity();
+        DelayedTask task = new DelayedTask(() -> {
+            player.getInventory().addItem(new ItemStack(Material.FEATHER));
+        }, 20 * 5);
+
+        Bukkit.getScheduler().cancelTask(task.getId());
     }
 }
