@@ -1,19 +1,19 @@
 package fr.cinpiros;
 
-import fr.cinpiros.commands.giveitemtest;
-import fr.cinpiros.commands.menutask;
-import fr.cinpiros.commands.test;
+import fr.cinpiros.commands.GiveItemTest;
+import fr.cinpiros.commands.MenuTask;
+import fr.cinpiros.commands.Test;
 import fr.cinpiros.handlers.PlayerHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class smcTask extends JavaPlugin {
+public class SmcTask extends JavaPlugin {
     @Override
     public void onEnable() {
 
-        getCommand("test").setExecutor(new test());
-        getCommand("giveitemtest").setExecutor(new giveitemtest());
-        getCommand("menutask").setExecutor(new menutask());
+        getCommand("test").setExecutor(new Test());
+        getCommand("giveitemtest").setExecutor(new GiveItemTest());
+        getCommand("menutask").setExecutor(new MenuTask(this));
 
         new PlayerHandler(this);
 

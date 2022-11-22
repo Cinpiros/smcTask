@@ -6,10 +6,10 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
-import fr.cinpiros.smcTask;
+import fr.cinpiros.SmcTask;
 
 public class PlayerHandler implements Listener {
-    public PlayerHandler(smcTask plugin) {
+    public PlayerHandler(SmcTask plugin) {
         Bukkit.getPluginManager().registerEvents(this, plugin);
     }
 
