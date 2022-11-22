@@ -1,4 +1,4 @@
-main: fr.cinpiros.smcTask
+main: fr.cinpiros.SmcTask
 name: smcTask
 version: 1.0
 api-version: 1.19
