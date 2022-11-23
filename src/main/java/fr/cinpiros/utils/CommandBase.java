@@ -1,6 +1,5 @@
-package fr.cinpiros.commands;
+package fr.cinpiros.utils;
 
-import fr.cinpiros.utils.DelayedTask;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

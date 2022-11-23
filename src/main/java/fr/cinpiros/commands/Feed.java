@@ -1,5 +1,6 @@
 package fr.cinpiros.commands;
 
+import fr.cinpiros.utils.CommandBase;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
