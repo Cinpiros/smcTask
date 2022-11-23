@@ -1,5 +1,6 @@
 package fr.cinpiros;
 
+import fr.cinpiros.commands.Feed;
 import fr.cinpiros.commands.GiveItemTest;
 import fr.cinpiros.commands.MenuTask;
 import fr.cinpiros.commands.Test;
@@ -20,6 +21,7 @@ public class SmcTask extends JavaPlugin {
         getCommand("test").setExecutor(new Test());
         getCommand("giveitemtest").setExecutor(new GiveItemTest());
         getCommand("menutask").setExecutor(new MenuTask(this));
+        new Feed();
 
         new PlayerHandler(this);
 
