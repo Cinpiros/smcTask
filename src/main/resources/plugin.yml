@@ -3,12 +3,6 @@ name: smcTask
 version: 1.0
 api-version: 1.19
 commands:
-  test:
-    description: just a test command
-    usage: /test
-    aliases: [t, tests]
-    permission: smcTask.commands.test
-    permission-message: "Vous n'avez pas les permission néssésaire pour exécuter cette commande"
   giveitemtest:
     description: give player a task
     usage: /giveitemtest
@@ -19,3 +13,9 @@ commands:
     usage: /menutask
     permission: smcTask.commands.menutask
     permission-message: "Vous n'avez pas les permission néssésaire pour exécuter cette commande"
+  task:
+    description: task base command
+    usage: /task
+    aliases: [t, tasks]
+    permission: smcTask.admin.access
+    permission-message: "&cVous n'avez pas la permission néssésaire pour exécuter cette commande"
