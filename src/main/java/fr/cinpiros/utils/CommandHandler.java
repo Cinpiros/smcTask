@@ -20,18 +20,32 @@ public class CommandHandler implements CommandExecutor {
         }
 
         if (args.length == 0){
-            sender.sendMessage("/task <action>");
+            sender.sendMessage("/"+command+" <action>");
             return true;
         }
 
 
-        if (!isPlayer || Bukkit.getServer().getPlayer(args[1]) == null) {
+        if (!isPlayer && Bukkit.getServer().getPlayer(args[1]) == null) {
             if (sender instanceof ConsoleCommandSender) {
-                sender.sendMessage("/task "+args[0]+" <player>");
+                sender.sendMessage("/"+command+" "+args[0]+" <player>");
             } else {
-                Bukkit.getLogger().info("Error <player is not online>² by non player entity or anorther plugin");
+                Bukkit.getLogger().info("Error player not found by non player entity or a plugin");
             }
             return true;
+        }
+        switch (args[0]) {
+            case "help", "aide" -> {
+                break;
+            }
+            case "version" -> {
+                break;
+            }
+            case "presentoire" -> {
+                break;
+            }
+            default -> {
+                sender.sendMessage("action non reconue taper /task help pour de l'aide");
+            }
         }
 
 
