@@ -7,6 +7,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
+import static org.bukkit.Bukkit.getPlayer;
 import static org.bukkit.Bukkit.getServer;
 
 public class CommandHandler implements CommandExecutor {
@@ -23,7 +24,7 @@ public class CommandHandler implements CommandExecutor {
             sender.sendMessage("/"+command+" <action>");
             return true;
         }
-
+        Player player = Bukkit.getPlayer(args[1]);
 
         if (!isPlayer && Bukkit.getServer().getPlayer(args[1]) == null) {
             if (sender instanceof ConsoleCommandSender) {
@@ -38,6 +39,7 @@ public class CommandHandler implements CommandExecutor {
                 break;
             }
             case "version" -> {
+
                 break;
             }
             case "presentoire" -> {
