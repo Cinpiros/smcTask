@@ -6,6 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="c88ecbdf-c6a3-4501-bb64-da24307c827b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/cinpiros/SmcTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/cinpiros/SmcTask.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/cinpiros/commands/MenuTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/cinpiros/commands/MenuTask.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/fr/cinpiros/utils/CommandHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/cinpiros/utils/CommandHandler.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -70,12 +72,12 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;org.jetbrains.plugins.github.ui.GithubSettingsConfigurable&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "settings.editor.selected.configurable": "inlay.hints"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\pierr\Documents\plugin\smcTask" />
@@ -86,7 +88,7 @@
       <recent name="fr.cinpiros.utils" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.smcTask [build]">
+  <component name="RunManager" selected="JAR Application.paper-1.19.2-270.jar">
     <configuration name="smcTask [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />

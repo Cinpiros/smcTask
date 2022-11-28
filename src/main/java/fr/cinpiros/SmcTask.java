@@ -17,7 +17,6 @@ public class SmcTask extends JavaPlugin {
 
 
         getCommand("giveitemtest").setExecutor(new GiveItemTest());
-        getCommand("menutask").setExecutor(new MenuTask(this));
         getCommand("task").setExecutor(new CommandHandler());
 
         new PlayerHandler(this);
