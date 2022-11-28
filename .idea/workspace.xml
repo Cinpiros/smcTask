@@ -5,10 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c88ecbdf-c6a3-4501-bb64-da24307c827b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/fr/cinpiros/handlers/menuInventoryHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/fr/cinpiros/utils/CreateItem.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fr/cinpiros/commands/MenuTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/cinpiros/commands/MenuTask.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/cinpiros/SmcTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/cinpiros/SmcTask.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/cinpiros/handlers/menuInventoryHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/cinpiros/handlers/MenuInventoryHandler.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -88,7 +87,7 @@
       <recent name="fr.cinpiros.utils" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.smcTask [build]">
+  <component name="RunManager" selected="JAR Application.paper-1.19.2-270.jar">
     <configuration name="smcTask [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />

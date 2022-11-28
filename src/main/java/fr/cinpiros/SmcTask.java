@@ -2,6 +2,7 @@ package fr.cinpiros;
 
 import fr.cinpiros.commands.GiveItemTest;
 import fr.cinpiros.commands.MenuTask;
+import fr.cinpiros.handlers.MenuInventoryHandler;
 import fr.cinpiros.handlers.PlayerHandler;
 import fr.cinpiros.utils.CommandHandler;
 import fr.cinpiros.utils.DelayedTask;
@@ -20,6 +21,7 @@ public class SmcTask extends JavaPlugin {
         getCommand("task").setExecutor(new CommandHandler());
 
         new PlayerHandler(this);
+        new MenuInventoryHandler(this);
 
         new DelayedTask(this);
 
