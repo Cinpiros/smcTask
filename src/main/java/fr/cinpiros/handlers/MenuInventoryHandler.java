@@ -3,6 +3,7 @@ package fr.cinpiros.handlers;
 import fr.cinpiros.SmcTask;
 import fr.cinpiros.commands.MenuTask;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -16,6 +17,8 @@ public class MenuInventoryHandler implements Listener {
     }
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onInventoryClick(InventoryClickEvent event) {
+        //Player player = (Player) event.getWhoClicked();
+
         if (!event.getView().title().equals(MenuTask.invName)) {
             return;
         }

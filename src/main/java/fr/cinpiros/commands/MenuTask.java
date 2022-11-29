@@ -19,15 +19,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MenuTask implements Listener {
-    static public String invName = "Task";
-    private Player player;
+    static public Component invName = Component.text("Task");
+    private final Player player;
 
     public MenuTask(Player player) {
         this.player = player;
     }
     public void openMenu() {
-        Component invName = Component.text(this.invName);
-        Inventory inv  = Bukkit.createInventory(this.player, 9*6,invName);
+        Inventory inv  = Bukkit.createInventory(this.player, 9*6, invName);
 
         inv.setItem(11, CreateItem.getItem(new ItemStack(Material.BOOK), "&9Task", "&a Clique pour récupérer la Task", "&fRécolter du blé : 0/1000"));
         inv.setItem(12, CreateItem.getItem(new ItemStack(Material.BOOK), "&9Task", "&a Clique pour récupérer la Task", "&fRécolter des patate : 0/1000"));
