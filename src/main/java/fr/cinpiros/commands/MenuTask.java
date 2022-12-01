@@ -20,9 +20,9 @@ public class MenuTask {
     public boolean openMenu() {
         Inventory inv  = Bukkit.createInventory(this.player, 9*6, invName);
 
-        inv.setItem(11, CreateItem.getItem(new ItemStack(Material.BOOK), "&9Task", "&a Clique pour récupérer la Task", "&fRécolter du blé : 0/1000"));
-        inv.setItem(12, CreateItem.getItem(new ItemStack(Material.BOOK), "&9Task", "&a Clique pour récupérer la Task", "&fRécolter des patate : 0/1000"));
-        inv.setItem(13, CreateItem.getItem(new ItemStack(Material.BOOK), "&9Task", "&a Clique pour récupérer la Task", "&fRécolter des carrote : 0/1000"));
+        inv.setItem(11, CreateItem.getItem(new ItemStack(Material.PAPER), "&9Task", "&a Clique pour récupérer la Task", "&fRécolter du blé : 0/1000"));
+        inv.setItem(12, CreateItem.getItem(new ItemStack(Material.PAPER), "&9Task", "&a Clique pour récupérer la Task", "&fRécolter des patate : 0/1000"));
+        inv.setItem(13, CreateItem.getItem(new ItemStack(Material.PAPER), "&9Task", "&a Clique pour récupérer la Task", "&fRécolter des carrote : 0/1000"));
 
         player.openInventory(inv);
 

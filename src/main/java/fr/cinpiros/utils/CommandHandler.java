@@ -1,6 +1,6 @@
 package fr.cinpiros.utils;
 
-import fr.cinpiros.commands.GiveTaskBundle;
+import fr.cinpiros.commands.GiveTaskClasseur;
 import fr.cinpiros.commands.MenuTask;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -45,26 +45,23 @@ public class CommandHandler implements CommandExecutor {
                 return true;
             }
         }
-        Boolean commandReturn = true;
+        boolean commandReturn = true;
         switch (args[0]) {
             case "help", "aide" -> {
                 player.sendMessage("help");
-                commandReturn = true;
             }
             case "version" -> {
                 player.sendMessage("verssion");
-                commandReturn = true;
             }
             case "presentoire", "menutask" -> {
                 commandReturn = new MenuTask(player).openMenu();
             }
             case "give", "taskbundle", "bundle" -> {
-                commandReturn = new GiveTaskBundle(player).giveBundle();
+                commandReturn = new GiveTaskClasseur(player).giveClasseur();
 
             }
             default -> {
-                sender.sendMessage("action non reconnue taper /task help pour de l'aide");
-                commandReturn = true;
+                Bukkit.getLogger().info("action non reconnue taper /task help pour de l'aide");
             }
         }
 
