@@ -3,16 +3,15 @@ package fr.cinpiros.handlers;
 import fr.cinpiros.SmcTask;
 import fr.cinpiros.commands.MenuTask;
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
 
-public class MenuInventoryHandler implements Listener {
+public class InventoryHandler implements Listener {
 
-    public MenuInventoryHandler(SmcTask plugin) {
+    public InventoryHandler(SmcTask plugin) {
         Bukkit.getPluginManager().registerEvents(this, plugin);
     }
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)

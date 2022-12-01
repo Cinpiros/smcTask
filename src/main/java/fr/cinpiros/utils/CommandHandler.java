@@ -1,5 +1,6 @@
 package fr.cinpiros.utils;
 
+import fr.cinpiros.commands.GiveTaskBundle;
 import fr.cinpiros.commands.MenuTask;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -17,7 +18,6 @@ public class CommandHandler implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String [] args) {
         Player player = null;
-        boolean needPlayer = true;
         if (sender instanceof Player) {
             player = (Player) sender;
         } else {
@@ -36,9 +36,7 @@ public class CommandHandler implements CommandExecutor {
         if (player == null) {
             List<String> listCommand = new ArrayList<>();
             listCommand.add("config");
-            if (listCommand.contains(args[0])) {
-                needPlayer = false;
-            } else {
+            if (!listCommand.contains(args[0])) {
                 if (sender instanceof ConsoleCommandSender) {
                     sender.sendMessage("/task "+args[0]+" <player>");
                 } else {
@@ -47,26 +45,30 @@ public class CommandHandler implements CommandExecutor {
                 return true;
             }
         }
-
+        Boolean commandReturn = true;
         switch (args[0]) {
             case "help", "aide" -> {
                 player.sendMessage("help");
-                break;
+                commandReturn = true;
             }
             case "version" -> {
                 player.sendMessage("verssion");
-                break;
+                commandReturn = true;
             }
             case "presentoire", "menutask" -> {
-                new MenuTask(player).openMenu();
-                break;
+                commandReturn = new MenuTask(player).openMenu();
+            }
+            case "give", "taskbundle", "bundle" -> {
+                commandReturn = new GiveTaskBundle(player).giveBundle();
+
             }
             default -> {
                 sender.sendMessage("action non reconnue taper /task help pour de l'aide");
+                commandReturn = true;
             }
         }
 
 
-        return true;
+        return commandReturn;
     }
 }
