@@ -3,16 +3,6 @@ name: smcTask
 version: 1.0
 api-version: 1.19
 commands:
-  giveitemtest:
-    description: give player a task
-    usage: /giveitemtest
-    permission: smcTask.commands.giveitemtest
-    permission-message: "Vous n'avez pas les permission néssésaire pour exécuter cette commande"
-  menutask:
-    description: open task menu for player
-    usage: /menutask
-    permission: smcTask.commands.menutask
-    permission-message: "Vous n'avez pas les permission néssésaire pour exécuter cette commande"
   task:
     description: task base command
     usage: /task

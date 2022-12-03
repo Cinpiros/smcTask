@@ -1,23 +1,16 @@
 package fr.cinpiros.handlers;
 
 import fr.cinpiros.commands.GiveTaskClasseur;
-import fr.cinpiros.taskInventory.QuestInventoryMenu;
-import fr.cinpiros.taskInventory.TaskInventoryMenu;
-import fr.cinpiros.utils.DelayedTask;
+import fr.cinpiros.inventory.QuestInventory;
+import fr.cinpiros.inventory.TaskInventory;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
 import fr.cinpiros.SmcTask;
-import org.bukkit.inventory.ItemStack;
-
-import java.util.Objects;
 
 public class PlayerHandler implements Listener {
     public PlayerHandler(SmcTask plugin) {
@@ -38,10 +31,10 @@ public class PlayerHandler implements Listener {
 
         Player player = event.getPlayer();
         if (event.getAction().isRightClick()) {
-            new TaskInventoryMenu(player).openMenu();
+            new TaskInventory(player).openMenu();
         }
         if (event.getAction().isLeftClick()) {
-            new QuestInventoryMenu(player).openMenu();
+            new QuestInventory(player).openMenu();
         }
     }
 }

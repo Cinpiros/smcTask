@@ -1,4 +1,4 @@
-package fr.cinpiros.commands;
+package fr.cinpiros.inventory;
 
 
 import fr.cinpiros.utils.CreateItem;
@@ -6,15 +6,14 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Listener;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-public class MenuTask {
+public class TaskPanel {
     static public Component invName = Component.text("Task");
     private final Player player;
 
-    public MenuTask(Player player) {
+    public TaskPanel(Player player) {
         this.player = player;
     }
     public boolean openMenu() {

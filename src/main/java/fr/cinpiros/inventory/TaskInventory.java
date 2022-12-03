@@ -1,4 +1,4 @@
-package fr.cinpiros.taskInventory;
+package fr.cinpiros.inventory;
 
 import fr.cinpiros.commands.GiveTaskClasseur;
 import net.kyori.adventure.text.Component;
@@ -6,12 +6,12 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
-public class TaskInventoryMenu {
+public class TaskInventory {
 
     static public Component invName = Component.text(GiveTaskClasseur.itemName+" de Tâche");
     private final Player player;
 
-    public TaskInventoryMenu(Player player) {
+    public TaskInventory(Player player) {
         this.player = player;
     }
 

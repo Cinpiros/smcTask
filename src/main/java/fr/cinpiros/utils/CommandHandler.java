@@ -1,7 +1,7 @@
 package fr.cinpiros.utils;
 
 import fr.cinpiros.commands.GiveTaskClasseur;
-import fr.cinpiros.commands.MenuTask;
+import fr.cinpiros.inventory.TaskPanel;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -54,7 +54,7 @@ public class CommandHandler implements CommandExecutor {
                 player.sendMessage("verssion");
             }
             case "presentoire", "menutask" -> {
-                commandReturn = new MenuTask(player).openMenu();
+                commandReturn = new TaskPanel(player).openMenu();
             }
             case "give", "taskbundle", "bundle" -> {
                 commandReturn = new GiveTaskClasseur(player).giveClasseur();
