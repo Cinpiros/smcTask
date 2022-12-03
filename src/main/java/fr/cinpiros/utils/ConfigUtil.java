@@ -22,7 +22,7 @@ public class ConfigUtil {
         if (pathList == null) {return;}
 
         for (String path : pathList) {
-            files.add(new File(path));
+            this.files.add(new File(path));
         }
 
         for (File file : this.files) {

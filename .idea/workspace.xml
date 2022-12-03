@@ -5,20 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c88ecbdf-c6a3-4501-bb64-da24307c827b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/fr/cinpiros/inventory/TaskDeposit.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/fr/cinpiros/task/TaskConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/fr/cinpiros/task/TaskCreator.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fr/cinpiros/SmcTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/cinpiros/SmcTask.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fr/cinpiros/commands/MenuTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/cinpiros/inventory/TaskPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fr/cinpiros/handlers/InventoryHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/cinpiros/handlers/InventoryHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fr/cinpiros/handlers/PlayerHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/cinpiros/handlers/PlayerHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fr/cinpiros/taskInventory/QuestInventoryMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/cinpiros/inventory/QuestInventory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fr/cinpiros/taskInventory/TaskInventoryMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/cinpiros/inventory/TaskInventory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fr/cinpiros/utils/CommandHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/cinpiros/utils/CommandHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/fr/cinpiros/utils/ConfigUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/cinpiros/utils/ConfigUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fr/cinpiros/utils/DelayedTask.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/plugin.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
