@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import fr.cinpiros.SmcTask;
 
@@ -16,7 +17,7 @@ public class PlayerHandler implements Listener {
     public PlayerHandler(SmcTask plugin) {
         Bukkit.getPluginManager().registerEvents(this, plugin);
     }
-    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.NORMAL)
     public void onPlayerUse(PlayerInteractEvent event){
         try {
             if (!event.getItem().getItemMeta().displayName().equals(GiveTaskClasseur.itemName)){
@@ -25,14 +26,13 @@ public class PlayerHandler implements Listener {
         } catch (NullPointerException e) {
             return;
         }
-        //if (!event.getPlayer().hasPermission("smcTask.useclasseur")) {
-        //    return;
-        //}
-
+        if (!event.getPlayer().hasPermission("smcTask.useclasseur")) {
+            return;
+        }
+        event.setCancelled(true);
         Player player = event.getPlayer();
         if (event.getAction().isRightClick()) {
             new TaskInventory(player).openMenu();
-            return;
         }
         if (event.getAction().isLeftClick()) {
             new QuestInventory(player).openMenu();
