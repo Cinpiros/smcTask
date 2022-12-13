@@ -1,5 +1,6 @@
 package fr.cinpiros.utils;
 
+import fr.cinpiros.commands.GiveTask;
 import fr.cinpiros.commands.GiveTaskClasseur;
 import fr.cinpiros.inventory.TaskPanel;
 import org.bukkit.Bukkit;
@@ -58,6 +59,10 @@ public class CommandHandler implements CommandExecutor {
             }
             case "give", "taskbundle", "bundle" -> {
                 commandReturn = new GiveTaskClasseur(player).giveClasseur();
+
+            }
+            case "task" -> {
+                commandReturn = new GiveTask(player).giveTask();
 
             }
             default -> {

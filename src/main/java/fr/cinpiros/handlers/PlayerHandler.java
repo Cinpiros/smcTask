@@ -19,19 +19,20 @@ public class PlayerHandler implements Listener {
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onPlayerUse(PlayerInteractEvent event){
         try {
-            if (!event.getItem().displayName().equals(Component.text(GiveTaskClasseur.itemName))){
+            if (!event.getItem().getItemMeta().displayName().equals(GiveTaskClasseur.itemName)){
                 return;
             }
         } catch (NullPointerException e) {
             return;
         }
-        if (!event.getPlayer().hasPermission("smcTask.useclasseur")) {
-            return;
-        }
+        //if (!event.getPlayer().hasPermission("smcTask.useclasseur")) {
+        //    return;
+        //}
 
         Player player = event.getPlayer();
         if (event.getAction().isRightClick()) {
             new TaskInventory(player).openMenu();
+            return;
         }
         if (event.getAction().isLeftClick()) {
             new QuestInventory(player).openMenu();

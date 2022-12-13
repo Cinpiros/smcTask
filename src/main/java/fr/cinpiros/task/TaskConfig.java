@@ -10,6 +10,6 @@ public class TaskConfig {
     private ArrayList<FileConfiguration> taskConfig;
 
     public TaskConfig (Plugin plugin) {
-        taskConfig = new ConfigUtil(plugin, "task").getConfig();
+        taskConfig = new ConfigUtil(plugin, "task/").getConfig();
     }
 }

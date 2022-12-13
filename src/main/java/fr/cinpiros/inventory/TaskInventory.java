@@ -8,7 +8,7 @@ import org.bukkit.inventory.Inventory;
 
 public class TaskInventory {
 
-    static public Component invName = Component.text(GiveTaskClasseur.itemName+" de Tâche");
+    static public Component invName = GiveTaskClasseur.itemName;
     private final Player player;
 
     public TaskInventory(Player player) {

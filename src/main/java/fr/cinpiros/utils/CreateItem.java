@@ -9,10 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CreateItem {
-    static public ItemStack getItem(ItemStack item, String name, String ... lore) {
+    static public ItemStack getItem(ItemStack item, Component name, String ... lore) {
         ItemMeta meta = item.getItemMeta();
 
-        meta.displayName(Component.text(ChatColor.translateAlternateColorCodes('&', name)));
+        meta.displayName(name);
 
         List<Component> lores = new ArrayList<>();
         for (String s : lore) {

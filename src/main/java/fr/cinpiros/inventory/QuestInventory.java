@@ -7,7 +7,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
 public class QuestInventory {
-    static public Component invName = Component.text(GiveTaskClasseur.itemName+" de quête");
+    static public Component invName = GiveTaskClasseur.itemName;
     private final Player player;
 
     public QuestInventory(Player player) {

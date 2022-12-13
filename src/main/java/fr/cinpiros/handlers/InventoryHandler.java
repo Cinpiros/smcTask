@@ -3,6 +3,8 @@ package fr.cinpiros.handlers;
 import fr.cinpiros.SmcTask;
 import fr.cinpiros.inventory.TaskPanel;
 import fr.cinpiros.inventory.TaskInventory;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -13,21 +15,34 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 
+
 public class InventoryHandler implements Listener {
 
     public InventoryHandler(SmcTask plugin) {
         Bukkit.getPluginManager().registerEvents(this, plugin);
     }
 
-    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
+
+    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onTaskInventoryClick(InventoryClickEvent event) {
         //Player player = (Player) event.getWhoClicked();
 
         if (!event.getView().title().equals(TaskInventory.invName)) {
             return;
         }
+        Inventory inv  = event.getClickedInventory();
 
-        //event.setCancelled(true);
+        if (inv == null) {
+            return;
+        }
+        ItemStack item = inv.getItem(event.getSlot());
+        Component sqlrequesttest = Component.text("Task").color(NamedTextColor.AQUA);
+
+        if (item == null || item.getItemMeta().displayName().equals(sqlrequesttest)) {
+            return;
+        }
+
+        event.setCancelled(true);
     }
 
     @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)

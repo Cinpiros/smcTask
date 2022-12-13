@@ -15,6 +15,9 @@ public class SmcTask extends JavaPlugin {
         new PlayerHandler(this);
         new InventoryHandler(this);
 
+        getConfig().options().copyDefaults();
+        saveConfig();
+
         Bukkit.getLogger().info("smcTask Enable");
     }
     @Override

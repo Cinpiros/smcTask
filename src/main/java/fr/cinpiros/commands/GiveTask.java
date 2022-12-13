@@ -8,20 +8,18 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-public class GiveTaskClasseur {
-
+public class GiveTask {
     private final Player player;
-    public static Component itemName = Component.text("Classeur").color(NamedTextColor.YELLOW);
 
-    public GiveTaskClasseur(Player player) {
+    public GiveTask(Player player) {
         this.player = player;
     }
 
-    public boolean giveClasseur(){
+    public boolean giveTask(){
 
         Inventory inv = player.getInventory();
 
-        inv.addItem(CreateItem.getItem(new ItemStack(Material.BOOK), itemName, "&fClique droit ouvre l'inventaire de tâche", "&fClique gauche ouvre le menu de quête"));
+        inv.addItem(CreateItem.getItem(new ItemStack(Material.PAPER), Component.text("Task").color(NamedTextColor.AQUA), "&a Clique pour récupérer la Task", "&fRécolter du blé : 0/1000"));
 
         return true;
     }
