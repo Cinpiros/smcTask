@@ -12,4 +12,7 @@ public class TaskConfig {
     public TaskConfig (Plugin plugin) {
         taskConfig = new ConfigUtil(plugin, "task/").getConfig();
     }
+
+    public void loadConfig(){
+    }
 }

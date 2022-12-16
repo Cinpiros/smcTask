@@ -6,7 +6,7 @@ test: #task id
     deposit_effect: true #animation lors du dépot de la task
   task:
     1: #task Complete condition up to 20
-      type: HARVEST #HARVEST, PICKUP, KILL, TAME, TRAVEL, TIME, BREED, CRAFT, SMELT, VISIT, TOMILK, BREAK, EAT, SHEAR, BEEKEEPING, BREW, ECHANT, SMITHING, SHOOT, FISH
+      type: HARVEST #HARVEST, PICKUP, KILL, TAME, TRAVEL, TIME, BREED, CRAFT, SMELT, VISIT, TOMILK, BREAK, EAT, SHEAR, BEEKEEPING, BREW, ECHANT, SMITHING, COMPLETE_TASK, FISH
       material: WHEAT #need to be at final stade of growth
       quantity: 64
     2:
@@ -74,9 +74,9 @@ test: #task id
       item: NETHER_WART #item used accept mythicmobs item
       quantity: 16
     19:
-      type: SHOOT
-      item: BOW #CROSSBOW, TRIDENT
-      quantity: 64
+      type: COMPLETE_TASK #kill mob with item
+      task: test #id of the task
+      quantity: 1
     20:
       TYPE: FISH
       ITEM: TROPICAL_FISH

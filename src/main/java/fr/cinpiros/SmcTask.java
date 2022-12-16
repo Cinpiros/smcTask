@@ -2,6 +2,7 @@ package fr.cinpiros;
 
 import fr.cinpiros.handlers.InventoryHandler;
 import fr.cinpiros.handlers.PlayerHandler;
+import fr.cinpiros.task.TaskConfig;
 import fr.cinpiros.utils.CommandHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -17,6 +18,8 @@ public class SmcTask extends JavaPlugin {
 
         getConfig().options().copyDefaults();
         saveConfig();
+
+        new TaskConfig(this).loadConfig();
 
         Bukkit.getLogger().info("smcTask Enable");
     }

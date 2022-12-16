@@ -1,0 +1,286 @@
+table task {
+  id varchar(100) [PK, not null, unique]
+  name varchar(255) [not null]
+  on_panel boolean
+  complete_effect boolean
+  deposit_effect boolean
+  reward_money int
+  rarity enum(COMMUN,RARE,EPIQUE,LEGENDAIRE,DIVIN)
+}
+
+table task_description {
+  FK_id varchar(100) [PK, ref: > task.id]
+  lore varchar(255) [not null]
+}
+
+table task_jobs_level {
+  FK_id varchar(100) [PK, ref: > task.id]
+  name varchar(100) [not null]
+  level int [not null]
+}
+
+table task_condition_type {
+  id int [PK, not null, unique, increment]
+  FK_id_task varchar(100) [ref: > task.id]
+  type varchar(30) [not null]
+}
+
+table task_condition_HARVEST {
+  FK_task_condition_type_id int [ref: > task_condition_type.id]
+  material varchar(100) [not null]
+  quantity int [not null]
+}
+
+table task_condition_PICKUP {
+  FK_task_condition_type_id int [ref: > task_condition_type.id]
+  material varchar(100) [not null]
+  quantity int [not null]
+}
+
+table task_condition_KILL {
+  FK_task_condition_type_id int [ref: > task_condition_type.id]
+  mob varchar(100) [not null]
+  quantity int [not null]
+}
+
+table task_condition_TAME {
+  FK_task_condition_type_id int [ref: > task_condition_type.id]
+  mob varchar(100) [not null]
+  quantity int [not null]
+}
+
+table task_condition_TRAVEL {
+  FK_task_condition_type_id int [ref: > task_condition_type.id]
+  method varchar(100) [not null]
+  distance int [not null]
+}
+
+table task_condition_TIME {
+  FK_task_condition_type_id int [ref: > task_condition_type.id]
+  time int [not null]
+}
+
+table task_condition_BREED {
+  FK_task_condition_type_id int [ref: > task_condition_type.id]
+  mob varchar(100) [not null]
+  quantity int [not null]
+}
+
+table task_condition_CRAFT {
+  FK_task_condition_type_id int [ref: > task_condition_type.id]
+  item varchar(100) [not null]
+  quantity int [not null]
+}
+
+table task_condition_SMELT {
+  FK_task_condition_type_id int [ref: > task_condition_type.id]
+  item varchar(100) [not null]
+  quantity int [not null]
+}
+
+table task_condition_VISIT {
+  FK_task_condition_type_id int [ref: > task_condition_type.id]
+  area varchar(255) [not null]
+}
+
+table task_condition_TOMILK {
+  FK_task_condition_type_id int [ref: > task_condition_type.id]
+  quantity int [not null]
+}
+
+table task_condition_BREAK {
+  FK_task_condition_type_id int [ref: > task_condition_type.id]
+  material varchar(100) [not null]
+  quantity int [not null]
+}
+
+table task_condition_EAT {
+  FK_task_condition_type_id int [ref: > task_condition_type.id]
+  item varchar(100) [not null]
+  quantity int [not null]
+}
+
+table task_condition_SHEAR {
+  FK_task_condition_type_id int [ref: > task_condition_type.id]
+  quantity int [not null]
+}
+
+table task_condition_BEEKEEPING {
+  FK_task_condition_type_id int [ref: > task_condition_type.id]
+  quantity int [not null]
+}
+
+table task_condition_SMITHING {
+  FK_task_condition_type_id int [ref: > task_condition_type.id]
+  item varchar(100) [not null]
+  quantity int [not null]
+}
+
+table task_condition_ECHANT {
+  FK_task_condition_type_id int [ref: > task_condition_type.id]
+  enchantment varchar(100) [not null]
+  level int [not null]
+  quantity int [not null]
+}
+
+table task_condition_BREW {
+  FK_task_condition_type_id int [ref: > task_condition_type.id]
+  item varchar(100) [not null]
+  quantity int [not null]
+}
+
+table task_condition_COMPLETE_TASK {
+  FK_task_condition_type_id int [ref: > task_condition_type.id]
+  task varchar(100) [not null]
+  quantity int [not null]
+}
+
+table task_condition_FISH {
+  FK_task_condition_type_id int [ref: > task_condition_type.id]
+  item varchar(100) [not null]
+  quantity int [not null]
+}
+
+table task_reward_jobs_exp {
+  FK_task_id varchar(100) [PK, ref: > task.id]
+  FK_jobs_id varchar(100) [not null, ref: < jobs.id]
+  exp int [not null]
+}
+
+table task_reward_item {
+  FK_task_id varchar(100) [PK, ref: > task.id]
+  item varchar(100) [not null]
+  quantity int [not null]
+}
+
+table task_reward_command {
+  FK_task_id varchar(100) [PK, ref: > task.id]
+  command varchar(255)
+}
+
+table jobs {
+  id varchar(100) [PK, not null, unique]
+  name varchar(100) [not null]
+  base_exp int [not null] //calcul : base_exp * player_jobs_level * player_jobs_level
+}
+
+table player_jobs_exp {
+  uuid varchar(36) [PK, not null, unique]
+  FK_jobs_id varchar(100) [not null, ref: > jobs.id]
+  level int [not null, default: 1]
+  exp int [not null, default: 0]
+}
+
+table player_task {
+  id int [PK, not null, unique, increment]
+  uuid varchar(36) [PK, not null, unique]
+  FK_task_id varchar(100) [not null, ref: > task.id]
+  complete boolean [default: false]
+}
+
+table player_task_condition {
+  id int [PK, not null, unique, increment]
+  FK_task_condition_type_id int [not null, ref: > task_condition_type.id]
+  FK_player_task_id int [ref: > player_task.id]
+  complete boolean [default: false]
+}
+
+table player_task_condition_HARVEST {
+  FK_player_task_condition_id int [ref: > player_task_condition.id]
+  quantity int [not null, default: 0]
+}
+
+table player_task_condition_PICKUP {
+  FK_player_task_condition_id int [ref: > player_task_condition.id]
+  quantity int [not null, default: 0]
+}
+
+table player_task_condition_KILL {
+  FK_player_task_condition_id int [ref: > player_task_condition.id]
+  quantity int [not null, default: 0]
+}
+
+table player_task_condition_TAME {
+  FK_player_task_condition_id int [ref: > player_task_condition.id]
+  quantity int [not null, default: 0]
+}
+
+table player_task_condition_TRAVEL {
+  FK_player_task_condition_id int [ref: > player_task_condition.id]
+  distance int [not null, default: 0]
+}
+
+table player_task_condition_TIME {
+  FK_player_task_condition_id int [ref: > player_task_condition.id]
+  time int [not null, default: 0]
+}
+
+table player_task_condition_BREED {
+  FK_player_task_condition_id int [ref: > player_task_condition.id]
+  quantity int [not null, default: 0]
+}
+
+table player_task_condition_CRAFT {
+  FK_player_task_condition_id int [ref: > player_task_condition.id]
+  quantity int [not null, default: 0]
+}
+
+table player_task_condition_SMELT {
+  FK_player_task_condition_id int [ref: > player_task_condition.id]
+  quantity int [not null, default: 0]
+}
+
+table player_task_condition_VISIT {
+  FK_player_task_condition_id int [ref: > player_task_condition.id]
+  complete boolean [not null, default: false]
+}
+
+table player_task_condition_TOMILK {
+  FK_player_task_condition_id int [ref: > player_task_condition.id]
+  quantity int [not null, default: 0]
+}
+
+table player_task_condition_BREAK {
+  FK_player_task_condition_id int [ref: > player_task_condition.id]
+  quantity int [not null, default: 0]
+}
+
+table player_task_condition_EAT {
+  FK_player_task_condition_id int [ref: > player_task_condition.id]
+  quantity int [not null, default: 0]
+}
+
+table player_task_condition_SHEAR {
+  FK_player_task_condition_id int [ref: > player_task_condition.id]
+  quantity int [not null, default: 0]
+}
+
+table player_task_condition_BEEKEEPING {
+  FK_player_task_condition_id int [ref: > player_task_condition.id]
+  quantity int [not null, default: 0]
+}
+
+table player_task_condition_SMITHING {
+  FK_player_task_condition_id int [ref: > player_task_condition.id]
+  quantity int [not null, default: 0]
+}
+
+table player_task_condition_ECHANT {
+  FK_player_task_condition_id int [ref: > player_task_condition.id]
+  quantity int [not null, default: 0]
+}
+
+table player_task_condition_BREW {
+  FK_player_task_condition_id int [ref: > player_task_condition.id]
+  quantity int [not null, default: 0]
+}
+
+table player_task_condition_COMPLETE_TASK {
+  FK_player_task_condition_id int [ref: > player_task_condition.id]
+  quantity int [not null, default: 0]
+}
+
+table player_task_condition_FISH {
+  FK_player_task_condition_id int [ref: > player_task_condition.id]
+  quantity int [not null, default: 0]
+}
