@@ -1,0 +1,95 @@
+harvest_wheat_64: #condition id need to be unique
+  type: HARVEST #HARVEST, PICKUP, KILL, TAME, TRAVEL, TIME, BREED, CRAFT, SMELT, VISIT, TOMILK, BREAK, EAT, SHEAR, BEEKEEPING, BREW, ECHANT, SMITHING, COMPLETE_TASK, FISH
+  id: WHEAT #HARVEST check final stage of growth
+  quantity: 64 #how muth to complete condition
+
+pickup_stone_64:
+  type: PICKUP
+  id: STONE
+  quantity: 64
+
+kill_zombie_64:
+  type: KILL
+  id: ZOMBIE #accept vanilla mob and mythicmobs
+  quantity: 64
+
+tame_wolf_8:
+  type: TAME
+  id: WOLF #accept tamable mob
+  quantity: 8
+
+travel_feet_1km:
+  type: TRAVEL
+  id: FEET #FEET, MINECART, BOAT, HORSE, PIG, ELYTRA, PEARL
+  quantity: 1000 #travel distance in block
+
+time_1h:
+  type: TIME #time to pass
+  time: 1 #time in hour
+
+breed_pig_8:
+  type: BREED
+  id: PIG #accept breedable mob
+  quantity: 8
+
+craft_compass_32:
+  type: CRAFT
+  id: COMPASS #craft result accept mythicmobs item
+  quantity: 32
+
+smelt_ironingot_64:
+  type: SMELT
+  id: IRON_INGOT #smelt result accept mythicmobs item
+  quantity: 64
+
+visit_spawn:
+  type: VISIT
+  id: spawn #worldguard area
+
+tomilk_1:
+  type: TOMILK #MILK A COW
+  quantity: 1
+
+break_stone_64:
+  type: BREAK
+  id: STONE
+  quantity: 64
+
+eat_cookedporkchop_16:
+  type: EAT
+  id: COOKED_PORKCHOP
+  quantity: 16
+
+shear_16:
+  type: SHEAR #just mutton
+  quantity: 16
+
+beekeeping_64:
+  type: BEEKEEPING #get honneycomb or honey bottle
+  quantity: 64
+
+smithing_netheriteaxe_1:
+  type: SMITHING
+  id: NETHERITE_AXE #smitting result accept mythicmobs item
+  quantity: 1
+
+echant_durability_0_1:
+  type: ECHANT
+  id: DURABILITY
+  level: 0 #0 = all level
+  quantity: 1
+
+brew_netherwart_16:
+  type: BREW
+  id: NETHER_WART #item used accept mythicmobs item
+  quantity: 16
+
+completetask_test_1:
+  type: COMPLETE_TASK #kill mob with item
+  id: test #id of the task
+  quantity: 1
+
+fish_tropicalfish_64:
+  type: FISH
+  id: TROPICAL_FISH
+  quantity: 64

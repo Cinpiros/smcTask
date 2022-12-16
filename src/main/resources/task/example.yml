@@ -4,83 +4,27 @@ test: #task id
     on_panel: true #si la task peux apparaitre sur le panel de récupération de task journalière
     complete_effect: true #animation au moment de la completion de la task
     deposit_effect: true #animation lors du dépot de la task
-  task:
-    1: #task Complete condition up to 20
-      type: HARVEST #HARVEST, PICKUP, KILL, TAME, TRAVEL, TIME, BREED, CRAFT, SMELT, VISIT, TOMILK, BREAK, EAT, SHEAR, BEEKEEPING, BREW, ECHANT, SMITHING, COMPLETE_TASK, FISH
-      material: WHEAT #need to be at final stade of growth
-      quantity: 64
-    2:
-      type: PICKUP
-      material: STONE
-      quantity: 64
-    3:
-      type: KILL
-      mob: ZOMBIE #accept vanilla mob and mythicmobs
-      quantity: 64
-    4:
-      type: TAME
-      mob: WOLF #accept tamable mob
-      quantity: 8
-    5:
-      type: TRAVEL
-      method: FEET #FEET, MINECART, BOAT, HORSE, PIG, ELYTRA, PEARL
-      distance: 1000 #travel distance in block
-    6:
-      type: TIME #time to pass
-      time: 1 #time in hour
-    7:
-      type: BREED
-      mob: PIG #accept breedable mob
-      quantity: 8
-    8:
-      type: CRAFT
-      item: COMPASS #craft result accept mythicmobs item
-      quantity: 32
-    9:
-      type: SMELT
-      item: IRON_INGOT #smelt result accept mythicmobs item
-      quantity: 64
-    10:
-      type: VISIT
-      area: spawn #worldguard area
-    11:
-      type: TOMILK #MILK A COW
-      quantity: 1
-    12:
-      type: BREAK
-      material: STONE
-      quantity: 64
-    13:
-      type: EAT
-      item: COOKED_PORKCHOP
-      quantity: 16
-    14:
-      type: SHEAR #just mutton
-      quantity: 16
-    15:
-      type: BEEKEEPING #get honneycomb or honey bottle
-      quantity: 64
-    16:
-      type: SMITHING
-      item: NETHERITE_AXE #smitting result accept mythicmobs item
-      quantity: 1
-    17:
-      type: ECHANT
-      enchantment: DURABILITY
-      level: 1-3 #trigger for durabilitie enchant level 1 to 3 can be juste level 3 or level 1 to 2 ect
-      quantity: 1
-    18:
-      type: BREW
-      item: NETHER_WART #item used accept mythicmobs item
-      quantity: 16
-    19:
-      type: COMPLETE_TASK #kill mob with item
-      task: test #id of the task
-      quantity: 1
-    20:
-      TYPE: FISH
-      ITEM: TROPICAL_FISH
-      quantity: 64
+  task: #condition id in folder condition
+    - harvest_wheat_64
+    - pickup_stone_64
+    - kill_zombie_64
+    - tame_wolf_8
+    - travel_feet_1km
+    - time_1h
+    - breed_pig_8
+    - craft_compass_32
+    - smelt_ironingot_64
+    - visit_spawn
+    - tomilk_1
+    - break_stone_64
+    - eat_cookedporkchop_16
+    - shear_16
+    - beekeeping_64
+    - smithing_netheriteaxe_1
+    - echant_durability_0_1
+    - brew_netherwart_16
+    - completetask_test_1
+    - fish_tropicalfish_64
   jobs_level: #level requis pour remplire la task, la mettre dans le taskinventory et l'obtenir des pnj et du panel
     ami_des_elfe: 10 #jobs: level
     alier_des_nain: 5
