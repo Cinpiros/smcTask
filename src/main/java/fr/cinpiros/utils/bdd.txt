@@ -19,11 +19,10 @@ table task_jobs_level {
   level int [not null]
 }
 
-table task_condition {
-  id int [PK, not null, unique, increment]
-  FK_id_task varchar(100) [ref: > task.id]
+table condition {
+  condition_id varchar(100) [PK, not null, unique]
   type varchar(30) [not null]
-  idm varchar(100)
+  id varchar(100)
   time time
   level tinyint
   quantity int
@@ -66,9 +65,9 @@ table task_instance {
   complete boolean [default: false]
 }
 
-table task_condition_instance {
-  FK_task_condition_id int [not null, ref: > task_condition.id]
+table condition_instance {
   FK_task_instance_id int [PK, not null, ref: > task_instance.id]
+  FK_task_condition_id int [not null, ref: > condition.id]
   quantity int [default: 0]
   time time [default: 0]
   complete boolean [default: false]
