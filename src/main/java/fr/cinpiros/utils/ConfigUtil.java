@@ -31,8 +31,6 @@ public class ConfigUtil {
             this.configs.add(YamlConfiguration.loadConfiguration(file));
         }
     }
-
-
     public ArrayList<File> getFile() {
         return this.files;
     }

@@ -6,7 +6,7 @@ public class TaskConfigSync {
     private void pushTask() {
         try {
 
-        } catch (SQLException e) {
+        } catch (Exception e) {
 
         } finally {
 

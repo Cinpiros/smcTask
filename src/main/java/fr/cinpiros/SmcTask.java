@@ -5,7 +5,11 @@ import fr.cinpiros.handlers.PlayerHandler;
 import fr.cinpiros.task.TaskConfig;
 import fr.cinpiros.utils.CommandHandler;
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.Nullable;
+
+import java.io.InputStream;
 
 public class SmcTask extends JavaPlugin {
     @Override
@@ -16,8 +20,11 @@ public class SmcTask extends JavaPlugin {
         new PlayerHandler(this);
         new InventoryHandler(this);
 
-        getConfig().options().copyDefaults();
-        saveConfig();
+
+        saveDefaultConfig();
+        this.saveResource("condition/example.yml", false);
+        this.saveResource("task/example.yml", false);
+
 
         new TaskConfig(this).loadConfig();
 
