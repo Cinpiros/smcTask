@@ -3,3 +3,4 @@ database:
   user: "root"
   password: "root"
   database: "smctask"
+  prefix: "task_"

@@ -7,10 +7,8 @@
     <list default="true" id="c88ecbdf-c6a3-4501-bb64-da24307c827b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/fr/cinpiros/SmcTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/cinpiros/SmcTask.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fr/cinpiros/database/ConnectionDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/cinpiros/database/ConnectionDatabase.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fr/cinpiros/database/TaskConfigSync.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/cinpiros/database/TaskConfigSync.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fr/cinpiros/utils/ConfigUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/cinpiros/utils/ConfigUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fr/cinpiros/utils/bdd.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/bdd.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/cinpiros/database/ConnectionDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/cinpiros/database/UtilsDatabase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/bdd.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/bdd.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/config.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

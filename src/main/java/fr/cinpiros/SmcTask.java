@@ -1,5 +1,6 @@
 package fr.cinpiros;
 
+import fr.cinpiros.database.UtilsDatabase;
 import fr.cinpiros.handlers.InventoryHandler;
 import fr.cinpiros.handlers.PlayerHandler;
 import fr.cinpiros.task.TaskConfig;
@@ -10,10 +11,17 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.InputStream;
+import java.sql.SQLException;
 
 public class SmcTask extends JavaPlugin {
     @Override
     public void onEnable() {
+
+        try {
+            new UtilsDatabase().configDatabase(this);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         getCommand("task").setExecutor(new CommandHandler());
 
@@ -34,5 +42,4 @@ public class SmcTask extends JavaPlugin {
     public void onDisable() {
         Bukkit.getLogger().info("smcTask Disable");
     }
-
 }

@@ -1,21 +1,21 @@
 table task {
   id varchar(100) [PK, not null, unique]
   name varchar(255) [not null]
-  on_panel boolean
-  complete_effect boolean
-  deposit_effect boolean
+  on_panel boolean [not null]
+  complete_effect boolean [not null]
+  deposit_effect boolean [not null]
   reward_money int
-  rarity enum(COMMUN,RARE,EPIQUE,LEGENDAIRE,DIVIN)
+  rarity varchar(30) [not null]
 }
 
 table task_description {
-  FK_id varchar(100) [PK, ref: > task.id]
+  FK_id varchar(100) [PK, not null, ref: > task.id]
   lore varchar(255) [not null]
 }
 
 table task_jobs_level {
-  FK_id varchar(100) [PK, ref: > task.id]
-  FK_jobs_id varchar(100) [ref: > jobs.id]
+  FK_id varchar(100) [PK, not null, ref: > task.id]
+  FK_jobs_id varchar(100) [PK, not null, ref: > jobs.id]
   level int [not null]
 }
 
@@ -29,31 +29,31 @@ table condition {
 }
 
 table task_reward_jobs_exp {
-  FK_task_id varchar(100) [PK, ref: > task.id]
-  FK_jobs_id varchar(100) [not null, ref: < jobs.id]
+  FK_task_id varchar(100) [PK, not null, ref: > task.id]
+  FK_jobs_id varchar(100) [PK, not null, ref: > jobs.id]
   exp int [not null]
 }
 
 table task_reward_item {
-  FK_task_id varchar(100) [PK, ref: > task.id]
+  FK_task_id varchar(100) [PK, not null, ref: > task.id]
   item varchar(100) [not null]
   quantity int [not null]
 }
 
 table task_reward_command {
-  FK_task_id varchar(100) [PK, ref: > task.id]
-  command varchar(255)
+  FK_task_id varchar(100) [PK, not null, ref: > task.id]
+  command varchar(255) [not null]
 }
 
 table jobs {
   id varchar(100) [PK, not null, unique]
   name varchar(100) [not null]
-  base_exp int [not null] //calcul : base_exp * player_jobs_level * player_jobs_level
+  base_exp int [not null]
 }
 
 table player_jobs_exp {
   uuid varchar(36) [PK, not null, unique]
-  FK_jobs_id varchar(100) [not null, ref: > jobs.id]
+  FK_jobs_id varchar(100) [PK, not null, ref: > jobs.id]
   level int [not null, default: 1]
   exp int [not null, default: 0]
 }
@@ -67,7 +67,7 @@ table task_instance {
 
 table condition_instance {
   FK_task_instance_id int [PK, not null, ref: > task_instance.id]
-  FK_task_condition_id int [not null, ref: > condition.id]
+  FK_task_condition_id varchar(100) [PK, not null, ref: > condition.condition_id]
   quantity int [default: 0]
   time time [default: 0]
   complete boolean [default: false]
