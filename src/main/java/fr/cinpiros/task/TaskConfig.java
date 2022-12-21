@@ -14,5 +14,18 @@ public class TaskConfig {
     }
 
     public void loadConfig(){
+        for (FileConfiguration config : this.taskConfig) {
+
+        }
     }
 }
+
+
+
+
+
+
+
+
+
+

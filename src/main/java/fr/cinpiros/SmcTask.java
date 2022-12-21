@@ -30,7 +30,7 @@ public class SmcTask extends JavaPlugin {
 
         new TaskConfig(this).loadConfig();
 
-        Bukkit.getLogger().info("smcTask Enable zefsdfqsd");
+        Bukkit.getLogger().info("smcTask Enable");
     }
     @Override
     public void onDisable() {

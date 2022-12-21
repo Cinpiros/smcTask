@@ -1,15 +1,13 @@
 package fr.cinpiros.database;
 
-import java.sql.SQLException;
+import org.bukkit.plugin.Plugin;
+
+import java.sql.Connection;
 
 public class TaskConfigSync {
-    private void pushTask() {
-        try {
+    private void pushTask(Plugin plugin, UtilsDatabase database) {
+        Connection conn = database.getConnection(plugin);
 
-        } catch (Exception e) {
-
-        } finally {
-
-        }
+        database.closeConnection(conn);
     }
 }
