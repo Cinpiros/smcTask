@@ -6,21 +6,15 @@ import fr.cinpiros.handlers.PlayerHandler;
 import fr.cinpiros.task.TaskConfig;
 import fr.cinpiros.utils.CommandHandler;
 import org.bukkit.Bukkit;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.jetbrains.annotations.Nullable;
-
-import java.io.InputStream;
-import java.sql.SQLException;
 
 public class SmcTask extends JavaPlugin {
     @Override
     public void onEnable() {
 
-        try {
-            new UtilsDatabase().configDatabase(this);
-        } catch (SQLException e) {
-            e.printStackTrace();
+        UtilsDatabase database = new UtilsDatabase();
+        if (!database.doDatabaseHaveTable(this)){
+            database.configDatabase(this);
         }
 
         getCommand("task").setExecutor(new CommandHandler());
@@ -36,7 +30,7 @@ public class SmcTask extends JavaPlugin {
 
         new TaskConfig(this).loadConfig();
 
-        Bukkit.getLogger().info("smcTask Enable");
+        Bukkit.getLogger().info("smcTask Enable zefsdfqsd");
     }
     @Override
     public void onDisable() {
