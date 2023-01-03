@@ -4,7 +4,7 @@ test: #task id
     on_panel: true #si la task peux apparaitre sur le panel de récupération de task journalière
     complete_effect: true #animation au moment de la completion de la task
     deposit_effect: true #animation lors du dépot de la task
-  task: #condition id in folder condition
+  condition: #condition id in folder condition
     - harvest_wheat_64
     - pickup_stone_64
     - kill_zombie_64
@@ -26,15 +26,15 @@ test: #task id
     - completetask_test_1
     - fish_tropicalfish_64
   jobs_level: #level requis pour remplire la task, la mettre dans le taskinventory et l'obtenir des pnj et du panel
-    ami_des_elfe: 10 #jobs: level
-    alier_des_nain: 5
-    crafting: 10
-    fishing: 15
+    - ami_des_elfe 10 #jobs_id level
+    - alier_des_nain 5
+    - crafting 10
+    - fishing 15
   reward: #task reward
     money: 100
     jobs_exp:
-      crafting: 50
-      fishing: 20
+      - crafting 50 #jobs_id exp
+      - fishing 20
     item:
       - STONE 64
       - TROPICAL_FISH 1
@@ -45,4 +45,4 @@ test: #task id
     - "lore line 2"
     - "lore line 3"
     - "ect ..."
-  rarity: COMMUN #COMMUN, RARE, EPIQUE, LEGENDAIRE, DIVIN
+  rarity: commun #rarity_id

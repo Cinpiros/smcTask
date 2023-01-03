@@ -1,0 +1,28 @@
+commun: #rarity_id
+  name: "COMMUN"
+  color: "#7A8085" #hex color code or mc color code ex: &e
+  base_rarity: true #true if its the most common rarity (with rarity boots all other rarity will be multiplied by the boost)
+  rarity: 1000 #random calculation : addition of all rarity and random to pick one of the rarity
+
+rare:
+  name: "RARE"
+  color: "#1591B5"
+  base_rarity: false
+  rarity: 100
+
+epique:
+  name: "EPIQUE"
+  color: "#9641C1"
+  base_rarity: false
+  rarity: 20
+
+legendaire:
+  name: "LEGENDAIRE"
+  color: "#DA7A39"
+  base_rarity: false
+  rarity: 5
+
+divin:
+  name: "DIVIN"
+  color: "#FED060"
+  rarity: 0 #0 = never appear on the daily task panel

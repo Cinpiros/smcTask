@@ -5,11 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c88ecbdf-c6a3-4501-bb64-da24307c827b" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/resources/jobs/example.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/rarity/example.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fr/cinpiros/task/TaskConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/cinpiros/task/TaskConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/condition/example.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/condition/example.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/config.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/task/example.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/task/example.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/task/examples.yml" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

@@ -1,4 +1,6 @@
 database:
+  enable: true
+  main_config: true #if enable all config  (task, condition, jobs, rarity) will be sync from this server to all other server connected to the same database /!\ enable on just one server or it will make a mess
   host: "localhost:3306"
   user: "root"
   password: "root"
