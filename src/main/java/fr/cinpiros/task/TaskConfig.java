@@ -17,13 +17,8 @@ public class TaskConfig {
     }
 
     public void loadTaskConfig(Plugin plugin){
-        //File file = new File(plugin.getDataFolder().getAbsolutePath()+"/task/example.yml");
-        //YamlConfiguration conf = YamlConfiguration.loadConfiguration(file);
-        //if (!conf.contains("tasks")) {
-        //    Bukkit.getLogger().info("WTF");
-        //}
+
         for (YamlConfiguration config : this.taskConfig) {
-            //getDefaultSection()
             //for (String rootObject : config.getConfigurationSection("tasks").getKeys(false)) {
             for (String rootObject : config.getKeys(false)) {
                 Bukkit.getLogger().info("yousk2"+rootObject);
