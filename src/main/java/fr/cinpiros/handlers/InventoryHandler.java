@@ -14,6 +14,7 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.Objects;
 
 
 public class InventoryHandler implements Listener {
@@ -38,7 +39,7 @@ public class InventoryHandler implements Listener {
         ItemStack item = inv.getItem(event.getSlot());
         Component sqlrequesttest = Component.text("Task").color(NamedTextColor.AQUA);
 
-        if (item == null || item.getItemMeta().displayName().equals(sqlrequesttest)) {
+        if (item == null || Objects.equals(item.getItemMeta().displayName(), sqlrequesttest)) {
             return;
         }
 

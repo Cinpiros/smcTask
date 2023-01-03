@@ -8,6 +8,8 @@ import fr.cinpiros.utils.CommandHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.Objects;
+
 public class SmcTask extends JavaPlugin {
     @Override
     public void onEnable() {
@@ -17,7 +19,7 @@ public class SmcTask extends JavaPlugin {
             database.configDatabase(this);
         }
 
-        getCommand("task").setExecutor(new CommandHandler());
+        Objects.requireNonNull(getCommand("task")).setExecutor(new CommandHandler());
 
         new PlayerHandler(this);
         new InventoryHandler(this);
@@ -28,7 +30,7 @@ public class SmcTask extends JavaPlugin {
         this.saveResource("task/example.yml", false);
 
 
-        new TaskConfig(this).loadConfig();
+        new TaskConfig(this).loadTaskConfig(this);
 
         Bukkit.getLogger().info("smcTask Enable");
     }

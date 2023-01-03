@@ -1,6 +1,5 @@
 package fr.cinpiros.utils;
 
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
 
@@ -9,8 +8,8 @@ import java.io.FilenameFilter;
 import java.util.ArrayList;
 
 public class ConfigUtil {
-    private ArrayList<File> files = new ArrayList<File>();
-    private ArrayList<FileConfiguration>  configs = new ArrayList<FileConfiguration>();
+    private final ArrayList<File> files = new ArrayList<>();
+    private final ArrayList<YamlConfiguration>  configs = new ArrayList<>();
 
     public ConfigUtil(Plugin plugin, String path) {
         this(plugin.getDataFolder().getAbsolutePath() + "/" + path);
@@ -24,7 +23,7 @@ public class ConfigUtil {
         }
 
         for (String path : pathList) {
-            this.files.add(new File(path));
+            this.files.add(new File(paths+path));
         }
 
         for (File file : this.files) {
@@ -35,7 +34,7 @@ public class ConfigUtil {
         return this.files;
     }
 
-    public ArrayList<FileConfiguration> getConfig() {
+    public ArrayList<YamlConfiguration> getConfig() {
         return this.configs;
     }
 
@@ -43,7 +42,7 @@ public class ConfigUtil {
     public boolean save() {
         try {
             int id = 0;
-            for (FileConfiguration config : this.configs){
+            for (YamlConfiguration config : this.configs){
                 config.save(this.files.get(id));
                 id++;
             }
