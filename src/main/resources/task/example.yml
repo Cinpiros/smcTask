@@ -1,9 +1,18 @@
 test: #task id
   name: "test" #name of the task
+  item: PAPER
+  color: "#A316DC"
+  description: #lore : condition lore then task lore then rarity
+    - "lore line 1"
+    - "lore line 2"
+    - "ect ..."
+  rarity: commun #rarity_id
   config:
     on_panel: true #si la task peux apparaitre sur le panel de récupération de task journalière
     complete_effect: true #animation au moment de la completion de la task
     deposit_effect: true #animation lors du dépot de la task
+    item_echant_effect: true #the task item apear echanted
+    reward_on_complete: false #true : reward player on quest complete. false: reward player on deposit in deposit menu
   condition: #condition id in folder condition
     - harvest_wheat_64
     - pickup_stone_64
@@ -36,13 +45,7 @@ test: #task id
       - crafting 50 #jobs_id exp
       - fishing 20
     item:
-      - STONE 64
+      - STONE 64 #item quantity can be mythicmobs item id
       - TROPICAL_FISH 1
     command:
       - "une commmand pour faire un truck"
-  description:
-    - "lore line 1"
-    - "lore line 2"
-    - "lore line 3"
-    - "ect ..."
-  rarity: commun #rarity_id

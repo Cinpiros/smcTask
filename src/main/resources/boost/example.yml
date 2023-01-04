@@ -1,0 +1,14 @@
+boost_vip: #boost id
+  duration: 30 #duration in day of the boost
+  item: PAPER
+  name: "vip boost"
+  color: "#FFC100" #hex color code or mc color code ex: &e
+  description:
+    - "duration : 30 day"
+    - "rare x2"
+    - "epique x1.5"
+    - "legendaire x1.2"
+  rarity_boosted: #boosted rarity
+    - rare 2 #rarity_id multiplier (multiply the rarity chance by multiplier)
+    - epique 1.5
+    - legendaire 1.2

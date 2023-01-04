@@ -1,95 +1,135 @@
 harvest_wheat_64: #condition id need to be unique
-  type: HARVEST #HARVEST, PICKUP, KILL, TAME, TRAVEL, TIME, BREED, CRAFT, SMELT, VISIT, TOMILK, BREAK, EAT, SHEAR, BEEKEEPING, BREW, ECHANT, SMITHING, COMPLETE_TASK, FISH
+  type: HARVEST #HARVEST, PICKUP, KILL, TAME, TRAVEL, TIME, BREED, CRAFT, SMELT, VISIT, TOMILK, BREAK, EAT, SHEAR, BEEKEEPING, BREW, ECHANT, SMITHING, COMPLETE_TASK, FISHING
+  description: "&7Harverst wheat: &f%q% &7/ %qm%" #%q% = quantity completed; %qm% quantity max
+  complete_description: "&8Harverst wheat: %q% / %qm%"
   id: WHEAT #HARVEST check final stage of growth
   quantity: 64 #how muth to complete condition
 
 pickup_stone_64:
   type: PICKUP
+  description: "&7Pickup stone: &f%q% &7/ %qm%"
+  complete_description: "&8Pickup stone: %q% / %qm%"
   id: STONE
   quantity: 64
 
 kill_zombie_64:
   type: KILL
+  description: "&7Kill zombie: &f%q% &7/ %qm%"
+  complete_description: "&8Kill zombie: %q% / %qm%"
   id: ZOMBIE #accept vanilla mob and mythicmobs
   quantity: 64
 
 tame_wolf_8:
   type: TAME
+  description: "&7Tame wolf: &f%q% &7/ %qm%"
+  complete_description: "&8Tame wolf: %q% / %qm%"
   id: WOLF #accept tamable mob
   quantity: 8
 
 travel_feet_1km:
   type: TRAVEL
+  description: "&7Travel by feet: &f%q% &7/ %qm% blocks"
+  complete_description: "&8Travel by feet: %q% / %qm% blocks"
   id: FEET #FEET, MINECART, BOAT, HORSE, PIG, ELYTRA, PEARL
   quantity: 1000 #travel distance in block
 
 time_1h:
   type: TIME #time to pass
-  time: 1 #time in hour
+  description: "&7Play time: &f%t% &7/ %tm%" #%t% actual time played; %tm% time to play
+  complete_description: "&8Play time: %t% / %tm%"
+  time: "01:00:00" #time format hh:mm:ss
 
 breed_pig_8:
   type: BREED
+  description: "&Breed pig: &f%q% &7/ %qm%"
+  complete_description: "&8Breed pig: %q% / %qm%"
   id: PIG #accept breedable mob
   quantity: 8
 
 craft_compass_32:
   type: CRAFT
+  description: "&7Craft compass: &f%q% &7/ %qm%"
+  complete_description: "&8Craft compass: %q% / %qm%"
   id: COMPASS #craft result accept mythicmobs item
   quantity: 32
 
 smelt_ironingot_64:
   type: SMELT
+  description: "&7Smelt iron ingot: &f%q% &7/ %qm%"
+  complete_description: "&8Smelt iron ingot: %q% / %qm%"
   id: IRON_INGOT #smelt result accept mythicmobs item
   quantity: 64
 
 visit_spawn:
   type: VISIT
+  description: "&7Visit spawn"
+  complete_description: "&8Visit spawn"
   id: spawn #worldguard area
 
 tomilk_1:
   type: TOMILK #MILK A COW
-  quantity: 1
+  description: "&7Milk cow: &f%q% &7/ %qm%"
+  complete_description: "&8Milk cow: %q% / %qm%"
+  quantity: 8
 
 break_stone_64:
   type: BREAK
+  description: "&7Break stone: &f%q% &7/ %qm%"
+  complete_description: "&8Break stone: %q% / %qm%"
   id: STONE
   quantity: 64
 
 eat_cookedporkchop_16:
   type: EAT
+  description: "&7Eat cooked porkchop: &f%q% &7/ %qm%"
+  complete_description: "&8Eat cooked porkchop: %q% / %qm%"
   id: COOKED_PORKCHOP
   quantity: 16
 
 shear_16:
   type: SHEAR #just mutton
+  description: "&7Shear mutton: &f%q% &7/ %qm%"
+  complete_description: "&8Shear mutton: %q% / %qm%"
   quantity: 16
 
 beekeeping_64:
   type: BEEKEEPING #get honneycomb or honey bottle
+  description: "&7Hive harvest: &f%q% &7/ %qm%"
+  complete_description: "&8Hive harvest: %q% / %qm%"
   quantity: 64
 
 smithing_netheriteaxe_1:
   type: SMITHING
+  description: "&7Smith netherite axe: &f%q% &7/ %qm%"
+  complete_description: "&8Smith netherite axe: %q% / %qm%"
   id: NETHERITE_AXE #smitting result accept mythicmobs item
   quantity: 1
 
 echant_durability_0_1:
   type: ECHANT
+  description: "&7Enchant durability enchantment: &f%q% &7/ %qm%"
+  complete_description: "&8Enchant durability enchantment: %q% / %qm%"
   id: DURABILITY
   level: 0 #0 = all level
   quantity: 1
 
 brew_netherwart_16:
   type: BREW
+  description: "&7Brew nether wart: &f%q% &7/ %qm%"
+  complete_description: "&8Brew nether wart: %q% / %qm%"
   id: NETHER_WART #item used accept mythicmobs item
   quantity: 16
 
 completetask_test_1:
   type: COMPLETE_TASK #kill mob with item
-  id: test #id of the task or 'none' for all quest
+  description: "&7Complete task harvest 12 potatoes: &f%q% &7/ %qm%"
+  complete_description: "&8Complete task harvest 12 potatoes: %q% / %qm%"
+  id: test #id of the task or 'none' for all task
   quantity: 1
 
 fish_tropicalfish_64:
-  type: FISH
+  type: FISHING
+  description: "&7Fishing tropical fish: &f%q% &7/ %qm%"
+  complete_description: "&8Fishing tropical fish: %q% / %qm%"
   id: TROPICAL_FISH
   quantity: 64

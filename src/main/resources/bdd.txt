@@ -1,11 +1,26 @@
 table task {
   id varchar(100) [PK, not null, unique]
   name varchar(255) [not null]
+  item varchar(100) [not null]
+  color varchar(7) [not null]
   on_panel boolean [not null]
   complete_effect boolean [not null]
   deposit_effect boolean [not null]
-  reward_money int
-  rarity varchar(30) [not null]
+  item_enchant_effect boolean [not null]
+  reward_on_complete boolean [not null]
+  reward_money int [not null]
+  rarity varchar(30) [not null, ref: > rarity.id]
+}
+
+table rarity {
+  id varchar(100) [PK, not null, unique]
+  name varchar(255) [not null]
+  color varchar(7) [not null]
+  rarity int [not null]
+  complete_effect_color varchar(7) [not null]
+  complete_effect_sound varchar(100) [not null]
+  deposit_effect_color varchar(7) [not null]
+  deposit_effect_sound varchar(100) [not null]
 }
 
 table task_description {
@@ -22,6 +37,8 @@ table task_jobs_level {
 table condition {
   condition_id varchar(100) [PK, not null, unique]
   type varchar(30) [not null]
+  description varchar(250) [not null]
+  complete_description varchar(250) [not null]
   id varchar(100)
   time time
   level tinyint
@@ -48,7 +65,8 @@ table task_reward_command {
 table jobs {
   id varchar(100) [PK, not null, unique]
   name varchar(100) [not null]
-  base_exp int [not null]
+  scale int [not null]
+  max_level int [not null]
 }
 
 table player_jobs_exp {
@@ -62,13 +80,13 @@ table task_instance {
   id int [PK, not null, unique, increment]
   uuid varchar(36) [PK, not null, unique]
   FK_task_id varchar(100) [not null, ref: > task.id]
-  complete boolean [default: false]
+  complete boolean [not null, default: false]
 }
 
 table condition_instance {
   FK_task_instance_id int [PK, not null, ref: > task_instance.id]
   FK_task_condition_id varchar(100) [PK, not null, ref: > condition.condition_id]
-  quantity int [default: 0]
-  time time [default: 0]
-  complete boolean [default: false]
+  quantity int [not null, default: 0]
+  time time [not null, default: 00:00:00]
+  complete boolean [not null, default: false]
 }

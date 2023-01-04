@@ -19,11 +19,13 @@ public class TaskConfig {
     public void loadTaskConfig(Plugin plugin){
 
         for (YamlConfiguration config : this.taskConfig) {
-            //for (String rootObject : config.getConfigurationSection("tasks").getKeys(false)) {
             for (String rootObject : config.getKeys(false)) {
                 Bukkit.getLogger().info("yousk2"+rootObject);
                 this.taskList.add(config.getConfigurationSection(rootObject));
             }
+        }
+        for (ConfigurationSection taskSection : this.taskList) {
+
         }
     }
 }
