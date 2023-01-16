@@ -3,7 +3,7 @@ package fr.cinpiros;
 import fr.cinpiros.database.UtilsDatabase;
 import fr.cinpiros.handlers.InventoryHandler;
 import fr.cinpiros.handlers.PlayerHandler;
-import fr.cinpiros.task.TaskConfig;
+import fr.cinpiros.config.TaskConfig;
 import fr.cinpiros.utils.CommandHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -15,9 +15,8 @@ public class SmcTask extends JavaPlugin {
     public void onEnable() {
 
         UtilsDatabase database = new UtilsDatabase();
-        if (!database.doDatabaseHaveTable(this)){
-            database.configDatabase(this);
-        }
+        database.configDatabase(this);
+
 
         Objects.requireNonNull(getCommand("task")).setExecutor(new CommandHandler());
 

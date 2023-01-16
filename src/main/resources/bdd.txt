@@ -65,6 +65,7 @@ table task_reward_command {
 table jobs {
   id varchar(100) [PK, not null, unique]
   name varchar(100) [not null]
+  color varchar(7) [not null]
   scale int [not null]
   max_level int [not null]
 }
@@ -73,7 +74,7 @@ table player_jobs_exp {
   uuid varchar(36) [PK, not null, unique]
   FK_jobs_id varchar(100) [PK, not null, ref: > jobs.id]
   level int [not null, default: 1]
-  exp int [not null, default: 0]
+  exp int [not null, default: "00:00:00"]
 }
 
 table task_instance {
@@ -87,6 +88,6 @@ table condition_instance {
   FK_task_instance_id int [PK, not null, ref: > task_instance.id]
   FK_task_condition_id varchar(100) [PK, not null, ref: > condition.condition_id]
   quantity int [not null, default: 0]
-  time time [not null, default: 00:00:00]
+  time time [not null, default: 0]
   complete boolean [not null, default: false]
 }
