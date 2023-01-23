@@ -5,4 +5,4 @@ database:
   user: "root"
   password: "root"
   database: "smctask"
-  prefix: "task_"
+  prefix: "smctask_"

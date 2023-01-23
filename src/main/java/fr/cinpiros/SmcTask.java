@@ -1,22 +1,21 @@
 package fr.cinpiros;
 
+import fr.cinpiros.database.ConfigSync;
 import fr.cinpiros.database.UtilsDatabase;
 import fr.cinpiros.handlers.InventoryHandler;
 import fr.cinpiros.handlers.PlayerHandler;
-import fr.cinpiros.config.TaskConfig;
 import fr.cinpiros.utils.CommandHandler;
+import fr.cinpiros.utils.ConfigUtil;
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class SmcTask extends JavaPlugin {
     @Override
     public void onEnable() {
-
-        UtilsDatabase database = new UtilsDatabase();
-        database.configDatabase(this);
-
 
         Objects.requireNonNull(getCommand("task")).setExecutor(new CommandHandler());
 
@@ -27,9 +26,28 @@ public class SmcTask extends JavaPlugin {
         saveDefaultConfig();
         this.saveResource("condition/example.yml", false);
         this.saveResource("task/example.yml", false);
+        this.saveResource("jobs/example.yml", false);
+        this.saveResource("rarity/example.yml", false);
 
 
-        new TaskConfig(this).loadTaskConfig(this);
+        ArrayList<ConfigurationSection> taskConfig = new ConfigUtil(this, "task/").loadConfigSection();
+        ArrayList<ConfigurationSection> conditionConfig = new ConfigUtil(this, "condition/").loadConfigSection();
+        ArrayList<ConfigurationSection> jobsConfig = new ConfigUtil(this, "jobs/").loadConfigSection();
+        ArrayList<ConfigurationSection> rarityConfig = new ConfigUtil(this, "rarity/").loadConfigSection();
+
+        if (this.getConfig().getBoolean("database.enable")) {
+            UtilsDatabase database = new UtilsDatabase();
+            database.configDatabase(this);
+            if (this.getConfig().getBoolean("database.main_config")) {
+                ConfigSync sync = new ConfigSync();
+                sync.syncTask(this, database, taskConfig);
+                sync.syncCondition(this, database, conditionConfig);
+                sync.syncJobs(this, database, jobsConfig);
+                sync.syncRarity(this, database, rarityConfig);
+            }
+        }
+
+
 
         Bukkit.getLogger().info("smcTask Enable");
     }

@@ -1,5 +1,6 @@
 package fr.cinpiros.utils;
 
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
 
@@ -52,5 +53,16 @@ public class ConfigUtil {
             e.printStackTrace();
             return false;
         }
+    }
+
+    public ArrayList<ConfigurationSection> loadConfigSection(){
+        ArrayList<ConfigurationSection> sectionList = new ArrayList<>();
+
+        for (YamlConfiguration config : this.configs) {
+            for (String rootObject : config.getKeys(false)) {
+                sectionList.add(config.getConfigurationSection(rootObject));
+            }
+        }
+        return sectionList;
     }
 }

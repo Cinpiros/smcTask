@@ -11,31 +11,10 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 
 public class UtilsDatabase {
-
-    /*public boolean doDatabaseHaveTable(Plugin plugin) {
-        Connection conn = getConnection(plugin);
-        boolean haveTable = false;
-        try {
-            ResultSet numTable = conn.prepareStatement("SELECT count(*) AS TOTALNUMBEROFTABLES" +
-                    " FROM INFORMATION_SCHEMA.TABLES" +
-                    " WHERE TABLE_SCHEMA = '" + plugin.getConfig().getString("database.database") + "';").executeQuery();
-            numTable.next();
-            if (numTable.getInt(1) != 0) {
-                haveTable =  true;
-            }
-        }catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            closeConnection(conn);
-        }
-
-        return haveTable;
-    }*/
-
     public void configDatabase(Plugin plugin) {
         Connection conn = getConnection(plugin);
         try {
-            String prefix = plugin.getConfig().getString("database.prefix");
+            String prefix = getPrefix(plugin);
             PreparedStatement requestListTable = conn.prepareStatement("SHOW TABLES;");
             ResultSet rsListTables = requestListTable.executeQuery();
 
@@ -244,6 +223,11 @@ public class UtilsDatabase {
         }catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public String getPrefix(Plugin plugin) {
+        String prefix = plugin.getConfig().getString("database.prefix");
+        return prefix;
     }
 
 }
