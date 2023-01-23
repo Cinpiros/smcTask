@@ -103,7 +103,6 @@ public class UtilsDatabase {
                         "  `description` varchar(250) NOT NULL," +
                         "  `complete_description` varchar(250) NOT NULL," +
                         "  `id` varchar(100)," +
-                        "  `time` time," +
                         "  `level` tinyint," +
                         "  `quantity` int" +
                         ");");
@@ -182,7 +181,6 @@ public class UtilsDatabase {
                         "  `FK_task_instance_id` int NOT NULL," +
                         "  `FK_task_condition_id` varchar(100) NOT NULL," +
                         "  `quantity` int NOT NULL DEFAULT 0," +
-                        "  `time` time NOT NULL DEFAULT '00:00:00'," +
                         "  `complete` boolean NOT NULL DEFAULT false," +
                         "  PRIMARY KEY (`FK_task_instance_id`, `FK_task_condition_id`)" +
                         ");");

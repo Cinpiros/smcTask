@@ -33,11 +33,11 @@ travel_feet_1km:
   id: FEET #FEET, MINECART, BOAT, HORSE, PIG, ELYTRA, PEARL
   quantity: 1000 #travel distance in block
 
-time_1h:
+time_7j:
   type: TIME #time to pass
   description: "&7Play time: &f%t% &7/ %tm%" #%t% actual time played; %tm% time to play
   complete_description: "&8Play time: %t% / %tm%"
-  time: "01:00:00" #time format hh:mm:ss
+  quantity: 10080 #time in minute
 
 breed_pig_8:
   type: BREED
