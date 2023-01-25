@@ -8,7 +8,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class ConfigSync {
     public void syncTask(Plugin plugin, UtilsDatabase database, ArrayList<ConfigurationSection> taskConfig) {
@@ -58,7 +57,7 @@ public class ConfigSync {
 
                     if (taskSection.contains("jobs_level")) {
                         PreparedStatement taskJobsLevelInsert = conn.prepareStatement("INSERT INTO "+prefix+"task_jobs_level (FK_task_id, FK_jobs_id, level) VALUES ('"+id+"', ?, ?);");
-                        for (String jobs_id : Objects.requireNonNull(taskSection.getConfigurationSection("jobs_level")).getKeys(false)) {
+                        for (String jobs_id : taskSection.getConfigurationSection("jobs_level").getKeys(false)) {
                             PreparedStatement testJobs = conn.prepareStatement("SELECT id FROM "+prefix+"jobs WHERE id = '"+jobs_id+"';");
                             ResultSet rsDoesJobsExist = testJobs.executeQuery();
                             if (rsDoesJobsExist.next()) {
@@ -75,7 +74,7 @@ public class ConfigSync {
                     if (taskSection.contains("reward.jobs_exp")) {
                         PreparedStatement taskJobsLevelInsert = conn.prepareStatement("INSERT INTO "+prefix+"task_reward_jobs_exp (FK_task_id, FK_jobs_id, exp) VALUES ('"+id+"', ?, ?);");
 
-                        for (String jobs_id : Objects.requireNonNull(taskSection.getConfigurationSection("reward.jobs_exp")).getKeys(false)) {
+                        for (String jobs_id : taskSection.getConfigurationSection("reward.jobs_exp").getKeys(false)) {
                             PreparedStatement testJobs = conn.prepareStatement("SELECT id FROM "+prefix+"jobs WHERE id = '"+jobs_id+"';");
                             ResultSet rsDoesJobsExist = testJobs.executeQuery();
                             if (rsDoesJobsExist.next()) {
@@ -92,7 +91,7 @@ public class ConfigSync {
                     if (taskSection.contains("reward.item")) {
                         PreparedStatement taskJobsLevelInsert = conn.prepareStatement("INSERT INTO "+prefix+"task_reward_item (FK_task_id, item, quantity) VALUES ('"+id+"', ?, ?);");
 
-                        for (String item : Objects.requireNonNull(taskSection.getConfigurationSection("reward.item")).getKeys(false)) {
+                        for (String item : taskSection.getConfigurationSection("reward.item").getKeys(false)) {
                             taskJobsLevelInsert.setString(1, item);
                             taskJobsLevelInsert.setInt(2, taskSection.getInt("reward.item."+item));
                             taskJobsLevelInsert.addBatch();
@@ -112,7 +111,6 @@ public class ConfigSync {
                     Bukkit.getLogger().info("rarity '"+id+"' already exist");
                 }*/
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -156,7 +154,8 @@ public class ConfigSync {
             }
             conditionInsert.executeBatch();
 
-        } catch (Exception e) {
+        } //catch (NullPointerException ignored) {}
+        catch (Exception e) {
             e.printStackTrace();
         } finally {
             database.closeConnection(conn);
@@ -184,7 +183,6 @@ public class ConfigSync {
                 }*/
             }
             jobsInsert.executeBatch();
-
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -216,7 +214,6 @@ public class ConfigSync {
                 }*/
             }
             rarityInsert.executeBatch();
-
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
