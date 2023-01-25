@@ -19,7 +19,7 @@ test: #task id
     - kill_zombie_64
     - tame_wolf_8
     - travel_feet_1km
-    - time_1h
+    - time_7j
     - breed_pig_8
     - craft_compass_32
     - smelt_ironingot_64
@@ -35,17 +35,13 @@ test: #task id
     - completetask_test_1
     - fish_tropicalfish_64
   jobs_level: #level requis pour remplire la task, la mettre dans le taskinventory et l'obtenir des pnj et du panel
-    - ami_des_elfe 10 #jobs_id level
-    - alier_des_nain 5
-    - crafting 10
-    - fishing 15
+    ami_des_elfe: 10 #jobs_id level
   reward: #task reward
     money: 100
     jobs_exp:
-      - crafting 50 #jobs_id exp
-      - fishing 20
+      ami_des_elfe: 100
     item:
-      - STONE 64 #item quantity can be mythicmobs item id
-      - TROPICAL_FISH 1
+      STONE: 64 #item quantity can be mythicmobs item id
+      TROPICAL_FISH: 1
     command:
       - "une commmand pour faire un truck"

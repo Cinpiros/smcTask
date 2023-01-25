@@ -40,10 +40,10 @@ public class SmcTask extends JavaPlugin {
             database.configDatabase(this);
             if (this.getConfig().getBoolean("database.main_config")) {
                 ConfigSync sync = new ConfigSync();
-                sync.syncTask(this, database, taskConfig);
                 sync.syncCondition(this, database, conditionConfig);
                 sync.syncJobs(this, database, jobsConfig);
                 sync.syncRarity(this, database, rarityConfig);
+                sync.syncTask(this, database, taskConfig);
             }
         }
 

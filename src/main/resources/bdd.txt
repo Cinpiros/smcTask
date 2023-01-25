@@ -9,7 +9,7 @@ table task {
   item_enchant_effect boolean [not null]
   reward_on_complete boolean [not null]
   reward_money int [not null]
-  rarity varchar(30) [not null, ref: > rarity.id]
+  FK_rarity_id varchar(100) [not null, ref: > rarity.id]
 }
 
 table rarity {
@@ -24,13 +24,15 @@ table rarity {
 }
 
 table task_description {
-  FK_id varchar(100) [PK, not null, ref: > task.id]
+  id int [PK, not null, unique, increment]
+  FK_task_id varchar(100) [not null, ref: > task.id]
   lore varchar(255) [not null]
 }
 
 table task_jobs_level {
-  FK_id varchar(100) [PK, not null, ref: > task.id]
-  FK_jobs_id varchar(100) [PK, not null, ref: > jobs.id]
+  id int [PK, not null, unique, increment]
+  FK_task_id varchar(100) [not null, ref: > task.id]
+  FK_jobs_id varchar(100) [not null, ref: > jobs.id]
   level int [not null]
 }
 
@@ -40,25 +42,32 @@ table condition {
   description varchar(250) [not null]
   complete_description varchar(250) [not null]
   id varchar(100)
-  time time
   level tinyint
   quantity int
 }
 
-table task_reward_jobs_exp {
+table task_condition {
   FK_task_id varchar(100) [PK, not null, ref: > task.id]
-  FK_jobs_id varchar(100) [PK, not null, ref: > jobs.id]
+  FK_condition_condition_id varchar(100) [PK, not null, ref: > condition.condition_id]
+}
+
+table task_reward_jobs_exp {
+  id int [PK, not null, unique, increment]
+  FK_task_id varchar(100) [not null, ref: > task.id]
+  FK_jobs_id varchar(100) [not null, ref: > jobs.id]
   exp int [not null]
 }
 
 table task_reward_item {
-  FK_task_id varchar(100) [PK, not null, ref: > task.id]
+  id int [PK, not null, unique, increment]
+  FK_task_id varchar(100) [not null, ref: > task.id]
   item varchar(100) [not null]
   quantity int [not null]
 }
 
 table task_reward_command {
-  FK_task_id varchar(100) [PK, not null, ref: > task.id]
+  id int [PK, not null, unique, increment]
+  FK_task_id varchar(100) [not null, ref: > task.id]
   command varchar(255) [not null]
 }
 
@@ -72,22 +81,20 @@ table jobs {
 
 table player_jobs_exp {
   uuid varchar(36) [PK, not null, unique]
-  FK_jobs_id varchar(100) [PK, not null, ref: > jobs.id]
+  FK_jobs_id varchar(100) [not null, ref: > jobs.id]
   level int [not null, default: 1]
-  exp int [not null, default: "00:00:00"]
+  exp int [not null, default: 0]
 }
 
 table task_instance {
   id int [PK, not null, unique, increment]
-  uuid varchar(36) [PK, not null, unique]
   FK_task_id varchar(100) [not null, ref: > task.id]
   complete boolean [not null, default: false]
 }
 
 table condition_instance {
   FK_task_instance_id int [PK, not null, ref: > task_instance.id]
-  FK_task_condition_id varchar(100) [PK, not null, ref: > condition.condition_id]
+  FK_condition_condition_id varchar(100) [PK, not null, ref: > condition.condition_id]
   quantity int [not null, default: 0]
-  time time [not null, default: 0]
   complete boolean [not null, default: false]
 }
