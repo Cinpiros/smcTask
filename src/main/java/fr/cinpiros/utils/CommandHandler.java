@@ -18,30 +18,24 @@ public class CommandHandler implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String [] args) {
-        Player player = null;
-        if (sender instanceof Player) {
-            player = (Player) sender;
-        } else {
-            if (args.length >= 2) {
-                player = Bukkit.getPlayer(args[1]);
-            }
-        }
-
         if (args.length == 0){
             sender.sendMessage("/task <commande>");
             return true;
         }
 
-
+        Player player = null;
+        if (args.length >= 2) {
+            player = Bukkit.getPlayer(args[1]);
+        }
 
         if (player == null) {
             List<String> listCommand = new ArrayList<>();
             listCommand.add("config");
             if (!listCommand.contains(args[0])) {
-                if (sender instanceof ConsoleCommandSender) {
+                if (sender instanceof Player) {
                     sender.sendMessage("/task "+args[0]+" <player>");
-                } else {
-                    Bukkit.getLogger().info("Error player not found by non player entity or a plugin");
+                } else if (sender instanceof ConsoleCommandSender) {
+                    Bukkit.getLogger().info("/task "+args[0]+" <player>");
                 }
                 return true;
             }
@@ -62,7 +56,7 @@ public class CommandHandler implements CommandExecutor {
 
             }
             case "task" -> {
-                commandReturn = new GiveTask(player).giveTask();
+                commandReturn = new GiveTask(player).giveTask(args[2]);
 
             }
             default -> {
