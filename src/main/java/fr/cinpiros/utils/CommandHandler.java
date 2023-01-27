@@ -29,15 +29,27 @@ public class CommandHandler implements CommandExecutor {
         }
 
         if (player == null) {
-            List<String> listCommand = new ArrayList<>();
-            listCommand.add("config");
-            if (!listCommand.contains(args[0])) {
-                if (sender instanceof Player) {
-                    sender.sendMessage("/task "+args[0]+" <player>");
-                } else if (sender instanceof ConsoleCommandSender) {
-                    Bukkit.getLogger().info("/task "+args[0]+" <player>");
+            List<String> listCommandSelfOnly = new ArrayList<>();
+            listCommandSelfOnly.add("config");
+            if (!listCommandSelfOnly.contains(args[0])) {
+                List<String> listCommandConsoleOnly = new ArrayList<>();
+                listCommandConsoleOnly.add("sync");
+                if (listCommandConsoleOnly.contains(args[0])) {
+                    if (!(sender instanceof ConsoleCommandSender)) {
+                        return true;
+                    }
+                } else {
+                    if (sender instanceof Player) {
+                        sender.sendMessage("/task "+args[0]+" <player>");
+                    } else if (sender instanceof ConsoleCommandSender) {
+                        Bukkit.getLogger().info("/task "+args[0]+" <player>");
+                    }
+                    return true;
                 }
-                return true;
+            } else {
+                if (!(sender instanceof Player)) {
+                    return true;
+                }
             }
         }
         boolean commandReturn = true;
