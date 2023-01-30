@@ -1,62 +1,62 @@
 harvest_wheat_64: #condition id need to be unique
   type: HARVEST #HARVEST, PICKUP, KILL, TAME, TRAVEL, TIME, BREED, CRAFT, SMELT, VISIT, TOMILK, BREAK, EAT, SHEAR, BEEKEEPING, BREW, ECHANT, SMITHING, COMPLETE_TASK, FISHING
-  description: "&7Harverst wheat: &f%q% &7/ %qm%" #%q% = quantity completed; %qm% quantity max
-  complete_description: "&8Harverst wheat: %q% / %qm%"
+  description: "&7Harverst wheat: &f%q% &7/ 64" #%q% = how many does the player already have done
+  complete_description: "&8Harverst wheat: 64 / 64"
   id: WHEAT #HARVEST check final stage of growth
   quantity: 64 #how muth to complete condition
 
 pickup_stone_64:
   type: PICKUP
-  description: "&7Pickup stone: &f%q% &7/ %qm%"
-  complete_description: "&8Pickup stone: %q% / %qm%"
+  description: "&7Pickup stone: &f%q% &7/ 64"
+  complete_description: "&8Pickup stone: 64 / 64"
   id: STONE
   quantity: 64
 
 kill_zombie_64:
   type: KILL
-  description: "&7Kill zombie: &f%q% &7/ %qm%"
-  complete_description: "&8Kill zombie: %q% / %qm%"
+  description: "&7Kill zombie: &f%q% &7/ 64"
+  complete_description: "&8Kill zombie: 64 / 64"
   id: ZOMBIE #accept vanilla mob and mythicmobs
   quantity: 64
 
 tame_wolf_8:
   type: TAME
-  description: "&7Tame wolf: &f%q% &7/ %qm%"
-  complete_description: "&8Tame wolf: %q% / %qm%"
+  description: "&7Tame wolf: &f%q% &7/ 64"
+  complete_description: "&8Tame wolf: 64 / 64"
   id: WOLF #accept tamable mob
   quantity: 8
 
 travel_feet_1km:
   type: TRAVEL
-  description: "&7Travel by feet: &f%q% &7/ %qm% blocks"
-  complete_description: "&8Travel by feet: %q% / %qm% blocks"
+  description: "&7Travel by feet: &f%q% &7/ 1000 blocks"
+  complete_description: "&8Travel by feet: 1000 / 1000 blocks"
   id: FEET #FEET, MINECART, BOAT, HORSE, PIG, ELYTRA, PEARL
   quantity: 1000 #travel distance in block
 
 time_7j:
   type: TIME #time to pass
-  description: "&7Play time: &f%t% &7/ %tm%" #%t% actual time played; %tm% time to play
-  complete_description: "&8Play time: %t% / %tm%"
+  description: "&7Play time: &f%t% &7/ 10080" #%t% actual time played; %tm% time to play
+  complete_description: "&8Play time: 10080 / 10080"
   quantity: 10080 #time in minute
 
 breed_pig_8:
   type: BREED
-  description: "&Breed pig: &f%q% &7/ %qm%"
-  complete_description: "&8Breed pig: %q% / %qm%"
+  description: "&Breed pig: &f%q% &7/ 8"
+  complete_description: "&8Breed pig: 8 / 8"
   id: PIG #accept breedable mob
   quantity: 8
 
 craft_compass_32:
   type: CRAFT
-  description: "&7Craft compass: &f%q% &7/ %qm%"
-  complete_description: "&8Craft compass: %q% / %qm%"
+  description: "&7Craft compass: &f%q% &7/ 32"
+  complete_description: "&8Craft compass: 32 / 32"
   id: COMPASS #craft result accept mythicmobs item
   quantity: 32
 
 smelt_ironingot_64:
   type: SMELT
-  description: "&7Smelt iron ingot: &f%q% &7/ %qm%"
-  complete_description: "&8Smelt iron ingot: %q% / %qm%"
+  description: "&7Smelt iron ingot: &f%q% &7/ 64"
+  complete_description: "&8Smelt iron ingot: 64 / 64"
   id: IRON_INGOT #smelt result accept mythicmobs item
   quantity: 64
 
@@ -68,68 +68,68 @@ visit_spawn:
 
 tomilk_1:
   type: TOMILK #MILK A COW
-  description: "&7Milk cow: &f%q% &7/ %qm%"
-  complete_description: "&8Milk cow: %q% / %qm%"
+  description: "&7Milk cow: &f%q% &7/ 8"
+  complete_description: "&8Milk cow: 8 / 8"
   quantity: 8
 
 break_stone_64:
   type: BREAK
-  description: "&7Break stone: &f%q% &7/ %qm%"
-  complete_description: "&8Break stone: %q% / %qm%"
+  description: "&7Break stone: &f%q% &7/ 64"
+  complete_description: "&8Break stone: 64 / 64"
   id: STONE
   quantity: 64
 
 eat_cookedporkchop_16:
   type: EAT
-  description: "&7Eat cooked porkchop: &f%q% &7/ %qm%"
-  complete_description: "&8Eat cooked porkchop: %q% / %qm%"
+  description: "&7Eat cooked porkchop: &f%q% &7/ 16"
+  complete_description: "&8Eat cooked porkchop: 16 / 16"
   id: COOKED_PORKCHOP
   quantity: 16
 
 shear_16:
   type: SHEAR #just mutton
-  description: "&7Shear mutton: &f%q% &7/ %qm%"
-  complete_description: "&8Shear mutton: %q% / %qm%"
+  description: "&7Shear mutton: &f%q% &7/ 16"
+  complete_description: "&8Shear mutton: 16 / 16"
   quantity: 16
 
 beekeeping_64:
   type: BEEKEEPING #get honneycomb or honey bottle
-  description: "&7Hive harvest: &f%q% &7/ %qm%"
-  complete_description: "&8Hive harvest: %q% / %qm%"
+  description: "&7Hive harvest: &f%q% &7/ 64"
+  complete_description: "&8Hive harvest: 64 / 64"
   quantity: 64
 
 smithing_netheriteaxe_1:
   type: SMITHING
-  description: "&7Smith netherite axe: &f%q% &7/ %qm%"
-  complete_description: "&8Smith netherite axe: %q% / %qm%"
+  description: "&7Smith netherite axe: &f%q% &7/ 1"
+  complete_description: "&8Smith netherite axe: 1 / 1"
   id: NETHERITE_AXE #smitting result accept mythicmobs item
   quantity: 1
 
 echant_durability_0_1:
   type: ECHANT
-  description: "&7Enchant durability enchantment: &f%q% &7/ %qm%"
-  complete_description: "&8Enchant durability enchantment: %q% / %qm%"
+  description: "&7Enchant durability enchantment: &f%q% &7/ 1"
+  complete_description: "&8Enchant durability enchantment: 1 / 1"
   id: DURABILITY
   level: 0 #0 = all level
   quantity: 1
 
 brew_netherwart_16:
   type: BREW
-  description: "&7Brew nether wart: &f%q% &7/ %qm%"
-  complete_description: "&8Brew nether wart: %q% / %qm%"
+  description: "&7Brew nether wart: &f%q% &7/ 16"
+  complete_description: "&8Brew nether wart: 16 / 16"
   id: NETHER_WART #item used accept mythicmobs item
   quantity: 16
 
 completetask_test_1:
   type: COMPLETE_TASK #kill mob with item
-  description: "&7Complete task harvest 12 potatoes: &f%q% &7/ %qm%"
-  complete_description: "&8Complete task harvest 12 potatoes: %q% / %qm%"
+  description: "&7Complete task harvest 12 potatoes: &f%q% &7/ 1"
+  complete_description: "&8Complete task harvest 12 potatoes: 1 / 1"
   id: test #id of the task or 'none' for all task
   quantity: 1
 
 fish_tropicalfish_64:
   type: FISHING
-  description: "&7Fishing tropical fish: &f%q% &7/ %qm%"
-  complete_description: "&8Fishing tropical fish: %q% / %qm%"
+  description: "&7Fishing tropical fish: &f%q% &7/ 64"
+  complete_description: "&8Fishing tropical fish: 64 / 64"
   id: TROPICAL_FISH
   quantity: 64

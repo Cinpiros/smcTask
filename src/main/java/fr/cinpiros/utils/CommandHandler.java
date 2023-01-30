@@ -68,7 +68,7 @@ public class CommandHandler implements CommandExecutor {
 
             }
             case "task" -> {
-                commandReturn = new GiveTask(player).giveTask(args[2]);
+                commandReturn = new GiveTask(player, sender).giveTask(args[2]);
 
             }
             default -> {

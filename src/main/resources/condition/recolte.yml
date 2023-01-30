@@ -1,0 +1,13 @@
+harvest_wheat_512:
+  type: HARVEST
+  description: "&7Harverst wheat: &f%q% &7/ 512"
+  complete_description: "&8Harverst wheat: 512 / 512"
+  id: WHEAT
+  quantity: 512
+
+harvest_potatoes_512:
+  type: HARVEST
+  description: "&7Harverst potatoes: &f%q% &7/ %qm%"
+  complete_description: "&8Harverst potatoes: 512 / 512"
+  id: POTATOES
+  quantity: 512

@@ -84,15 +84,17 @@ public class UtilsDatabase {
 
             if (!listTables.contains(prefix+"task_jobs_level")) {
                 PreparedStatement preRequest = conn.prepareStatement("CREATE TABLE `"+prefix+"task_jobs_level` (" +
-                        "  `id` int UNIQUE PRIMARY KEY NOT NULL AUTO_INCREMENT," +
                         "  `FK_task_id` varchar(100) NOT NULL," +
                         "  `FK_jobs_id` varchar(100) NOT NULL," +
-                        "  `level` int NOT NULL" +
+                        "  `level` int NOT NULL," +
+                        "  PRIMARY KEY (`FK_task_id`, `FK_jobs_id`)" +
                         ");");
                 preRequest.execute();
                 preRequest = conn.prepareStatement("ALTER TABLE `"+prefix+"task_jobs_level` ADD FOREIGN KEY (`FK_task_id`) REFERENCES `"+prefix+"task` (`id`);");
                 preRequest.execute();
                 preRequest = conn.prepareStatement("ALTER TABLE `"+prefix+"task_jobs_level` ADD FOREIGN KEY (`FK_jobs_id`) REFERENCES `"+prefix+"jobs` (`id`);");
+                preRequest.execute();
+                preRequest = conn.prepareStatement("ALTER TABLE `"+prefix+"task_jobs_level` ADD UNIQUE (`FK_task_id`, `FK_jobs_id`);");
                 preRequest.execute();
                 Bukkit.getLogger().info("Table task_jobs_level created");
             }
@@ -127,15 +129,17 @@ public class UtilsDatabase {
 
             if (!listTables.contains(prefix+"task_reward_jobs_exp")) {
                 PreparedStatement preRequest = conn.prepareStatement("CREATE TABLE `"+prefix+"task_reward_jobs_exp` (" +
-                        "  `id` int UNIQUE PRIMARY KEY NOT NULL AUTO_INCREMENT," +
                         "  `FK_task_id` varchar(100) NOT NULL," +
                         "  `FK_jobs_id` varchar(100) NOT NULL," +
-                        "  `exp` int NOT NULL" +
+                        "  `exp` int NOT NULL," +
+                        "  PRIMARY KEY (`FK_task_id`, `FK_jobs_id`)" +
                         ");");
                 preRequest.execute();
                 preRequest = conn.prepareStatement("ALTER TABLE `"+prefix+"task_reward_jobs_exp` ADD FOREIGN KEY (`FK_task_id`) REFERENCES `"+prefix+"task` (`id`);");
                 preRequest.execute();
                 preRequest = conn.prepareStatement("ALTER TABLE `"+prefix+"task_reward_jobs_exp` ADD FOREIGN KEY (`FK_jobs_id`) REFERENCES `"+prefix+"jobs` (`id`);");
+                preRequest.execute();
+                preRequest = conn.prepareStatement("ALTER TABLE `"+prefix+"task_reward_jobs_exp` ADD UNIQUE (`FK_task_id`, `FK_jobs_id`);");
                 preRequest.execute();
                 Bukkit.getLogger().info("Table task_reward_jobs_exp created");
             }

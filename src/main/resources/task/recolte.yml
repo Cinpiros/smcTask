@@ -1,0 +1,48 @@
+recolte_wheat_potatoes:
+  name: "recolte"
+  item: PAPER
+  color: "#A316DC"
+  description:
+    - "lore line 123"
+    - "lore line 2"
+    - "&9sdfqsdfq qsdqsd 2"
+    - "&cue qsdqsd &f2"
+  rarity: rare
+  config:
+    on_panel: true
+    complete_effect: true
+    deposit_effect: true
+    item_echant_effect: true
+    reward_on_complete: false
+  condition:
+    - harvest_wheat_512
+    - harvest_potatoes_512
+  jobs_level:
+    ami_des_elfe: 10
+    alier_des_nain: 15
+  reward:
+    money: 150
+    jobs_exp:
+      ami_des_elfe: 100
+      alier_des_nain: 150
+    item:
+      STONE: 64
+      TROPICAL_FISH: 1
+    command:
+      - "une commmand pour faire un truck"
+
+recolte_wheat:
+  name: "recolte ble simple"
+  item: PAPER
+  color: "#A316DC"
+  rarity: rare
+  config:
+    on_panel: true
+    complete_effect: true
+    deposit_effect: true
+    item_echant_effect: true
+    reward_on_complete: false
+  condition:
+    - harvest_wheat_512
+  reward:
+    money: 10

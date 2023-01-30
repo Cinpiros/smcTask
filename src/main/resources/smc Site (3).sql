@@ -33,7 +33,8 @@ CREATE TABLE `task_jobs_level` (
   `id` int UNIQUE PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `FK_task_id` varchar(100) NOT NULL,
   `FK_jobs_id` varchar(100) NOT NULL,
-  `level` int NOT NULL
+  `level` int NOT NULL,
+  PRIMARY KEY (`FK_task_id`, `FK_jobs_id`)
 );
 
 CREATE TABLE `condition` (
@@ -53,10 +54,10 @@ CREATE TABLE `task_condition` (
 );
 
 CREATE TABLE `task_reward_jobs_exp` (
-  `id` int UNIQUE PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `FK_task_id` varchar(100) NOT NULL,
   `FK_jobs_id` varchar(100) NOT NULL,
-  `exp` int NOT NULL
+  `exp` int NOT NULL,
+  PRIMARY KEY (`FK_task_id`, `FK_jobs_id`)
 );
 
 CREATE TABLE `task_reward_item` (
