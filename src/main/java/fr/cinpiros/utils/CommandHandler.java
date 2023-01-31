@@ -63,16 +63,19 @@ public class CommandHandler implements CommandExecutor {
             case "presentoire", "menutask" -> {
                 commandReturn = new TaskPanel(player).openMenu();
             }
-            case "give", "taskbundle", "bundle" -> {
+            case "taskbundle", "bundle" -> {
                 commandReturn = new GiveTaskClasseur(player).giveClasseur();
 
             }
-            case "task" -> {
-                commandReturn = new GiveTask(player, sender).giveTask(args[2]);
-
+            case "give" -> {
+                if (args[2] != null) {
+                    commandReturn = new GiveTask(player, sender).giveTask(args[2]);
+                } else {
+                    sender.sendMessage("/task "+args[0]+" "+player+" <task id>");
+                }
             }
             default -> {
-                Bukkit.getLogger().info("action non reconnue taper /task help pour de l'aide");
+                Bukkit.getLogger().info("argument not found /task help");
             }
         }
 
