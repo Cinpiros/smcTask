@@ -29,7 +29,7 @@ recolte_wheat_potatoes:
       STONE: 64
       TROPICAL_FISH: 1
     command:
-      - "une commmand pour faire un truck"
+      "give <user> minecraft:wheat 1": "&e1 Blé"
 
 recolte_wheat:
   name: "recolte ble simple"

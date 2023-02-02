@@ -30,7 +30,6 @@ CREATE TABLE `task_description` (
 );
 
 CREATE TABLE `task_jobs_level` (
-  `id` int UNIQUE PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `FK_task_id` varchar(100) NOT NULL,
   `FK_jobs_id` varchar(100) NOT NULL,
   `level` int NOT NULL,
@@ -70,7 +69,8 @@ CREATE TABLE `task_reward_item` (
 CREATE TABLE `task_reward_command` (
   `id` int UNIQUE PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `FK_task_id` varchar(100) NOT NULL,
-  `command` varchar(255) NOT NULL
+  `command` varchar(255) NOT NULL,
+  `description` varchar(255) NOT NULL
 );
 
 CREATE TABLE `jobs` (
@@ -82,10 +82,11 @@ CREATE TABLE `jobs` (
 );
 
 CREATE TABLE `player_jobs_exp` (
-  `uuid` varchar(36) UNIQUE PRIMARY KEY NOT NULL,
+  `uuid` varchar(36) NOT NULL,
   `FK_jobs_id` varchar(100) NOT NULL,
   `level` int NOT NULL DEFAULT 1,
-  `exp` int NOT NULL DEFAULT 0
+  `exp` int NOT NULL DEFAULT 0,
+  PRIMARY KEY (`uuid`, `FK_jobs_id`)
 );
 
 CREATE TABLE `task_instance` (

@@ -30,9 +30,8 @@ table task_description {
 }
 
 table task_jobs_level {
-  id int [PK, not null, unique, increment]
-  FK_task_id varchar(100) [not null, ref: > task.id]
-  FK_jobs_id varchar(100) [not null, ref: > jobs.id]
+  FK_task_id varchar(100) [PK, not null, ref: > task.id]
+  FK_jobs_id varchar(100) [PK, not null, ref: > jobs.id]
   level int [not null]
 }
 
@@ -52,9 +51,8 @@ table task_condition {
 }
 
 table task_reward_jobs_exp {
-  id int [PK, not null, unique, increment]
-  FK_task_id varchar(100) [not null, ref: > task.id]
-  FK_jobs_id varchar(100) [not null, ref: > jobs.id]
+  FK_task_id varchar(100) [PK, not null, ref: > task.id]
+  FK_jobs_id varchar(100) [PK, not null, ref: > jobs.id]
   exp int [not null]
 }
 
@@ -69,6 +67,7 @@ table task_reward_command {
   id int [PK, not null, unique, increment]
   FK_task_id varchar(100) [not null, ref: > task.id]
   command varchar(255) [not null]
+  description varchar(255) [not null]
 }
 
 table jobs {
@@ -80,8 +79,8 @@ table jobs {
 }
 
 table player_jobs_exp {
-  uuid varchar(36) [PK, not null, unique]
-  FK_jobs_id varchar(100) [not null, ref: > jobs.id]
+  uuid varchar(36) [PK, not null]
+  FK_jobs_id varchar(100) [PK, not null, ref: > jobs.id]
   level int [not null, default: 1]
   exp int [not null, default: 0]
 }

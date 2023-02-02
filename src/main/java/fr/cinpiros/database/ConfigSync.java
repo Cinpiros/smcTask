@@ -100,9 +100,10 @@ public class ConfigSync {
                     }
 
                     if (taskSection.contains("reward.command")) {
-                        PreparedStatement taskRewardCommandInsert = conn.prepareStatement("INSERT INTO "+prefix+"task_reward_command (FK_task_id, command) VALUES ('"+id+"', ?);");
-                        for (String command : taskSection.getStringList("reward.command")) {
+                        PreparedStatement taskRewardCommandInsert = conn.prepareStatement("INSERT INTO "+prefix+"task_reward_command (FK_task_id, command, description) VALUES ('"+id+"', ?, ?);");
+                        for (String command : taskSection.getConfigurationSection("reward.command").getKeys(false)) {
                             taskRewardCommandInsert.setString(1, command);
+                            taskRewardCommandInsert.setString(2, taskSection.getString("reward.command."+command));
                             taskRewardCommandInsert.addBatch();
                         }
                         taskRewardCommandInsert.executeBatch();

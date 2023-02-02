@@ -161,7 +161,8 @@ public class UtilsDatabase {
                 PreparedStatement preRequest = conn.prepareStatement("CREATE TABLE `"+prefix+"task_reward_command` (" +
                         "  `id` int UNIQUE PRIMARY KEY NOT NULL AUTO_INCREMENT," +
                         "  `FK_task_id` varchar(100) NOT NULL," +
-                        "  `command` varchar(255) NOT NULL" +
+                        "  `command` varchar(255) NOT NULL," +
+                        "  `description` varchar(255) NOT NULL" +
                         ");");
                 preRequest.execute();
                 preRequest = conn.prepareStatement("ALTER TABLE `"+prefix+"task_reward_command` ADD FOREIGN KEY (`FK_task_id`) REFERENCES `"+prefix+"task` (`id`);");
@@ -171,10 +172,11 @@ public class UtilsDatabase {
 
             if (!listTables.contains(prefix+"player_jobs_exp")) {
                 PreparedStatement preRequest = conn.prepareStatement("CREATE TABLE `"+prefix+"player_jobs_exp` (" +
-                        "  `uuid` varchar(36) UNIQUE PRIMARY KEY NOT NULL," +
+                        "  `uuid` varchar(36) NOT NULL," +
                         "  `FK_jobs_id` varchar(100) NOT NULL," +
                         "  `level` int NOT NULL DEFAULT 1," +
-                        "  `exp` int NOT NULL DEFAULT 0" +
+                        "  `exp` int NOT NULL DEFAULT 0," +
+                        "  PRIMARY KEY (`uuid`, `FK_jobs_id`)" +
                         ");");
                 preRequest.execute();
                 preRequest = conn.prepareStatement("ALTER TABLE `"+prefix+"player_jobs_exp` ADD FOREIGN KEY (`FK_jobs_id`) REFERENCES `"+prefix+"jobs` (`id`);");

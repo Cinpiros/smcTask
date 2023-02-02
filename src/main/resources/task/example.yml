@@ -44,4 +44,22 @@ test: #task id
       STONE: 64 #item quantity can be mythicmobs item id
       TROPICAL_FISH: 1
     command:
-      - "une commmand pour faire un truck"
+      "lp user <user> promote usertrack": "&epromote to next grade" #Command: Description
+      "give <user> minecraft:stone 1": "&e1 Stone"
+
+test1:
+  name: "a name"
+  item: BOOK
+  color: "#F79600"
+  description:
+    - "&9&lyes description"
+    - "&canother line"
+  rarity: commun
+  config:
+    on_panel: false
+    complete_effect: false
+    deposit_effect: false
+    item_echant_effect: false
+    reward_on_complete: false
+  condition:
+    - pickup_stone_64

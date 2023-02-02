@@ -92,7 +92,9 @@ public class GiveTask {
 
             while (rsConditionDescription.next()) {
                 lores.add(Component.text(ChatColor.translateAlternateColorCodes('&',
-                        rsConditionDescription.getString(1)))
+                        rsConditionDescription.getString(1)
+                                .replace("%q%", "0")
+                                .replace("%t%", "Jrs: 0, H: 0, Min: 0")))
                         .decoration(TextDecoration.ITALIC, false));
             }
 
@@ -141,7 +143,20 @@ public class GiveTask {
                 lores.add(Component.text("    "));
             }
 
+            PreparedStatement psSelectTaskRewardCommand = conn.prepareStatement("SELECT description FROM " +
+                    prefix+"task_reward_command WHERE FK_task_id = '"+task_id+"' ORDER BY id;");
+            ResultSet rsTaskRewardDescription = psSelectTaskRewardCommand.executeQuery();
 
+            boolean haveRewardCommand = false;
+
+            while (rsTaskRewardDescription.next()) {
+                haveRewardCommand = true;
+                lores.add(Component.text(ChatColor.translateAlternateColorCodes('&',
+                                rsTaskRewardDescription.getString(1))).decoration(TextDecoration.ITALIC, false));
+            }
+            if (haveRewardCommand) {
+                lores.add(Component.text("    "));
+            }
 
             PreparedStatement psSelectTaskRewardJobsExp = conn.prepareStatement("SELECT " +
                     prefix+"jobs.name, "+prefix+"jobs.color, "+prefix+"task_reward_jobs_exp.exp FROM " +
@@ -167,6 +182,7 @@ public class GiveTask {
             if (haveRewardJobsExp) {
                 lores.add(Component.text("    "));
             }
+
 
 
             lores.add(Component.text(rarity_name)

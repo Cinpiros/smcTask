@@ -35,13 +35,13 @@ travel_feet_1km:
 
 time_7j:
   type: TIME #time to pass
-  description: "&7Play time: &f%t% &7/ 10080" #%t% actual time played; %tm% time to play
-  complete_description: "&8Play time: 10080 / 10080"
+  description: "&7Play time: &f%t% &7/ 7 Jrs" #%t% actual time played
+  complete_description: "&8Play time: 7 Jrs / 7 Jrs"
   quantity: 10080 #time in minute
 
 breed_pig_8:
   type: BREED
-  description: "&Breed pig: &f%q% &7/ 8"
+  description: "&7Breed pig: &f%q% &7/ 8"
   complete_description: "&8Breed pig: 8 / 8"
   id: PIG #accept breedable mob
   quantity: 8
