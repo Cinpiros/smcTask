@@ -200,6 +200,7 @@ public class UtilsDatabase {
                 PreparedStatement preRequest = conn.prepareStatement("CREATE TABLE `"+prefix+"condition_instance` (" +
                         "  `FK_task_instance_id` int NOT NULL," +
                         "  `FK_condition_condition_id` varchar(100) NOT NULL," +
+                        "  `FK_task_id` varchar(100) NOT NULL," +
                         "  `quantity` int NOT NULL DEFAULT 0," +
                         "  `complete` boolean NOT NULL DEFAULT false," +
                         "  PRIMARY KEY (`FK_task_instance_id`, `FK_condition_condition_id`)" +
@@ -208,6 +209,8 @@ public class UtilsDatabase {
                 preRequest = conn.prepareStatement("ALTER TABLE `"+prefix+"condition_instance` ADD FOREIGN KEY (`FK_task_instance_id`) REFERENCES `"+prefix+"task_instance` (`id`);");
                 preRequest.execute();
                 preRequest = conn.prepareStatement("ALTER TABLE `"+prefix+"condition_instance` ADD FOREIGN KEY (`FK_condition_condition_id`) REFERENCES `"+prefix+"condition` (`condition_id`);");
+                preRequest.execute();
+                preRequest = conn.prepareStatement("ALTER TABLE `"+prefix+"condition_instance` ADD FOREIGN KEY (`FK_task_id`) REFERENCES `"+prefix+"task` (`id`);");
                 preRequest.execute();
                 Bukkit.getLogger().info("Table condition_instance created");
             }

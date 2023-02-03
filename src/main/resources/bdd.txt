@@ -94,6 +94,7 @@ table task_instance {
 table condition_instance {
   FK_task_instance_id int [PK, not null, ref: > task_instance.id]
   FK_condition_condition_id varchar(100) [PK, not null, ref: > condition.condition_id]
+  FK_task_id varchar(100) [not null, ref: > task.id]
   quantity int [not null, default: 0]
   complete boolean [not null, default: false]
 }

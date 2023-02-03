@@ -98,6 +98,7 @@ CREATE TABLE `task_instance` (
 CREATE TABLE `condition_instance` (
   `FK_task_instance_id` int NOT NULL,
   `FK_condition_condition_id` varchar(100) NOT NULL,
+  `FK_task_id` varchar(100) NOT NULL,
   `quantity` int NOT NULL DEFAULT 0,
   `complete` boolean NOT NULL DEFAULT false,
   PRIMARY KEY (`FK_task_instance_id`, `FK_condition_condition_id`)
@@ -130,3 +131,5 @@ ALTER TABLE `task_instance` ADD FOREIGN KEY (`FK_task_id`) REFERENCES `task` (`i
 ALTER TABLE `condition_instance` ADD FOREIGN KEY (`FK_task_instance_id`) REFERENCES `task_instance` (`id`);
 
 ALTER TABLE `condition_instance` ADD FOREIGN KEY (`FK_condition_condition_id`) REFERENCES `condition` (`condition_id`);
+
+ALTER TABLE `condition_instance` ADD FOREIGN KEY (`FK_task_id`) REFERENCES `task` (`id`);
