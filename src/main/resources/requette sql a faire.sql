@@ -65,10 +65,11 @@ DELETE FROM smctask_task_reward_jobs_exp WHERE FK_task_id = 'test';
 DELETE FROM smctask_task WHERE id = 'test';
 #test si la task est bien suprimer
 SELECT id FROM smctask_task WHERE id = 'test';
-#dump d'une condition et des donnée corespondante
-DELETE FROM smctask_condition_instance WHERE FK_condition_condition_id = 'harvest_wheat_64';
-DELETE FROM smctask_task_condition WHERE FK_condition_condition_id = 'harvest_wheat_64';
-DELETE FROM smctask_condition WHERE condition_id = 'harvest_wheat_64';
+#dump d'une condition et des donnée corespondante (seulement si aucune tache a cette condition)
+DELETE FROM smctask_condition_instance WHERE FK_condition_condition_id = 'harvest_wheat_64'
+ AND (SELECT count(FK_condition_condition_id) FROM smctask_task_condition WHERE FK_condition_condition_id = 'harvest_wheat_64') = 0;
+DELETE FROM smctask_condition WHERE condition_id = 'harvest_wheat_64'
+ AND (SELECT count(FK_condition_condition_id) FROM smctask_task_condition WHERE FK_condition_condition_id = 'harvest_wheat_64') = 0;
 #test si la condition est bien suprimer
 SELECT condition_id FROM smctask_condition WHERE condition_id = 'harvest_wheat_64';
 #dump d'une rareter (seulement si aucune tache n'a cette rareter)
@@ -86,7 +87,7 @@ DELETE FROM smctask_jobs WHERE id = 'ami_des_elfe' AND
 SELECT id FROM smctask_jobs WHERE id = 'ami_des_elfe';
 
 
-#update d'une tache (/!\ supression de donnée utilisateur si par exemple les condition change les instance de condition corespondante sont suprimée)
+#update d'une tache (/!\ supression de donnée utilisateur si par exemple les condition change les instance de condition qui disparaisse sont suprimée)
 #update d'une condition
 #update d'une rareter
 #update d'un jobs
