@@ -104,6 +104,18 @@ CREATE TABLE `condition_instance` (
   PRIMARY KEY (`FK_task_instance_id`, `FK_condition_condition_id`)
 );
 
+CREATE TABLE `player_task_inventory` (
+  `FK_task_instance_id` int UNIQUE PRIMARY KEY NOT NULL,
+  `uuid` varchar(36) NOT NULL,
+  `slot` tinyint NOT NULL
+);
+
+CREATE TABLE `player_quest_inventory` (
+  `FK_task_instance_id` int UNIQUE PRIMARY KEY NOT NULL,
+  `uuid` varchar(36) NOT NULL,
+  `slot` tinyint NOT NULL
+);
+
 ALTER TABLE `task` ADD FOREIGN KEY (`FK_rarity_id`) REFERENCES `rarity` (`id`);
 
 ALTER TABLE `task_description` ADD FOREIGN KEY (`FK_task_id`) REFERENCES `task` (`id`);
@@ -133,3 +145,7 @@ ALTER TABLE `condition_instance` ADD FOREIGN KEY (`FK_task_instance_id`) REFEREN
 ALTER TABLE `condition_instance` ADD FOREIGN KEY (`FK_condition_condition_id`) REFERENCES `condition` (`condition_id`);
 
 ALTER TABLE `condition_instance` ADD FOREIGN KEY (`FK_task_id`) REFERENCES `task` (`id`);
+
+ALTER TABLE `player_task_inventory` ADD FOREIGN KEY (`FK_task_instance_id`) REFERENCES `task_instance` (`id`);
+
+ALTER TABLE `player_quest_inventory` ADD FOREIGN KEY (`FK_task_instance_id`) REFERENCES `task_instance` (`id`);

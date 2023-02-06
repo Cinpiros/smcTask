@@ -215,6 +215,31 @@ public class UtilsDatabase {
                 Bukkit.getLogger().info("Table condition_instance created");
             }
 
+
+            if (!listTables.contains(prefix+"player_task_inventory")) {
+                PreparedStatement preRequest = conn.prepareStatement("CREATE TABLE `"+prefix+"player_task_inventory` (" +
+                        "  `FK_task_instance_id` int UNIQUE PRIMARY KEY NOT NULL," +
+                        "  `uuid` varchar(36) NOT NULL," +
+                        "  `slot` tinyint NOT NULL" +
+                        ");");
+                preRequest.execute();
+                preRequest = conn.prepareStatement("ALTER TABLE `"+prefix+"player_task_inventory` ADD FOREIGN KEY (`FK_task_instance_id`) REFERENCES `"+prefix+"task_instance` (`id`);");
+                preRequest.execute();
+                Bukkit.getLogger().info("Table player_task_inventory created");
+            }
+
+            if (!listTables.contains(prefix+"player_quest_inventory")) {
+                PreparedStatement preRequest = conn.prepareStatement("CREATE TABLE `"+prefix+"player_quest_inventory` (" +
+                        "  `FK_task_instance_id` int UNIQUE PRIMARY KEY NOT NULL," +
+                        "  `uuid` varchar(36) NOT NULL," +
+                        "  `slot` tinyint NOT NULL" +
+                        ");");
+                preRequest.execute();
+                preRequest = conn.prepareStatement("ALTER TABLE `"+prefix+"player_quest_inventory` ADD FOREIGN KEY (`FK_task_instance_id`) REFERENCES `"+prefix+"task_instance` (`id`);");
+                preRequest.execute();
+                Bukkit.getLogger().info("Table player_quest_inventory created");
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

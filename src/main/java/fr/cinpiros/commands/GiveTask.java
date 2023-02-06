@@ -7,6 +7,7 @@ import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.command.CommandSender;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -14,11 +15,13 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.Plugin;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -117,6 +120,8 @@ public class GiveTask {
                 lores.add(Component.text("    "));
             }
 
+
+            int index_reward_line = 0;
             if (task_money_reward != 0) {
                 lores.add(Component.text(ChatColor.translateAlternateColorCodes('&',
                         "&eReward: &6"+task_money_reward+" &eMoney"))
@@ -124,6 +129,7 @@ public class GiveTask {
             } else {
                 lores.add(Component.text(ChatColor.translateAlternateColorCodes('&', "&eReward:"))
                         .decoration(TextDecoration.ITALIC, false));
+                index_reward_line = lores.size() - 1;
             }
 
             PreparedStatement psSelectTaskRewardItem = conn.prepareStatement("SELECT item, quantity FROM " +
@@ -145,14 +151,14 @@ public class GiveTask {
 
             PreparedStatement psSelectTaskRewardCommand = conn.prepareStatement("SELECT description FROM " +
                     prefix+"task_reward_command WHERE FK_task_id = '"+task_id+"' ORDER BY id;");
-            ResultSet rsTaskRewardDescription = psSelectTaskRewardCommand.executeQuery();
+            ResultSet rsTaskRewardCommand = psSelectTaskRewardCommand.executeQuery();
 
             boolean haveRewardCommand = false;
 
-            while (rsTaskRewardDescription.next()) {
+            while (rsTaskRewardCommand.next()) {
                 haveRewardCommand = true;
                 lores.add(Component.text(ChatColor.translateAlternateColorCodes('&',
-                                rsTaskRewardDescription.getString(1))).decoration(TextDecoration.ITALIC, false));
+                        rsTaskRewardCommand.getString(1))).decoration(TextDecoration.ITALIC, false));
             }
             if (haveRewardCommand) {
                 lores.add(Component.text("    "));
@@ -183,7 +189,9 @@ public class GiveTask {
                 lores.add(Component.text("    "));
             }
 
-
+            if (index_reward_line != 0 && !haveRewardItem && !haveRewardCommand && !haveRewardJobsExp) {
+                lores.remove(index_reward_line);
+            }
 
             lores.add(Component.text(rarity_name)
                     .color(TextColor.fromCSSHexString(rarity_color))
@@ -192,7 +200,32 @@ public class GiveTask {
 
             meta.lore(lores);
 
+            Integer taskInstanceID;
+
+            PreparedStatement statementInsertTaskInstance  = conn.prepareStatement("INSERT INTO "+prefix+"task_instance (FK_task_id) VALUE ('"+task_id+"');",Statement.RETURN_GENERATED_KEYS);
+
+            int affectedRows = statementInsertTaskInstance.executeUpdate();
+
+            if (affectedRows == 0) {
+                sender.sendMessage("[smcTask] Error no task instance created on give task");
+                return true;
+            }
+            try (ResultSet generatedKeys = statementInsertTaskInstance.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    taskInstanceID = generatedKeys.getInt(1);
+                    sender.sendMessage("id: "+taskInstanceID);
+                }
+                else {
+                    sender.sendMessage("[smcTask] Error can't get task instance id on give task");
+                    return true;
+                }
+            }
+
+            NamespacedKey key = new NamespacedKey(plugin, "instance_task_id");
+            meta.getPersistentDataContainer().set(key, PersistentDataType.INTEGER, taskInstanceID);
+
             item.setItemMeta(meta);
+
 
             inv.addItem(item);
 

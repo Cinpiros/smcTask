@@ -98,3 +98,15 @@ table condition_instance {
   quantity int [not null, default: 0]
   complete boolean [not null, default: false]
 }
+
+table player_task_inventory {
+  FK_task_instance_id int [PK, not null, unique, ref: > task_instance.id]
+  uuid varchar(36) [not null]
+  slot tinyint [not null]
+}
+
+table player_quest_inventory {
+  FK_task_instance_id int [PK, not null, unique, ref: > task_instance.id]
+  uuid varchar(36) [not null]
+  slot tinyint [not null]
+}
