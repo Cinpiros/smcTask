@@ -272,8 +272,7 @@ public class UtilsDatabase {
     }
 
     public String getPrefix(Plugin plugin) {
-        String prefix = plugin.getConfig().getString("database.prefix");
-        return prefix;
+        return plugin.getConfig().getString("database.prefix");
     }
 
 }

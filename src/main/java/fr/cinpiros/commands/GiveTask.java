@@ -53,6 +53,7 @@ public class GiveTask {
             String rarity_name;
             String rarity_color;
 
+
             PreparedStatement psSelectTask = conn.prepareStatement("SELECT " +
                     prefix+"task.name, "+prefix+"task.item, "+prefix+"task.color, "+prefix+"task.item_enchant_effect, " +
                     prefix+"task.reward_money, "+prefix+"rarity.name, "+prefix+"rarity.color" +
@@ -87,11 +88,38 @@ public class GiveTask {
                 return true;
             }
 
+            int taskInstanceID;
+
+            PreparedStatement statementInsertTaskInstance  = conn.prepareStatement("INSERT INTO "+prefix+"task_instance (FK_task_id) VALUE ('"+task_id+"');", Statement.RETURN_GENERATED_KEYS);
+
+            int affectedRows = statementInsertTaskInstance.executeUpdate();
+
+            if (affectedRows == 0) {
+                sender.sendMessage("[smcTask] Error no task instance created on give task");
+                return true;
+            }
+            try (ResultSet generatedKeys = statementInsertTaskInstance.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    taskInstanceID = generatedKeys.getInt(1);
+                    sender.sendMessage("id: "+taskInstanceID);
+                }
+                else {
+                    sender.sendMessage("[smcTask] Error can't get task instance id on give task");
+                    return true;
+                }
+            }
+
+            NamespacedKey key = new NamespacedKey(plugin, "instance_task_id");
+            meta.getPersistentDataContainer().set(key, PersistentDataType.INTEGER, taskInstanceID);
+
+
             PreparedStatement psSelectConditionDescription = conn.prepareStatement("SELECT " +
-                    prefix+"condition.description FROM "+prefix+"task_condition INNER JOIN "+prefix+"condition ON " +
+                    prefix+"condition.description, "+prefix+"task_condition.FK_condition_condition_id FROM "+prefix+"task_condition INNER JOIN "+prefix+"condition ON " +
                     prefix+"task_condition.FK_condition_condition_id = "+prefix+"condition.condition_id WHERE " +
                     prefix+"task_condition.FK_task_id = '"+task_id+"';");
             ResultSet rsConditionDescription = psSelectConditionDescription.executeQuery();
+
+            PreparedStatement conditionInstanceInsert = conn.prepareStatement("INSERT INTO "+prefix+"condition_instance (FK_task_instance_id, FK_condition_condition_id, FK_task_id) VALUE (?, ?, ?);");
 
             while (rsConditionDescription.next()) {
                 lores.add(Component.text(ChatColor.translateAlternateColorCodes('&',
@@ -99,7 +127,13 @@ public class GiveTask {
                                 .replace("%q%", "0")
                                 .replace("%t%", "Jrs: 0, H: 0, Min: 0")))
                         .decoration(TextDecoration.ITALIC, false));
+
+                conditionInstanceInsert.setInt(1, taskInstanceID);
+                conditionInstanceInsert.setString(2, rsConditionDescription.getString(2));
+                conditionInstanceInsert.setString(3, task_id);
+                conditionInstanceInsert.addBatch();
             }
+            conditionInstanceInsert.executeBatch();
 
             lores.add(Component.text("    "));
 
@@ -199,30 +233,6 @@ public class GiveTask {
                     .decoration(TextDecoration.ITALIC, false));
 
             meta.lore(lores);
-
-            Integer taskInstanceID;
-
-            PreparedStatement statementInsertTaskInstance  = conn.prepareStatement("INSERT INTO "+prefix+"task_instance (FK_task_id) VALUE ('"+task_id+"');",Statement.RETURN_GENERATED_KEYS);
-
-            int affectedRows = statementInsertTaskInstance.executeUpdate();
-
-            if (affectedRows == 0) {
-                sender.sendMessage("[smcTask] Error no task instance created on give task");
-                return true;
-            }
-            try (ResultSet generatedKeys = statementInsertTaskInstance.getGeneratedKeys()) {
-                if (generatedKeys.next()) {
-                    taskInstanceID = generatedKeys.getInt(1);
-                    sender.sendMessage("id: "+taskInstanceID);
-                }
-                else {
-                    sender.sendMessage("[smcTask] Error can't get task instance id on give task");
-                    return true;
-                }
-            }
-
-            NamespacedKey key = new NamespacedKey(plugin, "instance_task_id");
-            meta.getPersistentDataContainer().set(key, PersistentDataType.INTEGER, taskInstanceID);
 
             item.setItemMeta(meta);
 
