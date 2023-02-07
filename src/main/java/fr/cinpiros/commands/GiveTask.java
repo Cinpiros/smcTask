@@ -30,7 +30,7 @@ public class GiveTask extends UtilsDatabase {
             return false;
         } catch (TaskCreateException e) {
             if (sender instanceof Player) {
-                sender.sendMessage("&4Error: &cunable to give task with this id");
+                sender.sendMessage("Error: unable to give task with this id");
             } else {
                 Bukkit.getLogger().warning(e.getMessage());
             }
@@ -41,8 +41,6 @@ public class GiveTask extends UtilsDatabase {
         } else {
             return false;
         }
-
-
         return true;
     }
 }

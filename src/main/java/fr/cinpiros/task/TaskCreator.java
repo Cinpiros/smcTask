@@ -92,7 +92,7 @@ public class TaskCreator extends UtilsDatabase{
                 lore.add(Component.text(ChatColor.translateAlternateColorCodes('&',
                                 rsConditionDescription.getString(1)
                                         .replace("%q%", "0")
-                                        .replace("%t%", "Jrs: 0, H: 0, Min: 0")))
+                                        .replace("%t%", "0J 00h00")))
                         .decoration(TextDecoration.ITALIC, false));
 
                 conditionInstanceInsert.setInt(1, taskInstanceID);
