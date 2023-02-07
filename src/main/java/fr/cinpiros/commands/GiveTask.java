@@ -18,14 +18,11 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.Plugin;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GiveTask {
+public class GiveTask extends UtilsDatabase {
     private final Player player;
     private final CommandSender sender;
 
@@ -34,63 +31,58 @@ public class GiveTask {
         this.sender = sender;
     }
 
-    public boolean giveTask(String task_id){
-        UtilsDatabase database = new UtilsDatabase();
+    public boolean giveTask(final String task_id) {
+        final Plugin plugin = SmcTask.getInstance();
 
-        Plugin plugin = SmcTask.getInstance();
+        final String prefix = getPrefix();
 
-        Connection conn = database.getConnection(plugin);
-        String prefix = database.getPrefix(plugin);
+        Inventory inv = this.player.getInventory();
+        ItemStack item;
+        ItemMeta meta;
+        List<Component> lore = new ArrayList<>();
 
+        int task_money_reward;
+        String rarity_name;
+        String rarity_color;
 
-        try {
-            Inventory inv = this.player.getInventory();
-            ItemStack item;
-            ItemMeta meta;
-            List<Component> lores = new ArrayList<>();
+        try (
+                Connection conn = getConnection()
+                ){
+            PreparedStatement psSelectTask = conn.prepareStatement(selectTask(prefix, task_id));
 
-            int task_money_reward;
-            String rarity_name;
-            String rarity_color;
-
-
-            PreparedStatement psSelectTask = conn.prepareStatement("SELECT " +
-                    prefix+"task.name, "+prefix+"task.item, "+prefix+"task.color, "+prefix+"task.item_enchant_effect, " +
-                    prefix+"task.reward_money, "+prefix+"rarity.name, "+prefix+"rarity.color" +
-                    " FROM "+prefix+"task LEFT OUTER JOIN "+prefix+"rarity ON " +
-                    prefix+"task.FK_rarity_id = "+prefix+"rarity.id WHERE "+prefix+"task.id = '"+task_id+"' LIMIT 1;");
             ResultSet rsTask = psSelectTask.executeQuery();
 
-            if (rsTask.next()) {
-                Material itemMaterial = Material.matchMaterial(rsTask.getString(2));
-
-                if (itemMaterial != null) {
-                    item = new ItemStack(itemMaterial);
-                    meta = item.getItemMeta();
-                } else {
-                    this.sender.sendMessage("&4Error: &cMaterial not found");
-                    return true;
-                }
-
-                if (rsTask.getBoolean(4)) {
-                    meta.addEnchant(Enchantment.DURABILITY, 1, true);
-                    meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-                }
-                meta.displayName(Component.text(rsTask.getString(1))
-                        .color(TextColor.fromCSSHexString(rsTask.getString(3)))
-                        .decoration(TextDecoration.ITALIC, false));
-
-                task_money_reward = rsTask.getInt(5);
-                rarity_name = rsTask.getString(6);
-                rarity_color = rsTask.getString(7);
-            } else {
+            if (!rsTask.next()) {
                 this.sender.sendMessage("&4Error: &ctask not found");
                 return true;
             }
+            Material itemMaterial = Material.matchMaterial(rsTask.getString(2));
+
+            if (itemMaterial != null) {
+                item = new ItemStack(itemMaterial);
+                meta = item.getItemMeta();
+            } else {
+                this.sender.sendMessage("&4Error: &cMaterial not found");
+                return false;
+            }
+
+            if (rsTask.getBoolean(4)) {
+                meta.addEnchant(Enchantment.DURABILITY, 1, true);
+                meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            }
+            meta.displayName(Component.text(rsTask.getString(1))
+                    .color(TextColor.fromCSSHexString(rsTask.getString(3)))
+                    .decoration(TextDecoration.ITALIC, false));
+
+            task_money_reward = rsTask.getInt(5);
+            rarity_name = rsTask.getString(6);
+            rarity_color = rsTask.getString(7);
 
             int taskInstanceID;
 
-            PreparedStatement statementInsertTaskInstance  = conn.prepareStatement("INSERT INTO "+prefix+"task_instance (FK_task_id) VALUE ('"+task_id+"');", Statement.RETURN_GENERATED_KEYS);
+
+
+            PreparedStatement statementInsertTaskInstance = conn.prepareStatement(insertTaskInstance(prefix, task_id), Statement.RETURN_GENERATED_KEYS);
 
             int affectedRows = statementInsertTaskInstance.executeUpdate();
 
@@ -101,9 +93,7 @@ public class GiveTask {
             try (ResultSet generatedKeys = statementInsertTaskInstance.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
                     taskInstanceID = generatedKeys.getInt(1);
-                    sender.sendMessage("id: "+taskInstanceID);
-                }
-                else {
+                } else {
                     sender.sendMessage("[smcTask] Error can't get task instance id on give task");
                     return true;
                 }
@@ -113,19 +103,16 @@ public class GiveTask {
             meta.getPersistentDataContainer().set(key, PersistentDataType.INTEGER, taskInstanceID);
 
 
-            PreparedStatement psSelectConditionDescription = conn.prepareStatement("SELECT " +
-                    prefix+"condition.description, "+prefix+"task_condition.FK_condition_condition_id FROM "+prefix+"task_condition INNER JOIN "+prefix+"condition ON " +
-                    prefix+"task_condition.FK_condition_condition_id = "+prefix+"condition.condition_id WHERE " +
-                    prefix+"task_condition.FK_task_id = '"+task_id+"';");
+            PreparedStatement psSelectConditionDescription = conn.prepareStatement(selectConditionDescription(prefix, task_id));
             ResultSet rsConditionDescription = psSelectConditionDescription.executeQuery();
 
-            PreparedStatement conditionInstanceInsert = conn.prepareStatement("INSERT INTO "+prefix+"condition_instance (FK_task_instance_id, FK_condition_condition_id, FK_task_id) VALUE (?, ?, ?);");
+            PreparedStatement conditionInstanceInsert = conn.prepareStatement(insertConditionInstance(prefix));
 
             while (rsConditionDescription.next()) {
-                lores.add(Component.text(ChatColor.translateAlternateColorCodes('&',
-                        rsConditionDescription.getString(1)
-                                .replace("%q%", "0")
-                                .replace("%t%", "Jrs: 0, H: 0, Min: 0")))
+                lore.add(Component.text(ChatColor.translateAlternateColorCodes('&',
+                                rsConditionDescription.getString(1)
+                                        .replace("%q%", "0")
+                                        .replace("%t%", "Jrs: 0, H: 0, Min: 0")))
                         .decoration(TextDecoration.ITALIC, false));
 
                 conditionInstanceInsert.setInt(1, taskInstanceID);
@@ -135,104 +122,97 @@ public class GiveTask {
             }
             conditionInstanceInsert.executeBatch();
 
-            lores.add(Component.text("    "));
+            lore.add(Component.text("    "));
 
-            PreparedStatement psSelectTaskDescription = conn.prepareStatement("SELECT lore FROM " +
-                    prefix+"task_description WHERE FK_task_id = '"+task_id+"' ORDER BY id;");
+            PreparedStatement psSelectTaskDescription = conn.prepareStatement(selectTaskDescription(prefix, task_id));
             ResultSet rsTask_description = psSelectTaskDescription.executeQuery();
 
             boolean haveDescription = false;
 
             while (rsTask_description.next()) {
                 haveDescription = true;
-                lores.add(Component.text(ChatColor.translateAlternateColorCodes('&',
-                        rsTask_description.getString(1)))
+                lore.add(Component.text(ChatColor.translateAlternateColorCodes('&',
+                                rsTask_description.getString(1)))
                         .decoration(TextDecoration.ITALIC, false)
                         .colorIfAbsent(TextColor.color(255, 255, 255)));
             }
             if (haveDescription) {
-                lores.add(Component.text("    "));
+                lore.add(Component.text("    "));
             }
 
 
             int index_reward_line = 0;
             if (task_money_reward != 0) {
-                lores.add(Component.text(ChatColor.translateAlternateColorCodes('&',
-                        "&eReward: &6"+task_money_reward+" &eMoney"))
+                lore.add(Component.text(ChatColor.translateAlternateColorCodes('&',
+                                "&eReward: &6" + task_money_reward + " &eMoney"))
                         .decoration(TextDecoration.ITALIC, false));
             } else {
-                lores.add(Component.text(ChatColor.translateAlternateColorCodes('&', "&eReward:"))
+                lore.add(Component.text(ChatColor.translateAlternateColorCodes('&', "&eReward:"))
                         .decoration(TextDecoration.ITALIC, false));
-                index_reward_line = lores.size() - 1;
+                index_reward_line = lore.size() - 1;
             }
 
-            PreparedStatement psSelectTaskRewardItem = conn.prepareStatement("SELECT item, quantity FROM " +
-                    prefix+"task_reward_item WHERE FK_task_id = '"+task_id+"' ORDER BY id;");
+            PreparedStatement psSelectTaskRewardItem = conn.prepareStatement(selectTaskRewardItem(prefix, task_id));
             ResultSet rsTaskRewardItem = psSelectTaskRewardItem.executeQuery();
 
             boolean haveRewardItem = false;
 
             while (rsTaskRewardItem.next()) {
                 haveRewardItem = true;
-                lores.add(Component.text(ChatColor.translateAlternateColorCodes('&',
-                        "&f" + rsTaskRewardItem.getString(1).toLowerCase().replace('_', ' ') +
-                                "&f: &3"+rsTaskRewardItem.getInt(2)))
+                lore.add(Component.text(ChatColor.translateAlternateColorCodes('&',
+                                "&f" + rsTaskRewardItem.getString(1).toLowerCase().replace('_', ' ') +
+                                        "&f: &3" + rsTaskRewardItem.getInt(2)))
                         .decoration(TextDecoration.ITALIC, false));
             }
             if (haveRewardItem) {
-                lores.add(Component.text("    "));
+                lore.add(Component.text("    "));
             }
 
-            PreparedStatement psSelectTaskRewardCommand = conn.prepareStatement("SELECT description FROM " +
-                    prefix+"task_reward_command WHERE FK_task_id = '"+task_id+"' ORDER BY id;");
+            PreparedStatement psSelectTaskRewardCommand = conn.prepareStatement(selectTaskRewardCommandDescription(prefix, task_id));
             ResultSet rsTaskRewardCommand = psSelectTaskRewardCommand.executeQuery();
 
             boolean haveRewardCommand = false;
 
             while (rsTaskRewardCommand.next()) {
                 haveRewardCommand = true;
-                lores.add(Component.text(ChatColor.translateAlternateColorCodes('&',
+                lore.add(Component.text(ChatColor.translateAlternateColorCodes('&',
                         rsTaskRewardCommand.getString(1))).decoration(TextDecoration.ITALIC, false));
             }
             if (haveRewardCommand) {
-                lores.add(Component.text("    "));
+                lore.add(Component.text("    "));
             }
 
-            PreparedStatement psSelectTaskRewardJobsExp = conn.prepareStatement("SELECT " +
-                    prefix+"jobs.name, "+prefix+"jobs.color, "+prefix+"task_reward_jobs_exp.exp FROM " +
-                    prefix+"task_reward_jobs_exp INNER JOIN "+prefix+"jobs ON " +
-                    prefix+"task_reward_jobs_exp.FK_jobs_id = "+prefix+"jobs.id WHERE " +
-                    prefix+"task_reward_jobs_exp.FK_task_id = '"+task_id+"';");
+            PreparedStatement psSelectTaskRewardJobsExp = conn.prepareStatement(selectTaskRewardJobsExp(prefix, task_id));
             ResultSet rsTaskRewardJobsExp = psSelectTaskRewardJobsExp.executeQuery();
 
             boolean haveRewardJobsExp = false;
 
             while (rsTaskRewardJobsExp.next()) {
                 haveRewardJobsExp = true;
-                lores.add(Component.text(rsTaskRewardJobsExp.getString(1))
+                lore.add(Component.text(rsTaskRewardJobsExp.getString(1))
                         .color(TextColor
-                        .fromCSSHexString(rsTaskRewardJobsExp.getString(2)))
+                                .fromCSSHexString(rsTaskRewardJobsExp.getString(2)))
                         .decoration(TextDecoration.ITALIC, false)
                         .append(Component
                                 .text(ChatColor
                                         .translateAlternateColorCodes('&', "&f: " +
-                                                rsTaskRewardJobsExp.getInt(3)+" &3fame"))
+                                                rsTaskRewardJobsExp.getInt(3) + " &3fame"))
                                 .decoration(TextDecoration.ITALIC, false)));
             }
             if (haveRewardJobsExp) {
-                lores.add(Component.text("    "));
+                lore.add(Component.text("    "));
             }
 
             if (index_reward_line != 0 && !haveRewardItem && !haveRewardCommand && !haveRewardJobsExp) {
-                lores.remove(index_reward_line);
+                lore.remove(index_reward_line);
             }
 
-            lores.add(Component.text(rarity_name)
+            lore.add(Component.text(rarity_name)
                     .color(TextColor.fromCSSHexString(rarity_color))
                     .decoration(TextDecoration.BOLD, true)
                     .decoration(TextDecoration.ITALIC, false));
 
-            meta.lore(lores);
+            meta.lore(lore);
 
             item.setItemMeta(meta);
 
@@ -241,8 +221,7 @@ public class GiveTask {
 
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            database.closeConnection(conn);
+            return false;
         }
         return true;
     }

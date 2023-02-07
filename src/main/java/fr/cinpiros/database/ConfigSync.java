@@ -2,18 +2,18 @@ package fr.cinpiros.database;
 
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.plugin.Plugin;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
-public class ConfigSync {
-    public void syncTask(Plugin plugin, UtilsDatabase database, ArrayList<ConfigurationSection> taskConfig) {
-        Connection conn = database.getConnection(plugin);
-        String prefix = database.getPrefix(plugin);
-        try {
+public class ConfigSync extends UtilsDatabase {
+    public void syncTask(ArrayList<ConfigurationSection> taskConfig) {
+        String prefix = getPrefix();
+        try (
+                Connection conn = getConnection();
+                ){
             PreparedStatement taskInsert = conn.prepareStatement("INSERT INTO "+prefix+"task (id, name, item, color, on_panel, complete_effect, deposit_effect, item_enchant_effect, reward_on_complete, reward_money, FK_rarity_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
             for (ConfigurationSection taskSection : taskConfig) {
                 String id = taskSection.getCurrentPath();
@@ -114,15 +114,14 @@ public class ConfigSync {
             }
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            database.closeConnection(conn);
         }
     }
 
-    public void syncCondition(Plugin plugin, UtilsDatabase database, ArrayList<ConfigurationSection> conditionConfig) {
-        Connection conn = database.getConnection(plugin);
-        String prefix = database.getPrefix(plugin);
-        try {
+    public void syncCondition(ArrayList<ConfigurationSection> conditionConfig) {
+        String prefix = getPrefix();
+        try (
+                Connection conn = getConnection();
+        ){
             PreparedStatement conditionInsert = conn.prepareStatement("INSERT INTO "+prefix+"condition (condition_id, type, description, complete_description, id, level, quantity) VALUES (?, ?, ?, ?, ?, ?, ?);");
             for (ConfigurationSection conditionSection : conditionConfig) {
                 String id = conditionSection.getCurrentPath();
@@ -158,15 +157,14 @@ public class ConfigSync {
         } //catch (NullPointerException ignored) {}
         catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            database.closeConnection(conn);
         }
     }
 
-    public void syncJobs(Plugin plugin, UtilsDatabase database, ArrayList<ConfigurationSection> jobsConfig) {
-        Connection conn = database.getConnection(plugin);
-        String prefix = database.getPrefix(plugin);
-        try {
+    public void syncJobs(ArrayList<ConfigurationSection> jobsConfig) {
+        String prefix = getPrefix();
+        try (
+                Connection conn = getConnection();
+                ) {
             PreparedStatement jobsInsert = conn.prepareStatement("INSERT INTO "+prefix+"jobs (id, name, color, scale, max_level) VALUES (?, ?, ?, ?, ?);");
             for (ConfigurationSection jobsSection : jobsConfig) {
                 String id = jobsSection.getCurrentPath();
@@ -186,15 +184,14 @@ public class ConfigSync {
             jobsInsert.executeBatch();
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            database.closeConnection(conn);
         }
     }
 
-    public void syncRarity(Plugin plugin, UtilsDatabase database, ArrayList<ConfigurationSection> rarityConfig) {
-        Connection conn = database.getConnection(plugin);
-        String prefix = database.getPrefix(plugin);
-        try {
+    public void syncRarity(ArrayList<ConfigurationSection> rarityConfig) {
+        String prefix = getPrefix();
+        try (
+                Connection conn = getConnection();
+                ){
             PreparedStatement rarityInsert = conn.prepareStatement("INSERT INTO "+prefix+"rarity (id, name, color, rarity, complete_effect_color, complete_effect_sound, deposit_effect_color, deposit_effect_sound) VALUES (?, ?, ?, ?, ?, ?, ?, ?);");
             for (ConfigurationSection raritySection : rarityConfig) {
                 String id = raritySection.getCurrentPath();
@@ -217,8 +214,6 @@ public class ConfigSync {
             rarityInsert.executeBatch();
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            database.closeConnection(conn);
         }
     }
 }

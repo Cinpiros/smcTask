@@ -1,7 +1,7 @@
 package fr.cinpiros;
 
+import fr.cinpiros.database.ConfigDatabase;
 import fr.cinpiros.database.ConfigSync;
-import fr.cinpiros.database.UtilsDatabase;
 import fr.cinpiros.handlers.InventoryHandler;
 import fr.cinpiros.handlers.PlayerHandler;
 import fr.cinpiros.utils.CommandHandler;
@@ -40,14 +40,13 @@ public class SmcTask extends JavaPlugin {
         ArrayList<ConfigurationSection> rarityConfig = new ConfigUtil(this, "rarity/").loadConfigSection();
 
         if (this.getConfig().getBoolean("database.enable")) {
-            UtilsDatabase database = new UtilsDatabase();
-            database.configDatabase(this);
+            new ConfigDatabase().configDatabase();
             if (this.getConfig().getBoolean("database.main_config")) {
                 ConfigSync sync = new ConfigSync();
-                sync.syncCondition(this, database, conditionConfig);
-                sync.syncJobs(this, database, jobsConfig);
-                sync.syncRarity(this, database, rarityConfig);
-                sync.syncTask(this, database, taskConfig);
+                sync.syncCondition(conditionConfig);
+                sync.syncJobs(jobsConfig);
+                sync.syncRarity(rarityConfig);
+                sync.syncTask(taskConfig);
             }
         }
 

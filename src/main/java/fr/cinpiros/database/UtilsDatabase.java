@@ -1,252 +1,15 @@
 package fr.cinpiros.database;
 
-import org.bukkit.Bukkit;
+import fr.cinpiros.SmcTask;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.Plugin;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.util.ArrayList;
 
 public class UtilsDatabase {
-    public void configDatabase(Plugin plugin) {
-        Connection conn = getConnection(plugin);
-        try {
-            String prefix = getPrefix(plugin);
-            PreparedStatement requestListTable = conn.prepareStatement("SHOW TABLES;");
-            ResultSet rsListTables = requestListTable.executeQuery();
-
-            ArrayList<String> listTables = new ArrayList<>();
-            while (rsListTables.next()) {
-                listTables.add(rsListTables.getString(1));
-            }
-
-            if (!listTables.contains(prefix+"rarity")) {
-                PreparedStatement preRequest = conn.prepareStatement("CREATE TABLE `"+prefix+"rarity` (" +
-                        "  `id` varchar(100) UNIQUE PRIMARY KEY NOT NULL," +
-                        "  `name` varchar(255) NOT NULL," +
-                        "  `color` varchar(7) NOT NULL," +
-                        "  `rarity` int NOT NULL," +
-                        "  `complete_effect_color` varchar(7) NOT NULL," +
-                        "  `complete_effect_sound` varchar(100) NOT NULL," +
-                        "  `deposit_effect_color` varchar(7) NOT NULL," +
-                        "  `deposit_effect_sound` varchar(100) NOT NULL" +
-                        ");");
-                preRequest.execute();
-                Bukkit.getLogger().info("Table rarity created");
-            }
-
-            if (!listTables.contains(prefix+"task")) {
-                PreparedStatement preRequest = conn.prepareStatement("CREATE TABLE `"+prefix+"task` (" +
-                        "  `id` varchar(100) UNIQUE PRIMARY KEY NOT NULL," +
-                        "  `name` varchar(255) NOT NULL," +
-                        "  `item` varchar(100) NOT NULL," +
-                        "  `color` varchar(7) NOT NULL," +
-                        "  `on_panel` boolean NOT NULL," +
-                        "  `complete_effect` boolean NOT NULL," +
-                        "  `deposit_effect` boolean NOT NULL," +
-                        "  `item_enchant_effect` boolean NOT NULL," +
-                        "  `reward_on_complete` boolean NOT NULL," +
-                        "  `reward_money` int NOT NULL," +
-                        "  `FK_rarity_id` varchar(100) NOT NULL" +
-                        ");");
-                preRequest.execute();
-                preRequest = conn.prepareStatement("ALTER TABLE `"+prefix+"task` ADD FOREIGN KEY (`FK_rarity_id`) REFERENCES `"+prefix+"rarity` (`id`);");
-                preRequest.execute();
-                Bukkit.getLogger().info("Table task created");
-            }
-
-            if (!listTables.contains(prefix+"task_description")) {
-                PreparedStatement preRequest = conn.prepareStatement("CREATE TABLE `"+prefix+"task_description` (" +
-                        "  `id` int UNIQUE PRIMARY KEY NOT NULL AUTO_INCREMENT," +
-                        "  `FK_task_id` varchar(100) NOT NULL," +
-                        "  `lore` varchar(255) NOT NULL" +
-                        ");");
-                preRequest.execute();
-                preRequest = conn.prepareStatement("ALTER TABLE `"+prefix+"task_description` ADD FOREIGN KEY (`FK_task_id`) REFERENCES `"+prefix+"task` (`id`);");
-                preRequest.execute();
-                Bukkit.getLogger().info("Table task_description created");
-            }
-
-            if (!listTables.contains(prefix+"jobs")) {
-                PreparedStatement preRequest = conn.prepareStatement("CREATE TABLE `"+prefix+"jobs` (" +
-                        "  `id` varchar(100) UNIQUE PRIMARY KEY NOT NULL," +
-                        "  `name` varchar(100) NOT NULL," +
-                        "  `color` varchar(7) NOT NULL," +
-                        "  `scale` int NOT NULL," +
-                        "  `max_level` int NOT NULL" +
-                        ");");
-                preRequest.execute();
-                Bukkit.getLogger().info("Table jobs created");
-            }
-
-            if (!listTables.contains(prefix+"task_jobs_level")) {
-                PreparedStatement preRequest = conn.prepareStatement("CREATE TABLE `"+prefix+"task_jobs_level` (" +
-                        "  `FK_task_id` varchar(100) NOT NULL," +
-                        "  `FK_jobs_id` varchar(100) NOT NULL," +
-                        "  `level` int NOT NULL," +
-                        "  PRIMARY KEY (`FK_task_id`, `FK_jobs_id`)" +
-                        ");");
-                preRequest.execute();
-                preRequest = conn.prepareStatement("ALTER TABLE `"+prefix+"task_jobs_level` ADD FOREIGN KEY (`FK_task_id`) REFERENCES `"+prefix+"task` (`id`);");
-                preRequest.execute();
-                preRequest = conn.prepareStatement("ALTER TABLE `"+prefix+"task_jobs_level` ADD FOREIGN KEY (`FK_jobs_id`) REFERENCES `"+prefix+"jobs` (`id`);");
-                preRequest.execute();
-                preRequest = conn.prepareStatement("ALTER TABLE `"+prefix+"task_jobs_level` ADD UNIQUE (`FK_task_id`, `FK_jobs_id`);");
-                preRequest.execute();
-                Bukkit.getLogger().info("Table task_jobs_level created");
-            }
-
-            if (!listTables.contains(prefix+"condition")) {
-                PreparedStatement preRequest = conn.prepareStatement("CREATE TABLE `"+prefix+"condition` (" +
-                        "  `condition_id` varchar(100) UNIQUE PRIMARY KEY NOT NULL," +
-                        "  `type` varchar(30) NOT NULL," +
-                        "  `description` varchar(250) NOT NULL," +
-                        "  `complete_description` varchar(250) NOT NULL," +
-                        "  `id` varchar(100)," +
-                        "  `level` tinyint," +
-                        "  `quantity` int" +
-                        ");");
-                preRequest.execute();
-                Bukkit.getLogger().info("Table condition created");
-            }
-
-            if (!listTables.contains(prefix+"task_condition")) {
-                PreparedStatement preRequest = conn.prepareStatement("CREATE TABLE `"+prefix+"task_Condition` (" +
-                        "  `FK_task_id` varchar(100) NOT NULL," +
-                        "  `FK_condition_condition_id` varchar(100) NOT NULL," +
-                        "  PRIMARY KEY (`FK_task_id`, `FK_condition_condition_id`)" +
-                        ");");
-                preRequest.execute();
-                preRequest = conn.prepareStatement("ALTER TABLE `"+prefix+"task_condition` ADD FOREIGN KEY (`FK_task_id`) REFERENCES `"+prefix+"task` (`id`);");
-                preRequest.execute();
-                preRequest = conn.prepareStatement("ALTER TABLE `"+prefix+"task_condition` ADD FOREIGN KEY (`FK_condition_condition_id`) REFERENCES `"+prefix+"condition` (`condition_id`);");
-                preRequest.execute();
-                Bukkit.getLogger().info("Table task_condition created");
-            }
-
-            if (!listTables.contains(prefix+"task_reward_jobs_exp")) {
-                PreparedStatement preRequest = conn.prepareStatement("CREATE TABLE `"+prefix+"task_reward_jobs_exp` (" +
-                        "  `FK_task_id` varchar(100) NOT NULL," +
-                        "  `FK_jobs_id` varchar(100) NOT NULL," +
-                        "  `exp` int NOT NULL," +
-                        "  PRIMARY KEY (`FK_task_id`, `FK_jobs_id`)" +
-                        ");");
-                preRequest.execute();
-                preRequest = conn.prepareStatement("ALTER TABLE `"+prefix+"task_reward_jobs_exp` ADD FOREIGN KEY (`FK_task_id`) REFERENCES `"+prefix+"task` (`id`);");
-                preRequest.execute();
-                preRequest = conn.prepareStatement("ALTER TABLE `"+prefix+"task_reward_jobs_exp` ADD FOREIGN KEY (`FK_jobs_id`) REFERENCES `"+prefix+"jobs` (`id`);");
-                preRequest.execute();
-                preRequest = conn.prepareStatement("ALTER TABLE `"+prefix+"task_reward_jobs_exp` ADD UNIQUE (`FK_task_id`, `FK_jobs_id`);");
-                preRequest.execute();
-                Bukkit.getLogger().info("Table task_reward_jobs_exp created");
-            }
-
-            if (!listTables.contains(prefix+"task_reward_item")) {
-                PreparedStatement preRequest = conn.prepareStatement("CREATE TABLE `"+prefix+"task_reward_item` (" +
-                        "  `id` int UNIQUE PRIMARY KEY NOT NULL AUTO_INCREMENT," +
-                        "  `FK_task_id` varchar(100) NOT NULL," +
-                        "  `item` varchar(100) NOT NULL," +
-                        "  `quantity` int NOT NULL" +
-                        ");");
-                preRequest.execute();
-                preRequest = conn.prepareStatement("ALTER TABLE `"+prefix+"task_reward_item` ADD FOREIGN KEY (`FK_task_id`) REFERENCES `"+prefix+"task` (`id`);");
-                preRequest.execute();
-                Bukkit.getLogger().info("Table task_reward_item created");
-            }
-
-            if (!listTables.contains(prefix+"task_reward_command")) {
-                PreparedStatement preRequest = conn.prepareStatement("CREATE TABLE `"+prefix+"task_reward_command` (" +
-                        "  `id` int UNIQUE PRIMARY KEY NOT NULL AUTO_INCREMENT," +
-                        "  `FK_task_id` varchar(100) NOT NULL," +
-                        "  `command` varchar(255) NOT NULL," +
-                        "  `description` varchar(255) NOT NULL" +
-                        ");");
-                preRequest.execute();
-                preRequest = conn.prepareStatement("ALTER TABLE `"+prefix+"task_reward_command` ADD FOREIGN KEY (`FK_task_id`) REFERENCES `"+prefix+"task` (`id`);");
-                preRequest.execute();
-                Bukkit.getLogger().info("Table task_reward_command created");
-            }
-
-            if (!listTables.contains(prefix+"player_jobs_exp")) {
-                PreparedStatement preRequest = conn.prepareStatement("CREATE TABLE `"+prefix+"player_jobs_exp` (" +
-                        "  `uuid` varchar(36) NOT NULL," +
-                        "  `FK_jobs_id` varchar(100) NOT NULL," +
-                        "  `level` int NOT NULL DEFAULT 1," +
-                        "  `exp` int NOT NULL DEFAULT 0," +
-                        "  PRIMARY KEY (`uuid`, `FK_jobs_id`)" +
-                        ");");
-                preRequest.execute();
-                preRequest = conn.prepareStatement("ALTER TABLE `"+prefix+"player_jobs_exp` ADD FOREIGN KEY (`FK_jobs_id`) REFERENCES `"+prefix+"jobs` (`id`);");
-                preRequest.execute();
-                Bukkit.getLogger().info("Table player_jobs_exp created");
-            }
-
-            if (!listTables.contains(prefix+"task_instance")) {
-                PreparedStatement preRequest = conn.prepareStatement("CREATE TABLE `"+prefix+"task_instance` (" +
-                        "  `id` int UNIQUE PRIMARY KEY NOT NULL AUTO_INCREMENT," +
-                        "  `FK_task_id` varchar(100) NOT NULL," +
-                        "  `complete` boolean NOT NULL DEFAULT false" +
-                        ");");
-                preRequest.execute();
-                preRequest = conn.prepareStatement("ALTER TABLE `"+prefix+"task_instance` ADD FOREIGN KEY (`FK_task_id`) REFERENCES `"+prefix+"task` (`id`);");
-                preRequest.execute();
-                Bukkit.getLogger().info("Table task_instance created");
-            }
-
-            if (!listTables.contains(prefix+"condition_instance")) {
-                PreparedStatement preRequest = conn.prepareStatement("CREATE TABLE `"+prefix+"condition_instance` (" +
-                        "  `FK_task_instance_id` int NOT NULL," +
-                        "  `FK_condition_condition_id` varchar(100) NOT NULL," +
-                        "  `FK_task_id` varchar(100) NOT NULL," +
-                        "  `quantity` int NOT NULL DEFAULT 0," +
-                        "  `complete` boolean NOT NULL DEFAULT false," +
-                        "  PRIMARY KEY (`FK_task_instance_id`, `FK_condition_condition_id`)" +
-                        ");");
-                preRequest.execute();
-                preRequest = conn.prepareStatement("ALTER TABLE `"+prefix+"condition_instance` ADD FOREIGN KEY (`FK_task_instance_id`) REFERENCES `"+prefix+"task_instance` (`id`);");
-                preRequest.execute();
-                preRequest = conn.prepareStatement("ALTER TABLE `"+prefix+"condition_instance` ADD FOREIGN KEY (`FK_condition_condition_id`) REFERENCES `"+prefix+"condition` (`condition_id`);");
-                preRequest.execute();
-                preRequest = conn.prepareStatement("ALTER TABLE `"+prefix+"condition_instance` ADD FOREIGN KEY (`FK_task_id`) REFERENCES `"+prefix+"task` (`id`);");
-                preRequest.execute();
-                Bukkit.getLogger().info("Table condition_instance created");
-            }
-
-
-            if (!listTables.contains(prefix+"player_task_inventory")) {
-                PreparedStatement preRequest = conn.prepareStatement("CREATE TABLE `"+prefix+"player_task_inventory` (" +
-                        "  `FK_task_instance_id` int UNIQUE PRIMARY KEY NOT NULL," +
-                        "  `uuid` varchar(36) NOT NULL," +
-                        "  `slot` tinyint NOT NULL" +
-                        ");");
-                preRequest.execute();
-                preRequest = conn.prepareStatement("ALTER TABLE `"+prefix+"player_task_inventory` ADD FOREIGN KEY (`FK_task_instance_id`) REFERENCES `"+prefix+"task_instance` (`id`);");
-                preRequest.execute();
-                Bukkit.getLogger().info("Table player_task_inventory created");
-            }
-
-            if (!listTables.contains(prefix+"player_quest_inventory")) {
-                PreparedStatement preRequest = conn.prepareStatement("CREATE TABLE `"+prefix+"player_quest_inventory` (" +
-                        "  `FK_task_instance_id` int UNIQUE PRIMARY KEY NOT NULL," +
-                        "  `uuid` varchar(36) NOT NULL," +
-                        "  `slot` tinyint NOT NULL" +
-                        ");");
-                preRequest.execute();
-                preRequest = conn.prepareStatement("ALTER TABLE `"+prefix+"player_quest_inventory` ADD FOREIGN KEY (`FK_task_instance_id`) REFERENCES `"+prefix+"task_instance` (`id`);");
-                preRequest.execute();
-                Bukkit.getLogger().info("Table player_quest_inventory created");
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            closeConnection(conn);
-        }
-    }
-    public Connection getConnection(Plugin plugin) {
+    public Connection getConnection() {
+        Plugin plugin = SmcTask.getInstance();
         FileConfiguration conf = plugin.getConfig();
         String host = conf.getString("database.host");
         String user = conf.getString("database.user");
@@ -271,8 +34,50 @@ public class UtilsDatabase {
         }
     }
 
-    public String getPrefix(Plugin plugin) {
+    public String getPrefix() {
+        Plugin plugin = SmcTask.getInstance();
         return plugin.getConfig().getString("database.prefix");
+    }
+
+    public final String selectTask(final String prefix, final String task_id) {
+        return "SELECT "+prefix+"task.name, "+prefix+"task.item, "+prefix+"task.color, "+prefix+"task.item_enchant_effect, " +
+                prefix+"task.reward_money, "+prefix+"rarity.name, "+prefix+"rarity.color" +
+                " FROM "+prefix+"task LEFT OUTER JOIN "+prefix+"rarity ON " +
+                prefix+"task.FK_rarity_id = "+prefix+"rarity.id WHERE "+prefix+"task.id = '"+task_id+"' LIMIT 1;";
+    }
+
+    public final String insertTaskInstance(final String prefix, final String task_id) {
+        return "INSERT INTO " + prefix + "task_instance (FK_task_id) VALUE ('" + task_id + "');";
+    }
+
+    public final String selectConditionDescription(final String prefix, final String task_id) {
+        return "SELECT "+prefix + "condition.description, " + prefix + "task_condition.FK_condition_condition_id FROM " +
+                prefix + "task_condition INNER JOIN " + prefix + "condition ON " +
+                prefix + "task_condition.FK_condition_condition_id = " + prefix + "condition.condition_id WHERE " +
+                prefix + "task_condition.FK_task_id = '" + task_id + "';";
+    }
+
+    public final String insertConditionInstance(final String prefix) {
+        return "INSERT INTO " + prefix + "condition_instance (FK_task_instance_id, FK_condition_condition_id, FK_task_id) VALUE (?, ?, ?);";
+    }
+
+    public final String selectTaskDescription(final String prefix, final String task_id) {
+        return "SELECT lore FROM "+prefix+"task_description WHERE FK_task_id = '" + task_id + "' ORDER BY id;";
+    }
+
+    public final String selectTaskRewardItem(final String prefix, final String task_id) {
+        return "SELECT item, quantity FROM " + prefix + "task_reward_item WHERE FK_task_id = '" + task_id + "' ORDER BY id;";
+    }
+
+    public final String selectTaskRewardCommandDescription(final String prefix, final String task_id) {
+        return "SELECT description FROM " + prefix + "task_reward_command WHERE FK_task_id = '" + task_id + "' ORDER BY id;";
+    }
+
+    public final String selectTaskRewardJobsExp(final String prefix, final String task_id) {
+        return "SELECT " + prefix + "jobs.name, " + prefix + "jobs.color, " + prefix + "task_reward_jobs_exp.exp FROM " +
+                prefix + "task_reward_jobs_exp INNER JOIN " + prefix + "jobs ON " +
+                prefix + "task_reward_jobs_exp.FK_jobs_id = " + prefix + "jobs.id WHERE " +
+                prefix + "task_reward_jobs_exp.FK_task_id = '" + task_id + "';";
     }
 
 }
