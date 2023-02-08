@@ -24,7 +24,7 @@ public class GiveTask extends UtilsDatabase {
         Inventory inv = this.player.getInventory();
         ItemStack item = null;
         try {
-            item = new TaskCreator().createTaskItem(task_id);
+            item = new TaskCreator().createTask(task_id);
         } catch (SQLException e) {
             e.printStackTrace();
             return false;

@@ -5,10 +5,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c88ecbdf-c6a3-4501-bb64-da24307c827b" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/fr/cinpiros/inventory/OpenInventory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/fr/cinpiros/inventory/SaveInventory.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/fr/cinpiros/commands/GiveTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/cinpiros/commands/GiveTask.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/cinpiros/commands/GiveTaskClasseur.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/cinpiros/commands/GiveTaskClasseur.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/cinpiros/database/QuestInventoryContent.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/cinpiros/database/TaskInventoryContent.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/cinpiros/database/UtilsDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/cinpiros/database/UtilsDatabase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/cinpiros/handlers/InventoryHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/cinpiros/handlers/InventoryHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/cinpiros/handlers/PlayerHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/cinpiros/handlers/PlayerHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/cinpiros/inventory/QuestInventory.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/cinpiros/inventory/TaskDeposit.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/cinpiros/inventory/TaskInventory.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/cinpiros/inventory/TaskPanel.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/fr/cinpiros/task/TaskCreator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/cinpiros/task/TaskCreator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/cinpiros/utils/CommandHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/cinpiros/utils/CommandHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/condition/example.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/condition/example.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/requette sql a faire.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/requette sql a faire.sql" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -93,16 +108,18 @@
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/pierr/Documents/plugin/smcTask/src/main/resources&quot;,
+    &quot;create.test.in.the.same.root&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/pierr/Documents/plugin/smcTask/server/plugins/smcTask/condition&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;inlay.hints&quot;
   }
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\pierr\Documents\plugin\smcTask\server\plugins\smcTask\condition" />
       <recent name="C:\Users\pierr\Documents\plugin\smcTask\src\main\resources" />
       <recent name="C:\Users\pierr\Documents\plugin\smcTask\server\plugins\smcTask\task" />
       <recent name="C:\Users\pierr\Documents\plugin\smcTask\server\plugins\smcTask\jobs" />
-      <recent name="C:\Users\pierr\Documents\plugin\smcTask\server\plugins\smcTask\condition" />
       <recent name="C:\Users\pierr\Documents\plugin\smcTask\src\main\resources\task" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
@@ -271,11 +288,6 @@
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/fr/cinpiros/handlers/PlayerHandler.java</url>
-          <line>21</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
         <line-breakpoint suspend="NONE" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/fr/cinpiros/database/ConfigSync.java</url>
           <line>134</line>

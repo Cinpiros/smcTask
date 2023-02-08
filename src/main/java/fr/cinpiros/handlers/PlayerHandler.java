@@ -2,8 +2,7 @@ package fr.cinpiros.handlers;
 
 import fr.cinpiros.SmcTask;
 import fr.cinpiros.commands.GiveTaskClasseur;
-import fr.cinpiros.inventory.QuestInventory;
-import fr.cinpiros.inventory.TaskInventory;
+import fr.cinpiros.inventory.OpenInventory;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -32,10 +31,10 @@ public class PlayerHandler implements Listener {
         event.setCancelled(true);
         Player player = event.getPlayer();
         if (event.getAction().isRightClick()) {
-            new TaskInventory(player).openMenu();
+            new OpenInventory(player).taskMenu();
         }
         if (event.getAction().isLeftClick()) {
-            new QuestInventory(player).openMenu();
+            new OpenInventory(player).questMenu();
         }
     }
 }

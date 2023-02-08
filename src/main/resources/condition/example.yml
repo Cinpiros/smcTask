@@ -35,8 +35,8 @@ travel_feet_1km:
 
 time_7j:
   type: TIME #time to pass
-  description: "&7Play time: &f%t% &7/ 7J" #%t% actual time played
-  complete_description: "&8Play time: 7J / 7J"
+  description: "&7Play time: &f%t% &7/ 7J 00:00" #%t% actual time played
+  complete_description: "&8Play time: 7J 00:00 / 7J 00:00"
   quantity: 10080 #time in minute
 
 breed_pig_8:

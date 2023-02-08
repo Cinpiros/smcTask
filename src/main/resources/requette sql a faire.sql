@@ -8,6 +8,22 @@ UPDATE smctask_task_instance SET smctask_task_instance.complete = true
  FROM smctask_condition_instance WHERE smctask_condition_instance.FK_task_instance_id = 123456
  AND smctask_condition_instance.complete = false)  = 0;
 
+#select task_id from task_instance_id
+SELECT id from smctask_task WHERE task_id = (SELECT FK_task_id FROM smctask_task_instance WHERE id = 123);
+
+
+#select condition id and description
+SELECT smctask_condition.description, smctask_task_condition.FK_condition_condition_id, smctask_condition.complete_description
+ FROM smctask_task_condition INNER JOIN smctask_condition
+ ON smctask_task_condition.FK_condition_condition_id = smctask_condition.condition_id
+ WHERE smctask_task_condition.FK_task_id = 'test';
+ 
+#select quantity and complete from condition instance 
+SELECT quantity, complete FROM smctask_condition_instance WHERE FK_task_instance_id = 11
+ AND FK_condition_condition_id = 'break_stone_64';
+ 
+#select player task inventory from uuid order by slot
+SELECT FK_task_instance_id, slot FROM smctask_player_task_inventory WHERE uuid = '00000000-0000-0000-0000-000000000000' ORDER BY slot;
 
 #insert d'instance de condition
 INSERT INTO smctask_condition_instance (FK_task_instance_id, FK_condition_condition_id, FK_task_id) VALUE (123456, 'break_stone_64', 'test');

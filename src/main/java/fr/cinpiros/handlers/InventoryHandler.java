@@ -1,20 +1,16 @@
 package fr.cinpiros.handlers;
 
 import fr.cinpiros.SmcTask;
-import fr.cinpiros.inventory.TaskPanel;
-import fr.cinpiros.inventory.TaskInventory;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
+import fr.cinpiros.inventory.OpenInventory;
+import fr.cinpiros.inventory.SaveInventory;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
-
-import java.util.Objects;
 
 
 public class InventoryHandler implements Listener {
@@ -24,11 +20,11 @@ public class InventoryHandler implements Listener {
     }
 
 
-    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
+    /*@EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onTaskInventoryClick(InventoryClickEvent event) {
         //Player player = (Player) event.getWhoClicked();
 
-        if (!event.getView().title().equals(TaskInventory.invName)) {
+        if (!event.getView().title().equals(OpenInventory.invTaskName)) {
             return;
         }
         Inventory inv  = event.getClickedInventory();
@@ -44,25 +40,26 @@ public class InventoryHandler implements Listener {
         }
 
         event.setCancelled(true);
-    }
+    }*/
 
     @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
     public void onTaskPanelClick(InventoryClickEvent event) {
-        if (!event.getView().title().equals(TaskPanel.invName)) {
+        if (!event.getView().title().equals(OpenInventory.panelName)) {
             return;
         }
 
         event.setCancelled(true);
     }
+
     @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
-    public void onCloseMenu(InventoryCloseEvent event) {
-        //Player player = (Player) event.getWhoClicked();
-        if (!event.getView().title().equals(TaskInventory.invName)) {
+    public void onCloseTaskInventory(InventoryCloseEvent event) {
+        if (!event.getView().title().equals(OpenInventory.invTaskName)) {
             return;
         }
-
+        Player player = (Player) event.getPlayer();
         Inventory inv = event.getInventory();
-        ItemStack[] invContent = inv.getContents();
+        new SaveInventory().saveTaskInventory(inv, player);
+
 
     }
 

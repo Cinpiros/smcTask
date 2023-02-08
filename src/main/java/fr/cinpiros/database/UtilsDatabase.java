@@ -51,7 +51,8 @@ public class UtilsDatabase {
     }
 
     public final String selectConditionDescription(final String prefix, final String task_id) {
-        return "SELECT "+prefix + "condition.description, " + prefix + "task_condition.FK_condition_condition_id FROM " +
+        return "SELECT "+prefix + "condition.description, " + prefix + "task_condition.FK_condition_condition_id, " +
+                prefix+"condition.complete_description FROM " +
                 prefix + "task_condition INNER JOIN " + prefix + "condition ON " +
                 prefix + "task_condition.FK_condition_condition_id = " + prefix + "condition.condition_id WHERE " +
                 prefix + "task_condition.FK_task_id = '" + task_id + "';";
@@ -78,6 +79,20 @@ public class UtilsDatabase {
                 prefix + "task_reward_jobs_exp INNER JOIN " + prefix + "jobs ON " +
                 prefix + "task_reward_jobs_exp.FK_jobs_id = " + prefix + "jobs.id WHERE " +
                 prefix + "task_reward_jobs_exp.FK_task_id = '" + task_id + "';";
+    }
+
+    public final String selectTaskId(final String prefix, final Integer task_instance_id) {
+        return "SELECT id from "+prefix+"task WHERE id = (SELECT FK_task_id FROM " +
+                prefix+"task_instance WHERE id = "+task_instance_id+");";
+    }
+
+    public final String selectConditionInstance(final String prefix, final Integer task_instance_id){
+        return "SELECT quantity, complete FROM "+prefix+"condition_instance WHERE FK_task_instance_id = " +
+                task_instance_id+" AND FK_condition_condition_id = ?;";
+    }
+
+    public final String selectPlayerTaskInventory(final String prefix, final String uuid) {
+        return "SELECT FK_task_instance_id, slot FROM "+prefix+"player_task_inventory WHERE uuid = '"+uuid+"' ORDER BY slot;";
     }
 
 }
