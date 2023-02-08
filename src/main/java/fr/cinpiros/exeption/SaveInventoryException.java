@@ -1,5 +1,6 @@
 package fr.cinpiros.exeption;
 
+@Deprecated
 public class SaveInventoryException extends Throwable{
     public SaveInventoryException() {
         super();
@@ -21,3 +22,4 @@ public class SaveInventoryException extends Throwable{
         super(message, cause, enableSuppression, writableStackTrace);
     }
 }
+

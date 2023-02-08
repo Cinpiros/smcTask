@@ -26,6 +26,7 @@ public class UtilsDatabase {
         return conn;
     }
 
+    @Deprecated
     public void closeConnection(Connection conn) {
         try {
             conn.close();
@@ -96,15 +97,18 @@ public class UtilsDatabase {
     }
 
 
+    @Deprecated
     public final String deletePlayerTaskInventoryTaskInstance(final String prefix, final String uuid, final Integer slot) {
         return "DELETE FROM "+prefix+"player_task_inventory WHERE uuid = '"+uuid+"' AND slot = "+slot+";";
     }
 
+    @Deprecated
     public final String insertPlayerTaskInventoryTaskInstance(final String prefix, final Integer task_instance_id, final String uuid, final Integer slot) {
         return "INSERT INTO "+prefix+"player_task_inventory (FK_task_instance_id, uuid, slot)" +
                 " VALUE ("+task_instance_id+", '"+uuid+"', "+slot+");";
     }
 
+    @Deprecated
     public final String updatePlayerTaskInventoryTaskInstance(final String prefix, final Integer task_instance_id, final String uuid, final Integer slot) {
         return "UPDATE "+prefix+"player_task_inventory SET" +
                 " FK_task_instance_id = "+task_instance_id+" WHERE uuid = '"+uuid+"' AND slot = "+slot+";";

@@ -8,6 +8,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.ArrayList;
 import java.util.List;
 
+@Deprecated
 public class CreateItem {
     static public ItemStack getItem(ItemStack item, Component name, String ... lore) {
         ItemMeta meta = item.getItemMeta();
