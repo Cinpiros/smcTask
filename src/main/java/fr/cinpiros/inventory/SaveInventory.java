@@ -31,7 +31,7 @@ public class SaveInventory extends UtilsDatabase {
             NamespacedKey key = new NamespacedKey(SmcTask.getInstance(), "instance_task_id");
             Inventory player_inv = player.getInventory();
 
-            for (int slot = 1; slot <= size; slot++) {
+            for (int slot = 0; slot < size; slot++) {
                 Integer rs_task_instance_id = playerInventoryRSMap.get(slot);
 
                 ItemStack curent_item = inv.getItem(slot);

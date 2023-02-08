@@ -106,8 +106,11 @@ SELECT id FROM smctask_jobs WHERE id = 'ami_des_elfe';
 #delete task_instance from player task inventory where uuid and slot
 DELETE FROM smctask_player_task_inventory WHERE uuid = '00000000-0000-0000-0000-000000000000' AND slot = 1;
 
-#insert task instance on player inventory with uuid and slot
+#insert task instance on player task inventory with uuid and slot
 INSERT INTO smctask_player_task_inventory (FK_task_instance_id, uuid, slot) VALUE (10, '00000000-0000-0000-0000-000000000000', 2);
+
+#update task instance on player task inventory where uuid and slot
+UPDATE smctask_player_task_inventory SET FK_task_instance_id = 10 WHERE uuid = '00000000-0000-0000-0000-000000000000' AND slot = 2;
 
 
 
