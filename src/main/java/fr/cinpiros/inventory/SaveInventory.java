@@ -2,22 +2,20 @@ package fr.cinpiros.inventory;
 
 import fr.cinpiros.SmcTask;
 import fr.cinpiros.database.UtilsDatabase;
+import fr.cinpiros.exeption.SaveInventoryException;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 public class SaveInventory extends UtilsDatabase {
 
-    public void saveTaskInventory(Inventory inv, final Player player) {
+    public void saveTaskInventory(Inventory inv, final Player player) throws SaveInventoryException {
         String uuid = player.getUniqueId().toString();
         int size = inv.getSize();
         try (Connection conn = getConnection()) {
@@ -31,37 +29,58 @@ public class SaveInventory extends UtilsDatabase {
             }
 
             NamespacedKey key = new NamespacedKey(SmcTask.getInstance(), "instance_task_id");
+            Inventory player_inv = player.getInventory();
 
-            for (int ct = 1; ct <= size; ct++) {
-                Integer rs_task_instance_id = playerInventoryRSMap.get(ct);
+            for (int slot = 1; slot <= size; slot++) {
+                Integer rs_task_instance_id = playerInventoryRSMap.get(slot);
 
-                if (inv.getItem(ct) == null) {
+                ItemStack curent_item = inv.getItem(slot);
+
+                if (curent_item == null) {
                     if (rs_task_instance_id != null) {
-                        //supr item at index ct and uuid
+                        PreparedStatement psDeleteTaskInstancePlayerTaskInventory
+                                = conn.prepareStatement(deletePlayerTaskInventoryTaskInstance(getPrefix(), uuid, slot));
+                        int countDelete = psDeleteTaskInstancePlayerTaskInventory.executeUpdate();
+                        if (countDelete == 0) {
+                            throw new SaveInventoryException("task not remove on local inventory slot = null and"+
+                                    " database inventory have task for uuid: "+uuid+" and slot: "+slot);
+                        }
                     }
                     continue;
                 }
 
-                if (!(Objects.requireNonNull(inv.getItem(ct)).getItemMeta().getPersistentDataContainer().has(key))) {
-                    //give back the itemstack that don't have key
+                if (!curent_item.getItemMeta().getPersistentDataContainer().has(key)) {
+                    player_inv.addItem(curent_item);
                     continue;
                 }
 
-                Integer item_task_instance_id = Objects.requireNonNull(inv.getItem(ct)).getItemMeta()
+                Integer item_task_instance_id = curent_item.getItemMeta()
                         .getPersistentDataContainer().get(key, PersistentDataType.INTEGER);
 
                 if (rs_task_instance_id == null) {
-                    //insert task instance uuid slot to db
+                    PreparedStatement psInsertPlayerTaskInventoryTaskInstance = conn.
+                            prepareStatement(insertPlayerTaskInventoryTaskInstance(getPrefix(), item_task_instance_id, uuid, slot));
+                    int countInsert = psInsertPlayerTaskInventoryTaskInstance.executeUpdate();
+                    if (countInsert == 0) {
+                        throw new SaveInventoryException("task not Insert in db with id: "+
+                                item_task_instance_id+" uuid: "+uuid+" slot: "+slot);
+                    }
                     continue;
                 }
 
-                if (!(item_task_instance_id == rs_task_instance_id)) {
-                    //update task_instance_id where uuid and slot
+                if (!(rs_task_instance_id.equals(item_task_instance_id))) {
+                    PreparedStatement psUpdatePlayerTaskInventoryTaskInstance = conn.
+                            prepareStatement(updatePlayerTaskInventoryTaskInstance(getPrefix(), item_task_instance_id, uuid, slot));
+                    int updateCount = psUpdatePlayerTaskInventoryTaskInstance.executeUpdate();
+                    if (updateCount == 0) {
+                        throw new SaveInventoryException("task not Update in db with id: "+
+                                item_task_instance_id+" uuid: "+uuid+" slot: "+slot);
+                    }
                 }
             }
 
 
-        } catch (SQLException | NullPointerException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 

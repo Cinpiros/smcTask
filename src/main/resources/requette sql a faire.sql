@@ -103,6 +103,14 @@ DELETE FROM smctask_jobs WHERE id = 'ami_des_elfe' AND
 SELECT id FROM smctask_jobs WHERE id = 'ami_des_elfe';
 
 
+#delete task_instance from player task inventory where uuid and slot
+DELETE FROM smctask_player_task_inventory WHERE uuid = '00000000-0000-0000-0000-000000000000' AND slot = 1;
+
+#insert task instance on player inventory with uuid and slot
+INSERT INTO smctask_player_task_inventory (FK_task_instance_id, uuid, slot) VALUE (10, '00000000-0000-0000-0000-000000000000', 2);
+
+
+
 #update d'une tache (/!\ supression de donnée utilisateur si par exemple les condition change les instance de condition qui disparaisse sont suprimée)
 #update d'une condition
 #update d'une rareter

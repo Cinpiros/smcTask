@@ -1,6 +1,7 @@
 package fr.cinpiros.handlers;
 
 import fr.cinpiros.SmcTask;
+import fr.cinpiros.exeption.SaveInventoryException;
 import fr.cinpiros.inventory.OpenInventory;
 import fr.cinpiros.inventory.SaveInventory;
 import org.bukkit.Bukkit;
@@ -42,7 +43,7 @@ public class InventoryHandler implements Listener {
         event.setCancelled(true);
     }*/
 
-    @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onTaskPanelClick(InventoryClickEvent event) {
         if (!event.getView().title().equals(OpenInventory.panelName)) {
             return;
@@ -51,14 +52,20 @@ public class InventoryHandler implements Listener {
         event.setCancelled(true);
     }
 
-    @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onCloseTaskInventory(InventoryCloseEvent event) {
         if (!event.getView().title().equals(OpenInventory.invTaskName)) {
             return;
         }
         Player player = (Player) event.getPlayer();
         Inventory inv = event.getInventory();
-        new SaveInventory().saveTaskInventory(inv, player);
+        try {
+            new SaveInventory().saveTaskInventory(inv, player);
+        } catch (SaveInventoryException e){
+            Bukkit.getLogger().warning(e.getMessage());
+            player.sendMessage("Erreur lors de la syncronisation de l'inventaire de task merci de contacter un administrateur");
+        }
+
 
 
     }

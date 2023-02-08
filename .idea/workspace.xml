@@ -5,24 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c88ecbdf-c6a3-4501-bb64-da24307c827b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/fr/cinpiros/inventory/OpenInventory.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/fr/cinpiros/inventory/SaveInventory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/fr/cinpiros/exeption/SaveInventoryException.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fr/cinpiros/commands/GiveTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/cinpiros/commands/GiveTask.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fr/cinpiros/commands/GiveTaskClasseur.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/cinpiros/commands/GiveTaskClasseur.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fr/cinpiros/database/QuestInventoryContent.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fr/cinpiros/database/TaskInventoryContent.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/fr/cinpiros/database/UtilsDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/cinpiros/database/UtilsDatabase.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/fr/cinpiros/handlers/InventoryHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/cinpiros/handlers/InventoryHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fr/cinpiros/handlers/PlayerHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/cinpiros/handlers/PlayerHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fr/cinpiros/inventory/QuestInventory.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fr/cinpiros/inventory/TaskDeposit.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fr/cinpiros/inventory/TaskInventory.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fr/cinpiros/inventory/TaskPanel.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fr/cinpiros/task/TaskCreator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/cinpiros/task/TaskCreator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fr/cinpiros/utils/CommandHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/cinpiros/utils/CommandHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/condition/example.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/condition/example.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/cinpiros/inventory/SaveInventory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/cinpiros/inventory/SaveInventory.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/requette sql a faire.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/requette sql a faire.sql" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -133,7 +120,7 @@
       <recent name="fr.cinpiros.utils" />
     </key>
   </component>
-  <component name="RunManager" selected="JAR Application.paper-1.19.3-348.jar">
+  <component name="RunManager" selected="Gradle.smcTask [build]">
     <configuration name="smcTask [buildDependents]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />

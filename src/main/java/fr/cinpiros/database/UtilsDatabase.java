@@ -95,4 +95,18 @@ public class UtilsDatabase {
         return "SELECT FK_task_instance_id, slot FROM "+prefix+"player_task_inventory WHERE uuid = '"+uuid+"' ORDER BY slot;";
     }
 
+
+    public final String deletePlayerTaskInventoryTaskInstance(final String prefix, final String uuid, final Integer slot) {
+        return "DELETE FROM "+prefix+"player_task_inventory WHERE uuid = '"+uuid+"' AND slot = "+slot+";";
+    }
+
+    public final String insertPlayerTaskInventoryTaskInstance(final String prefix, final Integer task_instance_id, final String uuid, final Integer slot) {
+        return "INSERT INTO "+prefix+"player_task_inventory (FK_task_instance_id, uuid, slot)" +
+                " VALUE ("+task_instance_id+", '"+uuid+"', "+slot+");";
+    }
+
+    public final String updatePlayerTaskInventoryTaskInstance(final String prefix, final Integer task_instance_id, final String uuid, final Integer slot) {
+        return "UPDATE "+prefix+"player_task_inventory SET" +
+                " FK_task_instance_id = "+task_instance_id+" WHERE uuid = '"+uuid+"' AND slot = "+slot+";";
+    }
 }
