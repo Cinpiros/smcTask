@@ -1,7 +1,6 @@
 package fr.cinpiros.handlers;
 
 import fr.cinpiros.SmcTask;
-import fr.cinpiros.exeption.SaveInventoryException;
 import fr.cinpiros.inventory.OpenInventory;
 import fr.cinpiros.inventory.SaveInventory;
 import org.bukkit.Bukkit;
@@ -59,12 +58,15 @@ public class InventoryHandler implements Listener {
         }
         Player player = (Player) event.getPlayer();
         Inventory inv = event.getInventory();
-        try {
+
+        new SaveInventory().saveTaskInventory(inv, player);
+
+        /*try {
             new SaveInventory().saveTaskInventory(inv, player);
         } catch (SaveInventoryException e){
             Bukkit.getLogger().warning(e.getMessage());
             player.sendMessage("Erreur lors de la syncronisation de l'inventaire de task merci de contacter un administrateur");
-        }
+        }*/
 
 
 

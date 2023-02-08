@@ -2,7 +2,6 @@ package fr.cinpiros.inventory;
 
 import fr.cinpiros.SmcTask;
 import fr.cinpiros.database.UtilsDatabase;
-import fr.cinpiros.exeption.SaveInventoryException;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -17,7 +16,7 @@ import java.util.Map;
 
 public class SaveInventory extends UtilsDatabase {
 
-    public void saveTaskInventory(Inventory inv, final Player player) throws SaveInventoryException {
+    public void saveTaskInventory(Inventory inv, final Player player) {
 
         try (Connection conn = getConnection()) {
             String uuid = player.getUniqueId().toString();
