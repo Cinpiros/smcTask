@@ -109,4 +109,12 @@ public class UtilsDatabase {
         return "UPDATE "+prefix+"player_task_inventory SET" +
                 " FK_task_instance_id = "+task_instance_id+" WHERE uuid = '"+uuid+"' AND slot = "+slot+";";
     }
+
+    public final String deletePlayerTaskInventory(final String prefix, final String uuid) {
+        return "DELETE FROM "+prefix+"player_task_inventory WHERE uuid = '"+uuid+"';";
+    }
+
+    public final String insertPlayerTaskInventory(final String prefix) {
+        return "INSERT INTO "+prefix+"player_task_inventory (FK_task_instance_id, uuid, slot) VALUE (?, ?, ?);";
+    }
 }

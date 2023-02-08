@@ -419,6 +419,9 @@ public class TaskCreator extends UtilsDatabase{
                 throw new TaskCreateException("material not found: " + task_id);
             }
 
+            NamespacedKey key = new NamespacedKey(SmcTask.getInstance(), "instance_task_id");
+            meta.getPersistentDataContainer().set(key, PersistentDataType.INTEGER, task_instance_id);
+
             if (rsTask.getBoolean(4)) {
                 meta.addEnchant(Enchantment.DURABILITY, 1, true);
                 meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);

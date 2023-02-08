@@ -9,18 +9,65 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
 public class SaveInventory extends UtilsDatabase {
 
     public void saveTaskInventory(Inventory inv, final Player player) throws SaveInventoryException {
-        String uuid = player.getUniqueId().toString();
-        int size = inv.getSize();
-        try (Connection conn = getConnection()) {
 
-            PreparedStatement psSelectPlayerTaskInventory = conn.prepareStatement(selectPlayerTaskInventory(getPrefix(), uuid));
+        try (Connection conn = getConnection()) {
+            String uuid = player.getUniqueId().toString();
+
+            PreparedStatement psDeletePlayerTaskInventory = conn.prepareStatement(deletePlayerTaskInventory(getPrefix(), uuid));
+            psDeletePlayerTaskInventory.executeUpdate();
+
+            Map<Integer, Integer> saveInv = new HashMap<>();
+            NamespacedKey key = new NamespacedKey(SmcTask.getInstance(), "instance_task_id");
+            Inventory player_inv = player.getInventory();
+
+
+            for (int slot = 0; slot < inv.getSize(); slot++) {
+                ItemStack curent_item = inv.getItem(slot);
+                if (curent_item == null) {
+                    continue;
+                }
+                if (!curent_item.getItemMeta().getPersistentDataContainer().has(key)) {
+                    player_inv.addItem(curent_item);
+                    continue;
+                }
+                saveInv.put(slot, curent_item.getItemMeta().getPersistentDataContainer().get(key, PersistentDataType.INTEGER));
+            }
+
+
+            PreparedStatement psInsertPlayerTaskInventory = conn.prepareStatement(insertPlayerTaskInventory(getPrefix()));
+
+            for (Integer slot : saveInv.keySet()) {
+                psInsertPlayerTaskInventory.setInt(1, saveInv.get(slot));
+                psInsertPlayerTaskInventory.setString(2, uuid);
+                psInsertPlayerTaskInventory.setInt(3, slot);
+                psInsertPlayerTaskInventory.addBatch();
+            }
+            psInsertPlayerTaskInventory.executeBatch();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            /*PreparedStatement psSelectPlayerTaskInventory = conn.prepareStatement(selectPlayerTaskInventory(getPrefix(), uuid));
             ResultSet rsPlayerTaskInventory = psSelectPlayerTaskInventory.executeQuery();
             Map<Integer, Integer> playerInventoryRSMap = new HashMap<>();
 
@@ -31,7 +78,7 @@ public class SaveInventory extends UtilsDatabase {
             NamespacedKey key = new NamespacedKey(SmcTask.getInstance(), "instance_task_id");
             Inventory player_inv = player.getInventory();
 
-            for (int slot = 0; slot < size; slot++) {
+            for (int slot = 0; slot < inv.getSize(); slot++) {
                 Integer rs_task_instance_id = playerInventoryRSMap.get(slot);
 
                 ItemStack curent_item = inv.getItem(slot);
@@ -77,7 +124,7 @@ public class SaveInventory extends UtilsDatabase {
                                 item_task_instance_id+" uuid: "+uuid+" slot: "+slot);
                     }
                 }
-            }
+            }*/
 
 
         } catch (SQLException e) {
