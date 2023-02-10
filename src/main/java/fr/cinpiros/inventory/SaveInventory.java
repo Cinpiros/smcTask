@@ -54,18 +54,6 @@ public class SaveInventory extends UtilsDatabase {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
             /*PreparedStatement psSelectPlayerTaskInventory = conn.prepareStatement(selectPlayerTaskInventory(getPrefix(), uuid));
             ResultSet rsPlayerTaskInventory = psSelectPlayerTaskInventory.executeQuery();
             Map<Integer, Integer> playerInventoryRSMap = new HashMap<>();

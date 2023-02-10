@@ -31,15 +31,19 @@ public class ConfigUtil {
             this.configs.add(YamlConfiguration.loadConfiguration(file));
         }
     }
+
+    @SuppressWarnings("unused")
     public ArrayList<File> getFile() {
         return this.files;
     }
 
+    @SuppressWarnings("unused")
     public ArrayList<YamlConfiguration> getConfig() {
         return this.configs;
     }
 
 
+    @SuppressWarnings("unused")
     public boolean save() {
         try {
             int id = 0;

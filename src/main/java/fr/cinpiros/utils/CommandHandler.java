@@ -9,6 +9,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +18,7 @@ import java.util.List;
 public class CommandHandler implements CommandExecutor {
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String [] args) {
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String [] args) {
         if (args.length == 0){
             sender.sendMessage("/task <commande>");
             return true;
@@ -54,19 +55,10 @@ public class CommandHandler implements CommandExecutor {
         }
         boolean commandReturn = true;
         switch (args[0]) {
-            case "help", "aide" -> {
-                player.sendMessage("help");
-            }
-            case "version" -> {
-                player.sendMessage("verssion");
-            }
-            case "presentoire", "menutask" -> {
-                commandReturn = new OpenInventory(player).panelMenu();
-            }
-            case "taskbundle", "bundle" -> {
-                commandReturn = new GiveTaskClasseur(player).giveClasseur();
+            case "presentoire", "menutask" -> commandReturn = new OpenInventory(player).panelMenu();
 
-            }
+            case "taskbundle", "bundle" -> commandReturn = new GiveTaskClasseur(player).giveClasseur();
+
             case "give" -> {
                 if (args[2] != null) {
                     commandReturn = new GiveTask(player, sender).giveTask(args[2]);
@@ -74,9 +66,8 @@ public class CommandHandler implements CommandExecutor {
                     sender.sendMessage("/task "+args[0]+" "+player+" <task id>");
                 }
             }
-            default -> {
-                Bukkit.getLogger().info("argument not found /task help");
-            }
+
+            default -> Bukkit.getLogger().info("argument not found /task help");
         }
 
 

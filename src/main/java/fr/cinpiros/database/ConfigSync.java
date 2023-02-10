@@ -12,7 +12,7 @@ public class ConfigSync extends UtilsDatabase {
     public void syncTask(ArrayList<ConfigurationSection> taskConfig) {
         String prefix = getPrefix();
         try (
-                Connection conn = getConnection();
+                Connection conn = getConnection()
                 ){
             PreparedStatement taskInsert = conn.prepareStatement("INSERT INTO "+prefix+"task (id, name, item, color, on_panel, complete_effect, deposit_effect, item_enchant_effect, reward_on_complete, reward_money, FK_rarity_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
             for (ConfigurationSection taskSection : taskConfig) {
@@ -57,56 +57,68 @@ public class ConfigSync extends UtilsDatabase {
 
                     if (taskSection.contains("jobs_level")) {
                         PreparedStatement taskJobsLevelInsert = conn.prepareStatement("INSERT INTO "+prefix+"task_jobs_level (FK_task_id, FK_jobs_id, level) VALUES ('"+id+"', ?, ?);");
-                        for (String jobs_id : taskSection.getConfigurationSection("jobs_level").getKeys(false)) {
-                            PreparedStatement testJobs = conn.prepareStatement("SELECT id FROM "+prefix+"jobs WHERE id = '"+jobs_id+"';");
-                            ResultSet rsDoesJobsExist = testJobs.executeQuery();
-                            if (rsDoesJobsExist.next()) {
-                                taskJobsLevelInsert.setString(1, jobs_id);
-                                taskJobsLevelInsert.setInt(2, taskSection.getInt("jobs_level."+jobs_id));
-                                taskJobsLevelInsert.addBatch();
-                            } else {
-                                Bukkit.getLogger().warning("Jobs: "+jobs_id+" does not exist in database task min jobs level not added");
+                        ConfigurationSection section = taskSection.getConfigurationSection("jobs_level");
+                        if (section != null) {
+                            for (String jobs_id : section.getKeys(false)) {
+                                PreparedStatement testJobs = conn.prepareStatement("SELECT id FROM "+prefix+"jobs WHERE id = '"+jobs_id+"';");
+                                ResultSet rsDoesJobsExist = testJobs.executeQuery();
+                                if (rsDoesJobsExist.next()) {
+                                    taskJobsLevelInsert.setString(1, jobs_id);
+                                    taskJobsLevelInsert.setInt(2, taskSection.getInt("jobs_level."+jobs_id));
+                                    taskJobsLevelInsert.addBatch();
+                                } else {
+                                    Bukkit.getLogger().warning("Jobs: "+jobs_id+" does not exist in database task min jobs level not added");
+                                }
                             }
+                            taskJobsLevelInsert.executeBatch();
                         }
-                        taskJobsLevelInsert.executeBatch();
+
                     }
 
                     if (taskSection.contains("reward.jobs_exp")) {
                         PreparedStatement taskJobsLevelInsert = conn.prepareStatement("INSERT INTO "+prefix+"task_reward_jobs_exp (FK_task_id, FK_jobs_id, exp) VALUES ('"+id+"', ?, ?);");
 
-                        for (String jobs_id : taskSection.getConfigurationSection("reward.jobs_exp").getKeys(false)) {
-                            PreparedStatement testJobs = conn.prepareStatement("SELECT id FROM "+prefix+"jobs WHERE id = '"+jobs_id+"';");
-                            ResultSet rsDoesJobsExist = testJobs.executeQuery();
-                            if (rsDoesJobsExist.next()) {
-                                taskJobsLevelInsert.setString(1, jobs_id);
-                                taskJobsLevelInsert.setInt(2, taskSection.getInt("reward.jobs_exp."+jobs_id));
-                                taskJobsLevelInsert.addBatch();
-                            } else {
-                                Bukkit.getLogger().warning("Jobs: "+jobs_id+" does not exist in database task reward exp not added");
+                        ConfigurationSection section = taskSection.getConfigurationSection("reward.jobs_exp");
+                        if (section != null) {
+                            for (String jobs_id : section.getKeys(false)) {
+                                PreparedStatement testJobs = conn.prepareStatement("SELECT id FROM "+prefix+"jobs WHERE id = '"+jobs_id+"';");
+                                ResultSet rsDoesJobsExist = testJobs.executeQuery();
+                                if (rsDoesJobsExist.next()) {
+                                    taskJobsLevelInsert.setString(1, jobs_id);
+                                    taskJobsLevelInsert.setInt(2, taskSection.getInt("reward.jobs_exp."+jobs_id));
+                                    taskJobsLevelInsert.addBatch();
+                                } else {
+                                    Bukkit.getLogger().warning("Jobs: "+jobs_id+" does not exist in database task reward exp not added");
+                                }
                             }
+                            taskJobsLevelInsert.executeBatch();
                         }
-                        taskJobsLevelInsert.executeBatch();
                     }
 
                     if (taskSection.contains("reward.item")) {
                         PreparedStatement taskJobsLevelInsert = conn.prepareStatement("INSERT INTO "+prefix+"task_reward_item (FK_task_id, item, quantity) VALUES ('"+id+"', ?, ?);");
-
-                        for (String item : taskSection.getConfigurationSection("reward.item").getKeys(false)) {
-                            taskJobsLevelInsert.setString(1, item);
-                            taskJobsLevelInsert.setInt(2, taskSection.getInt("reward.item."+item));
-                            taskJobsLevelInsert.addBatch();
+                        ConfigurationSection section = taskSection.getConfigurationSection("reward.item");
+                        if (section != null) {
+                            for (String item : section.getKeys(false)) {
+                                taskJobsLevelInsert.setString(1, item);
+                                taskJobsLevelInsert.setInt(2, taskSection.getInt("reward.item."+item));
+                                taskJobsLevelInsert.addBatch();
+                            }
+                            taskJobsLevelInsert.executeBatch();
                         }
-                        taskJobsLevelInsert.executeBatch();
                     }
 
                     if (taskSection.contains("reward.command")) {
                         PreparedStatement taskRewardCommandInsert = conn.prepareStatement("INSERT INTO "+prefix+"task_reward_command (FK_task_id, command, description) VALUES ('"+id+"', ?, ?);");
-                        for (String command : taskSection.getConfigurationSection("reward.command").getKeys(false)) {
-                            taskRewardCommandInsert.setString(1, command);
-                            taskRewardCommandInsert.setString(2, taskSection.getString("reward.command."+command));
-                            taskRewardCommandInsert.addBatch();
+                        ConfigurationSection section = taskSection.getConfigurationSection("reward.command");
+                        if (section != null) {
+                            for (String command : section.getKeys(false)) {
+                                taskRewardCommandInsert.setString(1, command);
+                                taskRewardCommandInsert.setString(2, taskSection.getString("reward.command."+command));
+                                taskRewardCommandInsert.addBatch();
+                            }
+                            taskRewardCommandInsert.executeBatch();
                         }
-                        taskRewardCommandInsert.executeBatch();
                     }
                 } /*else {
                     Bukkit.getLogger().info("rarity '"+id+"' already exist");
@@ -120,7 +132,7 @@ public class ConfigSync extends UtilsDatabase {
     public void syncCondition(ArrayList<ConfigurationSection> conditionConfig) {
         String prefix = getPrefix();
         try (
-                Connection conn = getConnection();
+                Connection conn = getConnection()
         ){
             PreparedStatement conditionInsert = conn.prepareStatement("INSERT INTO "+prefix+"condition (condition_id, type, description, complete_description, id, level, quantity) VALUES (?, ?, ?, ?, ?, ?, ?);");
             for (ConfigurationSection conditionSection : conditionConfig) {
@@ -163,7 +175,7 @@ public class ConfigSync extends UtilsDatabase {
     public void syncJobs(ArrayList<ConfigurationSection> jobsConfig) {
         String prefix = getPrefix();
         try (
-                Connection conn = getConnection();
+                Connection conn = getConnection()
                 ) {
             PreparedStatement jobsInsert = conn.prepareStatement("INSERT INTO "+prefix+"jobs (id, name, color, scale, max_level) VALUES (?, ?, ?, ?, ?);");
             for (ConfigurationSection jobsSection : jobsConfig) {
@@ -190,7 +202,7 @@ public class ConfigSync extends UtilsDatabase {
     public void syncRarity(ArrayList<ConfigurationSection> rarityConfig) {
         String prefix = getPrefix();
         try (
-                Connection conn = getConnection();
+                Connection conn = getConnection()
                 ){
             PreparedStatement rarityInsert = conn.prepareStatement("INSERT INTO "+prefix+"rarity (id, name, color, rarity, complete_effect_color, complete_effect_sound, deposit_effect_color, deposit_effect_sound) VALUES (?, ?, ?, ?, ?, ?, ?, ?);");
             for (ConfigurationSection raritySection : rarityConfig) {

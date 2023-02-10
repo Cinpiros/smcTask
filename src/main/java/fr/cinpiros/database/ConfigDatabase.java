@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class ConfigDatabase extends UtilsDatabase {
     public void configDatabase() {
-        try (Connection conn = getConnection();){
+        try (Connection conn = getConnection()){
             String prefix = getPrefix();
             PreparedStatement requestListTable = conn.prepareStatement("SHOW TABLES;");
             ResultSet rsListTables = requestListTable.executeQuery();
