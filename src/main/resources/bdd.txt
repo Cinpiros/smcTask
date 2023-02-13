@@ -113,8 +113,14 @@ table player_quest_inventory {
 
 table player_daily_task {
   uuid varchar(36) [PK, not null, unique]
-  actual_daily_pick_up_task int [not null]
+  daily_pick_up_task int [not null]
   max_daily_pick_up_task int [not null]
-  for_date date [not null]
-  day_random int [not null]
+  today date [not null]
+  number_panel_task tinyint [not null]
+}
+
+table player_daily_task_list {
+  uuid varchar(36) [not null, ref: > player_daily_task.uuid]
+  FK_player_daily_task_today date [not null]
+  FK_task_id varchar(100) [not null, ref: > task.id]
 }

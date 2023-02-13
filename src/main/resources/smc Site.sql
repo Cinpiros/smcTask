@@ -118,10 +118,16 @@ CREATE TABLE `player_quest_inventory` (
 
 CREATE TABLE `player_daily_task` (
   `uuid` varchar(36) UNIQUE PRIMARY KEY NOT NULL,
-  `actual_daily_pick_up_task` int NOT NULL,
+  `daily_pick_up_task` int NOT NULL,
   `max_daily_pick_up_task` int NOT NULL,
-  `for_date` date NOT NULL,
-  `day_random` int NOT NULL
+  `today` date NOT NULL,
+  `number_panel_task` tinyint NOT NULL
+);
+
+CREATE TABLE `player_daily_task_list` (
+  `uuid` varchar(36) NOT NULL,
+  `FK_player_daily_task_today` date NOT NULL,
+  `FK_task_id` varchar(100) NOT NULL
 );
 
 ALTER TABLE `task` ADD FOREIGN KEY (`FK_rarity_id`) REFERENCES `rarity` (`id`);
@@ -157,3 +163,7 @@ ALTER TABLE `condition_instance` ADD FOREIGN KEY (`FK_task_id`) REFERENCES `task
 ALTER TABLE `player_task_inventory` ADD FOREIGN KEY (`FK_task_instance_id`) REFERENCES `task_instance` (`id`);
 
 ALTER TABLE `player_quest_inventory` ADD FOREIGN KEY (`FK_task_instance_id`) REFERENCES `task_instance` (`id`);
+
+ALTER TABLE `player_daily_task_list` ADD FOREIGN KEY (`uuid`) REFERENCES `player_daily_task` (`uuid`);
+
+ALTER TABLE `player_daily_task_list` ADD FOREIGN KEY (`FK_task_id`) REFERENCES `task` (`id`);

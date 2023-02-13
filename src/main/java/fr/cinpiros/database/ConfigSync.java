@@ -8,9 +8,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
+import static fr.cinpiros.SmcTask.getSmcTaskInstance;
+
 public class ConfigSync extends UtilsDatabase {
-    public void syncTask(ArrayList<ConfigurationSection> taskConfig) {
+    public int syncTask(ArrayList<ConfigurationSection> taskConfig) {
         String prefix = super.prefix;
+        int sync_task_num = 0;
         try (
                 Connection conn = getConnection()
                 ){
@@ -41,7 +44,7 @@ public class ConfigSync extends UtilsDatabase {
                             taskConditionInsert.setString(1, condition);
                             taskConditionInsert.addBatch();
                         } else {
-                            Bukkit.getLogger().warning("Condition: "+condition+" does not exist in database condition not added");
+                            Bukkit.getLogger().warning("[SmcTask] Condition: "+condition+" does not exist in table condition not added for task: "+id);
                         }
                     }
                     taskConditionInsert.executeBatch();
@@ -67,7 +70,7 @@ public class ConfigSync extends UtilsDatabase {
                                     taskJobsLevelInsert.setInt(2, taskSection.getInt("jobs_level."+jobs_id));
                                     taskJobsLevelInsert.addBatch();
                                 } else {
-                                    Bukkit.getLogger().warning("Jobs: "+jobs_id+" does not exist in database task min jobs level not added");
+                                    Bukkit.getLogger().warning("[SmcTask] Jobs: "+jobs_id+" does not exist in database task min jobs level not added for task: "+id);
                                 }
                             }
                             taskJobsLevelInsert.executeBatch();
@@ -88,7 +91,7 @@ public class ConfigSync extends UtilsDatabase {
                                     taskJobsLevelInsert.setInt(2, taskSection.getInt("reward.jobs_exp."+jobs_id));
                                     taskJobsLevelInsert.addBatch();
                                 } else {
-                                    Bukkit.getLogger().warning("Jobs: "+jobs_id+" does not exist in database task reward exp not added");
+                                    Bukkit.getLogger().warning("[SmcTask] Jobs: "+jobs_id+" does not exist in database task reward exp not added for task: "+id);
                                 }
                             }
                             taskJobsLevelInsert.executeBatch();
@@ -123,14 +126,19 @@ public class ConfigSync extends UtilsDatabase {
                 } /*else {
                     Bukkit.getLogger().info("rarity '"+id+"' already exist");
                 }*/
+                sync_task_num++;
             }
         } catch (Exception e) {
+            Bukkit.getLogger().warning("[SmcTask] Error on task sync");
+            Bukkit.getPluginManager().disablePlugin(getSmcTaskInstance());
             e.printStackTrace();
         }
+        return sync_task_num;
     }
 
-    public void syncCondition(ArrayList<ConfigurationSection> conditionConfig) {
+    public int syncCondition(ArrayList<ConfigurationSection> conditionConfig) {
         String prefix = super.prefix;
+        int sync_condition_num = 0;
         try (
                 Connection conn = getConnection()
         ){
@@ -163,17 +171,22 @@ public class ConfigSync extends UtilsDatabase {
                 } /*else {
                     Bukkit.getLogger().info("rarity '"+id+"' already exist");
                 }*/
+                sync_condition_num++;
             }
             conditionInsert.executeBatch();
 
         } //catch (NullPointerException ignored) {}
         catch (Exception e) {
+            Bukkit.getLogger().warning("[SmcTask] Error on Condition sync");
+            Bukkit.getPluginManager().disablePlugin(getSmcTaskInstance());
             e.printStackTrace();
         }
+        return sync_condition_num;
     }
 
-    public void syncJobs(ArrayList<ConfigurationSection> jobsConfig) {
+    public int syncJobs(ArrayList<ConfigurationSection> jobsConfig) {
         String prefix = super.prefix;
+        int sync_jobs_num = 0;
         try (
                 Connection conn = getConnection()
                 ) {
@@ -192,15 +205,20 @@ public class ConfigSync extends UtilsDatabase {
                 } /*else {
                     Bukkit.getLogger().info("jobs '"+id+"' already exist");
                 }*/
+                sync_jobs_num++;
             }
             jobsInsert.executeBatch();
         } catch (Exception e) {
+            Bukkit.getLogger().warning("[SmcTask] Error on Jobs sync");
+            Bukkit.getPluginManager().disablePlugin(getSmcTaskInstance());
             e.printStackTrace();
         }
+        return sync_jobs_num;
     }
 
-    public void syncRarity(ArrayList<ConfigurationSection> rarityConfig) {
+    public int syncRarity(ArrayList<ConfigurationSection> rarityConfig) {
         String prefix = super.prefix;
+        int sync_rarity_num = 0;
         try (
                 Connection conn = getConnection()
                 ){
@@ -222,10 +240,14 @@ public class ConfigSync extends UtilsDatabase {
                 } /*else {
                     Bukkit.getLogger().info("rarity '"+id+"' already exist");
                 }*/
+                sync_rarity_num++;
             }
             rarityInsert.executeBatch();
         } catch (Exception e) {
+            Bukkit.getLogger().warning("[SmcTask] Error on Rarity sync");
+            Bukkit.getPluginManager().disablePlugin(getSmcTaskInstance());
             e.printStackTrace();
         }
+        return sync_rarity_num;
     }
 }

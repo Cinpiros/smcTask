@@ -7,6 +7,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
+import static fr.cinpiros.SmcTask.getSmcTaskInstance;
+
 public class ConfigDatabase extends UtilsDatabase {
     public void configDatabase() {
         try (Connection conn = getConnection()){
@@ -224,15 +226,31 @@ public class ConfigDatabase extends UtilsDatabase {
             if (!listTables.contains(prefix+"player_daily_task")) {
                 PreparedStatement preRequest = conn.prepareStatement("CREATE TABLE `"+prefix+"player_daily_task` (" +
                         "  `uuid` varchar(36) UNIQUE PRIMARY KEY NOT NULL," +
-                        "  `actual_daily_pick_up_task` int NOT NULL," +
+                        "  `daily_pick_up_task` int NOT NULL," +
                         "  `max_daily_pick_up_task` int NOT NULL," +
-                        "  `for_date` date NOT NULL," +
-                        "  `day_random` int NOT NULL" +
+                        "  `today` date NOT NULL," +
+                        "  `number_panel_task` tinyint NOT NULL" +
                         ");");
                 preRequest.execute();
             }
+
+            if (!listTables.contains(prefix+"player_daily_task_list")) {
+                PreparedStatement preRequest = conn.prepareStatement("CREATE TABLE `"+prefix+"player_daily_task_list` (" +
+                        "  `uuid` varchar(36) NOT NULL," +
+                        "  `FK_player_daily_task_today` date NOT NULL," +
+                        "  `FK_task_id` varchar(100) NOT NULL" +
+                        ");");
+                preRequest.execute();
+                preRequest = conn.prepareStatement("ALTER TABLE `"+prefix+"player_daily_task_list` ADD FOREIGN KEY (`uuid`) REFERENCES `"+prefix+"player_daily_task` (`uuid`);");
+                preRequest.execute();
+                preRequest = conn.prepareStatement("ALTER TABLE `"+prefix+"player_daily_task_list` ADD FOREIGN KEY (`FK_task_id`) REFERENCES `"+prefix+"task` (`id`);");
+                preRequest.execute();
+            }
+            Bukkit.getLogger().info("[SmcTask] Database initialised with success");
+
         } catch (Exception e) {
             Bukkit.getLogger().warning("[SmcTask] Database initialisation error");
+            Bukkit.getPluginManager().disablePlugin(getSmcTaskInstance());
             e.printStackTrace();
         }
     }

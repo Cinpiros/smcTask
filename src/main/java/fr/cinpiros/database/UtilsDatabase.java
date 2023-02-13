@@ -9,15 +9,15 @@ import java.sql.DriverManager;
 
 public class UtilsDatabase {
     public final String prefix;
+    public final Plugin plugin;
 
 
     public UtilsDatabase() {
-        Plugin plugin = SmcTask.getInstance();
-        this.prefix = plugin.getConfig().getString("database.prefix");
+        plugin = SmcTask.getSmcTaskInstance();
+        prefix = plugin.getConfig().getString("database.prefix");
     }
     public Connection getConnection() {
-        Plugin plugin = SmcTask.getInstance();
-        FileConfiguration conf = plugin.getConfig();
+        FileConfiguration conf = this.plugin.getConfig();
         String host = conf.getString("database.host");
         String user = conf.getString("database.user");
         String password = conf.getString("database.password");

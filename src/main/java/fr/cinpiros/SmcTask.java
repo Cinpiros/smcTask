@@ -7,12 +7,13 @@ import fr.cinpiros.handlers.PlayerHandler;
 import fr.cinpiros.utils.CommandHandler;
 import fr.cinpiros.utils.ConfigUtil;
 import org.bukkit.Bukkit;
+import org.bukkit.command.PluginCommand;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.File;
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class SmcTask extends JavaPlugin {
     private static SmcTask instance = null;
@@ -21,7 +22,14 @@ public class SmcTask extends JavaPlugin {
 
 
         instance = this;
-        Objects.requireNonNull(getCommand("task")).setExecutor(new CommandHandler());
+        PluginCommand command = getCommand("task");
+        if (command != null) {
+            command.setExecutor(new CommandHandler());
+        } else {
+            Bukkit.getLogger().warning("[smcTask] can't get command");
+            Bukkit.getPluginManager().disablePlugin(getSmcTaskInstance());
+        }
+
 
         new PlayerHandler(this);
         new InventoryHandler(this);
@@ -29,10 +37,18 @@ public class SmcTask extends JavaPlugin {
 
         saveDefaultConfig();
 
-        this.saveResource("condition/example.yml", false);
-        this.saveResource("task/example.yml", false);
-        this.saveResource("jobs/example.yml", false);
-        this.saveResource("rarity/example.yml", false);
+        if (!new File(this.getDataFolder().getAbsolutePath()+"/condition/example.yml").exists()) {
+            this.saveResource("condition/example.yml", false);
+        }
+        if (!new File(this.getDataFolder().getAbsolutePath()+"/task/example.yml").exists()) {
+            this.saveResource("task/example.yml", false);
+        }
+        if (!new File(this.getDataFolder().getAbsolutePath()+"/jobs/example.yml").exists()) {
+            this.saveResource("jobs/example.yml", false);
+        }
+        if (!new File(this.getDataFolder().getAbsolutePath()+"/rarity/example.yml").exists()) {
+            this.saveResource("rarity/example.yml", false);
+        }
 
 
         ArrayList<ConfigurationSection> taskConfig = new ConfigUtil(this, "task/").loadConfigSection();
@@ -44,24 +60,27 @@ public class SmcTask extends JavaPlugin {
             new ConfigDatabase().configDatabase();
             if (this.getConfig().getBoolean("database.main_config")) {
                 ConfigSync sync = new ConfigSync();
-                sync.syncCondition(conditionConfig);
-                sync.syncJobs(jobsConfig);
-                sync.syncRarity(rarityConfig);
-                sync.syncTask(taskConfig);
+                int sync_condition_num = sync.syncCondition(conditionConfig);
+                int sync_jobs_num = sync.syncJobs(jobsConfig);
+                int sync_rarity_num = sync.syncRarity(rarityConfig);
+                int sync_task_num = sync.syncTask(taskConfig);
+                Bukkit.getLogger().info("[SmcTask] "+sync_task_num+" Task synchronised");
+                Bukkit.getLogger().info("[SmcTask] "+sync_condition_num+" Condition synchronised");
+                Bukkit.getLogger().info("[SmcTask] "+sync_rarity_num+" Rarity synchronised");
+                Bukkit.getLogger().info("[SmcTask] "+sync_jobs_num+" Jobs synchronised");
             }
         }
 
-
-
-        Bukkit.getLogger().info("smcTask Enable");
+        Bukkit.getLogger().info("[SmcTask] Enable correctly");
     }
+
     @Override
     public void onDisable() {
-        Bukkit.getLogger().info("smcTask Disable");
+        Bukkit.getLogger().info("[SmcTask] Disable correctly");
     }
 
 
-    public static Plugin getInstance() {
+    public static Plugin getSmcTaskInstance() {
         return instance;
     }
 }

@@ -25,7 +25,7 @@ public class SaveInventory extends UtilsDatabase {
             psDeletePlayerTaskInventory.executeUpdate();
 
             Map<Integer, Integer> saveInv = new HashMap<>();
-            NamespacedKey key = new NamespacedKey(SmcTask.getInstance(), "instance_task_id");
+            NamespacedKey key = new NamespacedKey(SmcTask.getSmcTaskInstance(), "instance_task_id");
             Inventory player_inv = player.getInventory();
 
 

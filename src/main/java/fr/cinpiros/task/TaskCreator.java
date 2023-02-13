@@ -79,7 +79,7 @@ public class TaskCreator extends UtilsDatabase{
                 }
             }
 
-            NamespacedKey key = new NamespacedKey(SmcTask.getInstance(), "instance_task_id");
+            NamespacedKey key = new NamespacedKey(SmcTask.getSmcTaskInstance(), "instance_task_id");
             meta.getPersistentDataContainer().set(key, PersistentDataType.INTEGER, taskInstanceID);
 
 
@@ -240,7 +240,7 @@ public class TaskCreator extends UtilsDatabase{
                 throw new TaskCreateException("material not found: " + task_id);
             }
 
-            NamespacedKey key = new NamespacedKey(SmcTask.getInstance(), "instance_task_id");
+            NamespacedKey key = new NamespacedKey(SmcTask.getSmcTaskInstance(), "instance_task_id");
             meta.getPersistentDataContainer().set(key, PersistentDataType.INTEGER, task_instance_id);
 
             if (rsTask.getBoolean(4)) {

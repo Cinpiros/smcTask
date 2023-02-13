@@ -15,8 +15,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Random;
 
 public class OpenInventory extends UtilsDatabase {
 
@@ -67,8 +65,58 @@ public class OpenInventory extends UtilsDatabase {
     }
 
     public boolean panelMenu() {
-        Inventory inv  = Bukkit.createInventory(this.player, 9*6, invPanelName);
-        String prefix = super.prefix;
+        final String prefix = super.prefix;
+        final String uuid = this.player.getUniqueId().toString();
+        Integer daily_pick_up_task;
+        final Integer max_daily_pick_up_task;
+        final int number_panel_task; // max 45 9*5
+
+        try (Connection conn = getConnection()) {
+            PreparedStatement psSelectPlayerDailyTask = conn.prepareStatement(
+                    "SELECT daily_pick_up_task, max_daily_pick_up_task, today, number_panel_task FROM " +
+                            prefix+"player_daily_task WHERE uuid = '"+uuid+"';"
+            );
+            ResultSet rsSelectPlayerDailyTask = psSelectPlayerDailyTask.executeQuery();
+
+            if (rsSelectPlayerDailyTask.next()) {
+
+                daily_pick_up_task = rsSelectPlayerDailyTask.getInt(1);
+                max_daily_pick_up_task = rsSelectPlayerDailyTask.getInt(2);
+                number_panel_task = rsSelectPlayerDailyTask.getInt(4);
+
+                if (!rsSelectPlayerDailyTask.getDate(3).toString().equals(java.time.LocalDate.now().toString())) {
+                    //delete all row where uuid random for  number_panel_task set today to today set daily_pick_up_task to max_daily_pick_up_task
+                    // generate task id for number_panel_task and insert it in player_daily_task_list
+                }
+
+            } else {
+                PreparedStatement psInsertPlayerDailyTask = conn.prepareStatement("INSERT INTO " +
+                        prefix+"player_daily_task (uuid, daily_pick_up_task, max_daily_pick_up_task, today, number_panel_task) " +
+                        "VALUE ('"+uuid+"', 5, 5, (SELECT CURDATE()), 21);");
+                int checkExecute = psInsertPlayerDailyTask.executeUpdate();
+
+                if (checkExecute < 0) {
+                    Bukkit.getLogger().warning("[SmcTask] Warn daily task not inserted for user: "+uuid);
+                    return false;
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+
+
+        return true;
+
+
+
+
+
+
+        /*
+        Inventory inv = Bukkit.createInventory(this.player, 9*6, invPanelName);
         ArrayList<String> task_id_list = new ArrayList<>();
         ArrayList<Integer> rarity_list =  new ArrayList<>();
         int total_rarity = 0;
@@ -87,19 +135,15 @@ public class OpenInventory extends UtilsDatabase {
 
             int random = (new Random().nextInt(total_rarity))+1;
 
-            for (int ct = 0; ct < ) {
-            }
+            //for (int ct = 0; ct < ) {
+            //}
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-
-
-
-
         player.openInventory(inv);
 
         return true;
+        */
     }
 }
