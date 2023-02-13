@@ -4,15 +4,12 @@ import fr.cinpiros.commands.GiveTask;
 import fr.cinpiros.commands.GiveTaskClasseur;
 import fr.cinpiros.inventory.OpenInventory;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class CommandHandler implements CommandExecutor {
@@ -20,10 +17,14 @@ public class CommandHandler implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String [] args) {
         if (args.length == 0){
-            sender.sendMessage("/task <commande>");
+            if (sender instanceof Player) {
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&c/task <commande>"));
+            } else {
+                Bukkit.getLogger().warning("[SmcTask] Commend send with no argument");
+            }
             return true;
         }
-
+        /*
         Player player = null;
         if (args.length >= 2) {
             player = Bukkit.getPlayer(args[1]);
@@ -52,25 +53,99 @@ public class CommandHandler implements CommandExecutor {
                     return true;
                 }
             }
-        }
+        }*/
+
         boolean commandReturn = true;
         switch (args[0]) {
-            case "presentoire", "menutask" -> commandReturn = new OpenInventory(player).panelMenu();
+            case "config" -> {
+                commandReturn = new Test().test();
+            }
 
-            case "taskbundle", "bundle" -> commandReturn = new GiveTaskClasseur(player).giveClasseur();
+            case "panel" -> {
+                if (args.length < 2) {
+                    if (sender instanceof Player) {
+                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&c/task "+args[0]+" <player>"));
+                    } else {
+                        Bukkit.getLogger().info("[SmcTask] Wrong usage of command: task "+args[0]+" <player>");
+                    }
+                    break;
+                }
+
+                final Player player = Bukkit.getPlayer(args[1]);
+
+                if (player == null) {
+                    if (sender instanceof Player) {
+                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&cThis player is not connected"));
+                    } else {
+                        Bukkit.getLogger().info("[SmcTask] Command send non-existent player");
+                    }
+                    break;
+                }
+
+                commandReturn = new OpenInventory(player).panelMenu();
+            }
+
+            case "workbook" -> {
+                if (args.length < 2) {
+                    if (sender instanceof Player) {
+                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&c/task "+args[0]+" <player>"));
+                    } else {
+                        Bukkit.getLogger().warning("[SmcTask] Wrong usage of command: task "+args[0]+" <player>");
+                    }
+                    break;
+                }
+
+                final Player player = Bukkit.getPlayer(args[1]);
+
+                if (player == null) {
+                    if (sender instanceof Player) {
+                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&cThis player is not connected"));
+                    } else {
+                        Bukkit.getLogger().warning("[SmcTask] Command send non-existent player");
+                    }
+                    break;
+                }
+
+                commandReturn = new GiveTaskClasseur(player).giveClasseur();
+            }
 
             case "give" -> {
+                if (args.length < 2) {
+                    if (sender instanceof Player) {
+                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&c/task "+args[0]+" <player>"));
+                    } else {
+                        Bukkit.getLogger().warning("[SmcTask] Wrong usage of command: task "+args[0]+" <player>");
+                    }
+                    break;
+                }
+
+                final Player player = Bukkit.getPlayer(args[1]);
+
+                if (player == null) {
+                    if (sender instanceof Player) {
+                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&cThis player is not connected"));
+                    } else {
+                        Bukkit.getLogger().warning("[SmcTask] Command send non-existent player");
+                    }
+                    break;
+                }
+
+
                 if (args[2] != null) {
                     commandReturn = new GiveTask(player, sender).giveTask(args[2]);
                 } else {
-                    sender.sendMessage("/task "+args[0]+" "+player+" <task id>");
+                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&c/task "+args[0]+" "+player+" <task id>"));
                 }
             }
 
-            default -> Bukkit.getLogger().info("argument not found /task help");
+            default -> {
+                if (sender instanceof Player) {
+                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&cArgument not found /task help"));
+                } else {
+                    Bukkit.getLogger().warning("[SmcTask] Command send with wrong arguments");
+                }
+            }
         }
-
-
         return commandReturn;
     }
 }

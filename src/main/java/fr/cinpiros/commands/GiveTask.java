@@ -4,6 +4,7 @@ import fr.cinpiros.database.UtilsDatabase;
 import fr.cinpiros.exeption.TaskCreateException;
 import fr.cinpiros.task.TaskCreator;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -30,7 +31,7 @@ public class GiveTask extends UtilsDatabase {
             return false;
         } catch (TaskCreateException e) {
             if (sender instanceof Player) {
-                sender.sendMessage("Error: unable to give task with this id");
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&cError: unable to give task with this id"));
             } else {
                 Bukkit.getLogger().warning(e.getMessage());
             }

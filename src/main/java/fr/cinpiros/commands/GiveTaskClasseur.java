@@ -16,7 +16,7 @@ import java.util.List;
 public class GiveTaskClasseur {
 
     private final Player player;
-    public static final Component itemName = Component.text("Classeur").color(NamedTextColor.YELLOW)
+    public static final Component itemName = Component.text("Workbook").color(NamedTextColor.YELLOW)
             .decoration(TextDecoration.ITALIC, false);
 
     public GiveTaskClasseur(Player player) {

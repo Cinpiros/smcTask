@@ -110,3 +110,11 @@ table player_quest_inventory {
   uuid varchar(36) [not null]
   slot tinyint [not null]
 }
+
+table player_daily_task {
+  uuid varchar(36) [PK, not null, unique]
+  actual_daily_pick_up_task int [not null]
+  max_daily_pick_up_task int [not null]
+  for_date date [not null]
+  day_random int [not null]
+}

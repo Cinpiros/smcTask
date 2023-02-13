@@ -103,6 +103,12 @@ DELETE FROM smctask_jobs WHERE id = 'ami_des_elfe' AND
 SELECT id FROM smctask_jobs WHERE id = 'ami_des_elfe';
 
 
+#select task id with rarity
+SELECT smctask_task.id, smctask_rarity.rarity FROM smctask_task INNER JOIN smctask_rarity
+ ON smctask_rarity.id = smctask_task.FK_rarity_id;
+
+
+
 #delete task_instance from player task inventory where uuid and slot
 DELETE FROM smctask_player_task_inventory WHERE uuid = '00000000-0000-0000-0000-000000000000' AND slot = 1;
 

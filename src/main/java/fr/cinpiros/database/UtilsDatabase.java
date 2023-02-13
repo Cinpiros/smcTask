@@ -8,6 +8,13 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 
 public class UtilsDatabase {
+    public final String prefix;
+
+
+    public UtilsDatabase() {
+        Plugin plugin = SmcTask.getInstance();
+        this.prefix = plugin.getConfig().getString("database.prefix");
+    }
     public Connection getConnection() {
         Plugin plugin = SmcTask.getInstance();
         FileConfiguration conf = plugin.getConfig();
@@ -33,11 +40,6 @@ public class UtilsDatabase {
         }catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    public String getPrefix() {
-        Plugin plugin = SmcTask.getInstance();
-        return plugin.getConfig().getString("database.prefix");
     }
 
     public final String selectTask(final String prefix, final String task_id) {
@@ -121,4 +123,10 @@ public class UtilsDatabase {
     public final String insertPlayerTaskInventory(final String prefix) {
         return "INSERT INTO "+prefix+"player_task_inventory (FK_task_instance_id, uuid, slot) VALUE (?, ?, ?);";
     }
+
+    public final String selectAllTaskIdRairty(final String prefix) {
+        return "SELECT "+prefix+"task.id, "+prefix+"rarity.rarity FROM "+prefix+"task INNER JOIN smctask_rarity" +
+                " ON smctask_rarity.id = smctask_task.FK_rarity_id;";
+    }
+
 }

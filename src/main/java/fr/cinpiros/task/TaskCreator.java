@@ -21,7 +21,7 @@ import java.util.List;
 
 public class TaskCreator extends UtilsDatabase{
     public ItemStack createTask(final String task_id) throws SQLException, TaskCreateException {
-        final String prefix = getPrefix();
+        final String prefix = super.prefix;
 
         ItemStack item;
         ItemMeta meta;
@@ -201,7 +201,7 @@ public class TaskCreator extends UtilsDatabase{
     }
 
     public ItemStack getTaskForInventory(final Integer task_instance_id) throws SQLException, TaskCreateException {
-        final String prefix = getPrefix();
+        final String prefix = super.prefix;
 
         ItemStack item;
         ItemMeta meta;

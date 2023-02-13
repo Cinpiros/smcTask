@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class ConfigDatabase extends UtilsDatabase {
     public void configDatabase() {
         try (Connection conn = getConnection()){
-            String prefix = getPrefix();
+            String prefix = super.prefix;
             PreparedStatement requestListTable = conn.prepareStatement("SHOW TABLES;");
             ResultSet rsListTables = requestListTable.executeQuery();
 
@@ -31,7 +31,6 @@ public class ConfigDatabase extends UtilsDatabase {
                         "  `deposit_effect_sound` varchar(100) NOT NULL" +
                         ");");
                 preRequest.execute();
-                Bukkit.getLogger().info("Table rarity created");
             }
 
             if (!listTables.contains(prefix+"task")) {
@@ -51,7 +50,6 @@ public class ConfigDatabase extends UtilsDatabase {
                 preRequest.execute();
                 preRequest = conn.prepareStatement("ALTER TABLE `"+prefix+"task` ADD FOREIGN KEY (`FK_rarity_id`) REFERENCES `"+prefix+"rarity` (`id`);");
                 preRequest.execute();
-                Bukkit.getLogger().info("Table task created");
             }
 
             if (!listTables.contains(prefix+"task_description")) {
@@ -63,7 +61,6 @@ public class ConfigDatabase extends UtilsDatabase {
                 preRequest.execute();
                 preRequest = conn.prepareStatement("ALTER TABLE `"+prefix+"task_description` ADD FOREIGN KEY (`FK_task_id`) REFERENCES `"+prefix+"task` (`id`);");
                 preRequest.execute();
-                Bukkit.getLogger().info("Table task_description created");
             }
 
             if (!listTables.contains(prefix+"jobs")) {
@@ -75,7 +72,6 @@ public class ConfigDatabase extends UtilsDatabase {
                         "  `max_level` int NOT NULL" +
                         ");");
                 preRequest.execute();
-                Bukkit.getLogger().info("Table jobs created");
             }
 
             if (!listTables.contains(prefix+"task_jobs_level")) {
@@ -92,7 +88,6 @@ public class ConfigDatabase extends UtilsDatabase {
                 preRequest.execute();
                 preRequest = conn.prepareStatement("ALTER TABLE `"+prefix+"task_jobs_level` ADD UNIQUE (`FK_task_id`, `FK_jobs_id`);");
                 preRequest.execute();
-                Bukkit.getLogger().info("Table task_jobs_level created");
             }
 
             if (!listTables.contains(prefix+"condition")) {
@@ -106,7 +101,6 @@ public class ConfigDatabase extends UtilsDatabase {
                         "  `quantity` int" +
                         ");");
                 preRequest.execute();
-                Bukkit.getLogger().info("Table condition created");
             }
 
             if (!listTables.contains(prefix+"task_condition")) {
@@ -120,7 +114,6 @@ public class ConfigDatabase extends UtilsDatabase {
                 preRequest.execute();
                 preRequest = conn.prepareStatement("ALTER TABLE `"+prefix+"task_condition` ADD FOREIGN KEY (`FK_condition_condition_id`) REFERENCES `"+prefix+"condition` (`condition_id`);");
                 preRequest.execute();
-                Bukkit.getLogger().info("Table task_condition created");
             }
 
             if (!listTables.contains(prefix+"task_reward_jobs_exp")) {
@@ -137,7 +130,6 @@ public class ConfigDatabase extends UtilsDatabase {
                 preRequest.execute();
                 preRequest = conn.prepareStatement("ALTER TABLE `"+prefix+"task_reward_jobs_exp` ADD UNIQUE (`FK_task_id`, `FK_jobs_id`);");
                 preRequest.execute();
-                Bukkit.getLogger().info("Table task_reward_jobs_exp created");
             }
 
             if (!listTables.contains(prefix+"task_reward_item")) {
@@ -150,7 +142,6 @@ public class ConfigDatabase extends UtilsDatabase {
                 preRequest.execute();
                 preRequest = conn.prepareStatement("ALTER TABLE `"+prefix+"task_reward_item` ADD FOREIGN KEY (`FK_task_id`) REFERENCES `"+prefix+"task` (`id`);");
                 preRequest.execute();
-                Bukkit.getLogger().info("Table task_reward_item created");
             }
 
             if (!listTables.contains(prefix+"task_reward_command")) {
@@ -163,7 +154,6 @@ public class ConfigDatabase extends UtilsDatabase {
                 preRequest.execute();
                 preRequest = conn.prepareStatement("ALTER TABLE `"+prefix+"task_reward_command` ADD FOREIGN KEY (`FK_task_id`) REFERENCES `"+prefix+"task` (`id`);");
                 preRequest.execute();
-                Bukkit.getLogger().info("Table task_reward_command created");
             }
 
             if (!listTables.contains(prefix+"player_jobs_exp")) {
@@ -177,7 +167,6 @@ public class ConfigDatabase extends UtilsDatabase {
                 preRequest.execute();
                 preRequest = conn.prepareStatement("ALTER TABLE `"+prefix+"player_jobs_exp` ADD FOREIGN KEY (`FK_jobs_id`) REFERENCES `"+prefix+"jobs` (`id`);");
                 preRequest.execute();
-                Bukkit.getLogger().info("Table player_jobs_exp created");
             }
 
             if (!listTables.contains(prefix+"task_instance")) {
@@ -189,7 +178,6 @@ public class ConfigDatabase extends UtilsDatabase {
                 preRequest.execute();
                 preRequest = conn.prepareStatement("ALTER TABLE `"+prefix+"task_instance` ADD FOREIGN KEY (`FK_task_id`) REFERENCES `"+prefix+"task` (`id`);");
                 preRequest.execute();
-                Bukkit.getLogger().info("Table task_instance created");
             }
 
             if (!listTables.contains(prefix+"condition_instance")) {
@@ -208,7 +196,6 @@ public class ConfigDatabase extends UtilsDatabase {
                 preRequest.execute();
                 preRequest = conn.prepareStatement("ALTER TABLE `"+prefix+"condition_instance` ADD FOREIGN KEY (`FK_task_id`) REFERENCES `"+prefix+"task` (`id`);");
                 preRequest.execute();
-                Bukkit.getLogger().info("Table condition_instance created");
             }
 
 
@@ -221,7 +208,6 @@ public class ConfigDatabase extends UtilsDatabase {
                 preRequest.execute();
                 preRequest = conn.prepareStatement("ALTER TABLE `"+prefix+"player_task_inventory` ADD FOREIGN KEY (`FK_task_instance_id`) REFERENCES `"+prefix+"task_instance` (`id`);");
                 preRequest.execute();
-                Bukkit.getLogger().info("Table player_task_inventory created");
             }
 
             if (!listTables.contains(prefix+"player_quest_inventory")) {
@@ -233,10 +219,20 @@ public class ConfigDatabase extends UtilsDatabase {
                 preRequest.execute();
                 preRequest = conn.prepareStatement("ALTER TABLE `"+prefix+"player_quest_inventory` ADD FOREIGN KEY (`FK_task_instance_id`) REFERENCES `"+prefix+"task_instance` (`id`);");
                 preRequest.execute();
-                Bukkit.getLogger().info("Table player_quest_inventory created");
             }
 
+            if (!listTables.contains(prefix+"player_daily_task")) {
+                PreparedStatement preRequest = conn.prepareStatement("CREATE TABLE `"+prefix+"player_daily_task` (" +
+                        "  `uuid` varchar(36) UNIQUE PRIMARY KEY NOT NULL," +
+                        "  `actual_daily_pick_up_task` int NOT NULL," +
+                        "  `max_daily_pick_up_task` int NOT NULL," +
+                        "  `for_date` date NOT NULL," +
+                        "  `day_random` int NOT NULL" +
+                        ");");
+                preRequest.execute();
+            }
         } catch (Exception e) {
+            Bukkit.getLogger().warning("[SmcTask] Database initialisation error");
             e.printStackTrace();
         }
     }

@@ -28,6 +28,7 @@ public class SmcTask extends JavaPlugin {
 
 
         saveDefaultConfig();
+
         this.saveResource("condition/example.yml", false);
         this.saveResource("task/example.yml", false);
         this.saveResource("jobs/example.yml", false);

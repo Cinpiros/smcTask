@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class ConfigSync extends UtilsDatabase {
     public void syncTask(ArrayList<ConfigurationSection> taskConfig) {
-        String prefix = getPrefix();
+        String prefix = super.prefix;
         try (
                 Connection conn = getConnection()
                 ){
@@ -130,7 +130,7 @@ public class ConfigSync extends UtilsDatabase {
     }
 
     public void syncCondition(ArrayList<ConfigurationSection> conditionConfig) {
-        String prefix = getPrefix();
+        String prefix = super.prefix;
         try (
                 Connection conn = getConnection()
         ){
@@ -173,7 +173,7 @@ public class ConfigSync extends UtilsDatabase {
     }
 
     public void syncJobs(ArrayList<ConfigurationSection> jobsConfig) {
-        String prefix = getPrefix();
+        String prefix = super.prefix;
         try (
                 Connection conn = getConnection()
                 ) {
@@ -200,7 +200,7 @@ public class ConfigSync extends UtilsDatabase {
     }
 
     public void syncRarity(ArrayList<ConfigurationSection> rarityConfig) {
-        String prefix = getPrefix();
+        String prefix = super.prefix;
         try (
                 Connection conn = getConnection()
                 ){

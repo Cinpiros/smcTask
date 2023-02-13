@@ -116,6 +116,14 @@ CREATE TABLE `player_quest_inventory` (
   `slot` tinyint NOT NULL
 );
 
+CREATE TABLE `player_daily_task` (
+  `uuid` varchar(36) UNIQUE PRIMARY KEY NOT NULL,
+  `actual_daily_pick_up_task` int NOT NULL,
+  `max_daily_pick_up_task` int NOT NULL,
+  `for_date` date NOT NULL,
+  `day_random` int NOT NULL
+);
+
 ALTER TABLE `task` ADD FOREIGN KEY (`FK_rarity_id`) REFERENCES `rarity` (`id`);
 
 ALTER TABLE `task_description` ADD FOREIGN KEY (`FK_task_id`) REFERENCES `task` (`id`);
