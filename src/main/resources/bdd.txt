@@ -120,7 +120,6 @@ table player_daily_task {
 }
 
 table player_daily_task_list {
-  uuid varchar(36) [not null, ref: > player_daily_task.uuid]
-  FK_player_daily_task_today date [not null]
+  FK_uuid varchar(36) [PK, not null, ref: > player_daily_task.uuid]
   FK_task_id varchar(100) [not null, ref: > task.id]
 }

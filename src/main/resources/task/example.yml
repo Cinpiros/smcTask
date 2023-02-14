@@ -63,3 +63,42 @@ test1:
     reward_on_complete: false
   condition:
     - pickup_stone_64
+
+test2:
+  name: "test2"
+  item: PAPER
+  color: "#A316DC"
+  description:
+    - "lore line 1"
+  rarity: epique
+  config:
+    on_panel: true
+    complete_effect: true
+    deposit_effect: true
+    item_echant_effect: true
+    reward_on_complete: false
+  condition:
+    - harvest_wheat_64
+  jobs_level:
+    ami_des_elfe: 5
+    test_jobs: 15
+    alier_des_nain: 30
+
+test3:
+  name: "test2"
+  item: PAPER
+  color: "#A316DC"
+  description:
+    - "lore line 1"
+  rarity: epique
+  config:
+    on_panel: true
+    complete_effect: true
+    deposit_effect: true
+    item_echant_effect: true
+    reward_on_complete: false
+  condition:
+    - harvest_wheat_64
+  jobs_level:
+    ami_des_elfe: 5
+    alier_des_nain: 5

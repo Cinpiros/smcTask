@@ -1,5 +1,11 @@
 ami_des_elfe:
   name: "Ami des elfe"
   color: "#37ff30"
-  scale: 10 #level exp = player jobs level * player jobs level * scale
+  scale: 10 #level exp = player jobs level * player jobs level * scale level 1 = 10 exp level 100 = 100 000
+  max_level: 100
+
+test_jobs:
+  name: "test jobs"
+  color: "#37ff30"
+  scale: 10 #level exp = player jobs level * player jobs level * scale level 1 = 10 exp level 100 = 100 000
   max_level: 100

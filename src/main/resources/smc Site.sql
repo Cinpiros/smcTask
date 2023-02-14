@@ -125,8 +125,7 @@ CREATE TABLE `player_daily_task` (
 );
 
 CREATE TABLE `player_daily_task_list` (
-  `uuid` varchar(36) NOT NULL,
-  `FK_player_daily_task_today` date NOT NULL,
+  `FK_uuid` varchar(36) PRIMARY KEY NOT NULL,
   `FK_task_id` varchar(100) NOT NULL
 );
 
@@ -164,6 +163,6 @@ ALTER TABLE `player_task_inventory` ADD FOREIGN KEY (`FK_task_instance_id`) REFE
 
 ALTER TABLE `player_quest_inventory` ADD FOREIGN KEY (`FK_task_instance_id`) REFERENCES `task_instance` (`id`);
 
-ALTER TABLE `player_daily_task_list` ADD FOREIGN KEY (`uuid`) REFERENCES `player_daily_task` (`uuid`);
+ALTER TABLE `player_daily_task_list` ADD FOREIGN KEY (`FK_uuid`) REFERENCES `player_daily_task` (`uuid`);
 
 ALTER TABLE `player_daily_task_list` ADD FOREIGN KEY (`FK_task_id`) REFERENCES `task` (`id`);

@@ -236,12 +236,11 @@ public class ConfigDatabase extends UtilsDatabase {
 
             if (!listTables.contains(prefix+"player_daily_task_list")) {
                 PreparedStatement preRequest = conn.prepareStatement("CREATE TABLE `"+prefix+"player_daily_task_list` (" +
-                        "  `uuid` varchar(36) NOT NULL," +
-                        "  `FK_player_daily_task_today` date NOT NULL," +
+                        "  `FK_uuid` varchar(36) PRIMARY KEY NOT NULL," +
                         "  `FK_task_id` varchar(100) NOT NULL" +
                         ");");
                 preRequest.execute();
-                preRequest = conn.prepareStatement("ALTER TABLE `"+prefix+"player_daily_task_list` ADD FOREIGN KEY (`uuid`) REFERENCES `"+prefix+"player_daily_task` (`uuid`);");
+                preRequest = conn.prepareStatement("ALTER TABLE `"+prefix+"player_daily_task_list` ADD FOREIGN KEY (`FK_uuid`) REFERENCES `"+prefix+"player_daily_task` (`uuid`);");
                 preRequest.execute();
                 preRequest = conn.prepareStatement("ALTER TABLE `"+prefix+"player_daily_task_list` ADD FOREIGN KEY (`FK_task_id`) REFERENCES `"+prefix+"task` (`id`);");
                 preRequest.execute();

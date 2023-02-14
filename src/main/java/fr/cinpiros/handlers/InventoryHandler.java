@@ -44,7 +44,7 @@ public class InventoryHandler implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onTaskPanelClick(InventoryClickEvent event) {
-        if (!event.getView().title().equals(OpenInventory.panelName)) {
+        if (!event.getView().title().equals(OpenInventory.invPanelName)) {
             return;
         }
 

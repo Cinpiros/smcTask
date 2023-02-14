@@ -5,18 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c88ecbdf-c6a3-4501-bb64-da24307c827b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/fr/cinpiros/utils/ConfigSettings.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fr/cinpiros/SmcTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/cinpiros/SmcTask.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/fr/cinpiros/database/ConfigDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/cinpiros/database/ConfigDatabase.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fr/cinpiros/database/ConfigSync.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/cinpiros/database/ConfigSync.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fr/cinpiros/database/UtilsDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/cinpiros/database/UtilsDatabase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/cinpiros/handlers/InventoryHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/cinpiros/handlers/InventoryHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/fr/cinpiros/inventory/OpenInventory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/cinpiros/inventory/OpenInventory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fr/cinpiros/inventory/SaveInventory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/cinpiros/inventory/SaveInventory.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/fr/cinpiros/task/TaskCreator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/cinpiros/task/TaskCreator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fr/cinpiros/utils/Test.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/cinpiros/utils/Test.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/bdd.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/bdd.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/jobs/example.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/jobs/example.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/requette sql a faire.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/requette sql a faire.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/smc Site.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/smc Site.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/task/example.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/task/example.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -98,15 +96,15 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "create.test.in.the.same.root": "true",
-    "last_opened_file_path": "C:/Users/pierr/Documents/plugin/smcTask/src/main/resources",
-    "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "inlay.hints"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;create.test.in.the.same.root&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/pierr/Documents/plugin/smcTask/src/main/resources&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;inlay.hints&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\pierr\Documents\plugin\smcTask\src\main\resources" />

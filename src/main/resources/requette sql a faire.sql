@@ -12,6 +12,21 @@ UPDATE smctask_task_instance SET smctask_task_instance.complete = true
 SELECT id from smctask_task WHERE task_id = (SELECT FK_task_id FROM smctask_task_instance WHERE id = 123);
 
 
+#select task_id and rarity where player can have task because player have higher level than task minimum level
+SELECT smctask_task.id, smctask_rarity.rarity FROM smctask_task INNER JOIN smctask_rarity
+ ON smctask_rarity.id = smctask_task.FK_rarity_id
+ WHERE (SELECT count(smctask_task_jobs_level.FK_task_id) FROM smctask_task_jobs_level, smctask_player_jobs_exp
+WHERE smctask_task_jobs_level.FK_task_id =  smctask_task.id
+AND smctask_player_jobs_exp.uuid = '00000000-0000-0000-0000-000000000000'
+AND smctask_task_jobs_level.FK_jobs_id = smctask_player_jobs_exp.FK_jobs_id
+AND smctask_task_jobs_level.level > smctask_player_jobs_exp.level) = 0 ORDER BY smctask_rarity.rarity DESC;
+
+
+
+
+
+
+
 #select condition id and description
 SELECT smctask_condition.description, smctask_task_condition.FK_condition_condition_id, smctask_condition.complete_description
  FROM smctask_task_condition INNER JOIN smctask_condition
@@ -107,6 +122,10 @@ SELECT id FROM smctask_jobs WHERE id = 'ami_des_elfe';
 SELECT smctask_task.id, smctask_rarity.rarity FROM smctask_task INNER JOIN smctask_rarity
  ON smctask_rarity.id = smctask_task.FK_rarity_id;
 
+
+#Insert into player_daily_task new user
+INSERT INTO smctask_player_daily_task (uuid, daily_pick_up_task, max_daily_pick_up_task, today, number_panel_task)
+VALUE ('00000000-0000-0000-0000-000000000000', 0, 5, (SELECT CURDATE()), 45);
 
 
 #delete task_instance from player task inventory where uuid and slot
