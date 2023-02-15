@@ -21,8 +21,6 @@ import java.util.List;
 
 public class TaskCreator extends UtilsDatabase{
     public ItemStack createTask(final String task_id) throws SQLException, TaskCreateException {
-        final String prefix = super.prefix;
-
         ItemStack item;
         ItemMeta meta;
         List<Component> lore = new ArrayList<>();
@@ -32,8 +30,13 @@ public class TaskCreator extends UtilsDatabase{
         String rarity_color;
 
         try (Connection conn = getConnection()){
-            PreparedStatement psSelectTask = conn.prepareStatement(selectTask(prefix, task_id));
-
+            PreparedStatement psSelectTask = conn.prepareStatement("SELECT "+
+                    super.prefix+"task.name, "+super.prefix+"task.item, "+super.prefix+"task.color, "+
+                    super.prefix+"task.item_enchant_effect, " +
+                    super.prefix+"task.reward_money, "+super.prefix+"rarity.name, "+super.prefix+"rarity.color" +
+                    " FROM "+super.prefix+"task LEFT OUTER JOIN "+super.prefix+"rarity ON " +
+                    super.prefix+"task.FK_rarity_id = "+super.prefix+"rarity.id WHERE "+
+                    super.prefix+"task.id = '"+task_id+"' LIMIT 1;");
             ResultSet rsTask = psSelectTask.executeQuery();
 
             if (!rsTask.next()) {
@@ -64,7 +67,8 @@ public class TaskCreator extends UtilsDatabase{
 
 
 
-            PreparedStatement statementInsertTaskInstance = conn.prepareStatement(insertTaskInstance(prefix, task_id), Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement statementInsertTaskInstance = conn.prepareStatement("INSERT INTO " +
+                    super.prefix + "task_instance (FK_task_id) VALUE ('" + task_id + "');", Statement.RETURN_GENERATED_KEYS);
 
             int affectedRows = statementInsertTaskInstance.executeUpdate();
 
@@ -83,10 +87,15 @@ public class TaskCreator extends UtilsDatabase{
             meta.getPersistentDataContainer().set(key, PersistentDataType.INTEGER, taskInstanceID);
 
 
-            PreparedStatement psSelectConditionDescription = conn.prepareStatement(selectConditionDescription(prefix, task_id));
+            PreparedStatement psSelectConditionDescription = conn.prepareStatement("SELECT "+
+                    super.prefix + "condition.description, " + super.prefix + "task_condition.FK_condition_condition_id FROM " +
+                    super.prefix + "task_condition INNER JOIN " + super.prefix + "condition ON " +
+                    super.prefix + "task_condition.FK_condition_condition_id = " + super.prefix + "condition.condition_id WHERE " +
+                    super.prefix + "task_condition.FK_task_id = '" + task_id + "';");
             ResultSet rsConditionDescription = psSelectConditionDescription.executeQuery();
 
-            PreparedStatement conditionInstanceInsert = conn.prepareStatement(insertConditionInstance(prefix));
+            PreparedStatement conditionInstanceInsert = conn.prepareStatement("INSERT INTO " +
+                    super.prefix + "condition_instance (FK_task_instance_id, FK_condition_condition_id, FK_task_id) VALUE ("+taskInstanceID+", ?, '"+task_id+"');");
 
             while (rsConditionDescription.next()) {
                 lore.add(Component.text(ChatColor.translateAlternateColorCodes('&',
@@ -95,16 +104,15 @@ public class TaskCreator extends UtilsDatabase{
                                         .replace("%t%", "0J 00:00")))
                         .decoration(TextDecoration.ITALIC, false));
 
-                conditionInstanceInsert.setInt(1, taskInstanceID);
-                conditionInstanceInsert.setString(2, rsConditionDescription.getString(2));
-                conditionInstanceInsert.setString(3, task_id);
+                conditionInstanceInsert.setString(1, rsConditionDescription.getString(2));
                 conditionInstanceInsert.addBatch();
             }
             conditionInstanceInsert.executeBatch();
 
             lore.add(Component.text("    "));
 
-            PreparedStatement psSelectTaskDescription = conn.prepareStatement(selectTaskDescription(prefix, task_id));
+            PreparedStatement psSelectTaskDescription = conn.prepareStatement("SELECT lore FROM "+
+                    super.prefix+"task_description WHERE FK_task_id = '" + task_id + "' ORDER BY id;");
             ResultSet rsTask_description = psSelectTaskDescription.executeQuery();
 
             boolean haveDescription = false;
@@ -132,7 +140,8 @@ public class TaskCreator extends UtilsDatabase{
                 index_reward_line = lore.size() - 1;
             }
 
-            PreparedStatement psSelectTaskRewardItem = conn.prepareStatement(selectTaskRewardItem(prefix, task_id));
+            PreparedStatement psSelectTaskRewardItem = conn.prepareStatement("SELECT item, quantity FROM " +
+                    super.prefix + "task_reward_item WHERE FK_task_id = '" + task_id + "' ORDER BY id;");
             ResultSet rsTaskRewardItem = psSelectTaskRewardItem.executeQuery();
 
             boolean haveRewardItem = false;
@@ -148,7 +157,8 @@ public class TaskCreator extends UtilsDatabase{
                 lore.add(Component.text("    "));
             }
 
-            PreparedStatement psSelectTaskRewardCommand = conn.prepareStatement(selectTaskRewardCommandDescription(prefix, task_id));
+            PreparedStatement psSelectTaskRewardCommand = conn.prepareStatement("SELECT description FROM " +
+                    super.prefix + "task_reward_command WHERE FK_task_id = '" + task_id + "' ORDER BY id;");
             ResultSet rsTaskRewardCommand = psSelectTaskRewardCommand.executeQuery();
 
             boolean haveRewardCommand = false;
@@ -162,7 +172,11 @@ public class TaskCreator extends UtilsDatabase{
                 lore.add(Component.text("    "));
             }
 
-            PreparedStatement psSelectTaskRewardJobsExp = conn.prepareStatement(selectTaskRewardJobsExp(prefix, task_id));
+            PreparedStatement psSelectTaskRewardJobsExp = conn.prepareStatement("SELECT " +
+                    super.prefix + "jobs.name, " + super.prefix + "jobs.color, " + super.prefix + "task_reward_jobs_exp.exp FROM " +
+                    super.prefix + "task_reward_jobs_exp INNER JOIN " + super.prefix + "jobs ON " +
+                    super.prefix + "task_reward_jobs_exp.FK_jobs_id = " + super.prefix + "jobs.id WHERE " +
+                    super.prefix + "task_reward_jobs_exp.FK_task_id = '" + task_id + "';");
             ResultSet rsTaskRewardJobsExp = psSelectTaskRewardJobsExp.executeQuery();
 
             boolean haveRewardJobsExp = false;
@@ -201,7 +215,6 @@ public class TaskCreator extends UtilsDatabase{
     }
 
     public ItemStack getTaskForPanel(final String task_id) throws SQLException, TaskCreateException {
-        final String prefix = super.prefix;
 
         ItemStack item;
         ItemMeta meta;
@@ -212,8 +225,11 @@ public class TaskCreator extends UtilsDatabase{
         String rarity_color;
 
         try (Connection conn = getConnection()){
-            PreparedStatement psSelectTask = conn.prepareStatement(selectTask(prefix, task_id));
-
+            PreparedStatement psSelectTask = conn.prepareStatement("SELECT "+super.prefix+"task.name, "+
+                    super.prefix+"task.item, "+super.prefix+"task.color, "+super.prefix+"task.item_enchant_effect, " +
+                    super.prefix+"task.reward_money, "+super.prefix+"rarity.name, "+super.prefix+"rarity.color" +
+                    " FROM "+super.prefix+"task LEFT OUTER JOIN "+super.prefix+"rarity ON " +
+                    super.prefix+"task.FK_rarity_id = "+super.prefix+"rarity.id WHERE "+super.prefix+"task.id = '"+task_id+"' LIMIT 1;");
             ResultSet rsTask = psSelectTask.executeQuery();
 
             if (!rsTask.next()) {
@@ -240,33 +256,17 @@ public class TaskCreator extends UtilsDatabase{
             rarity_name = rsTask.getString(6);
             rarity_color = rsTask.getString(7);
 
-            int taskInstanceID;
+
+            NamespacedKey key = new NamespacedKey(SmcTask.getSmcTaskInstance(), "task_id");
+            meta.getPersistentDataContainer().set(key, PersistentDataType.STRING, task_id);
 
 
-
-            PreparedStatement statementInsertTaskInstance = conn.prepareStatement(insertTaskInstance(prefix, task_id), Statement.RETURN_GENERATED_KEYS);
-
-            int affectedRows = statementInsertTaskInstance.executeUpdate();
-
-            if (affectedRows == 0) {
-                throw new TaskCreateException("task instance not created: "+task_id);
-            }
-            try (ResultSet generatedKeys = statementInsertTaskInstance.getGeneratedKeys()) {
-                if (generatedKeys.next()) {
-                    taskInstanceID = generatedKeys.getInt(1);
-                } else {
-                    throw new TaskCreateException("task generated key missing: "+task_id);
-                }
-            }
-
-            NamespacedKey key = new NamespacedKey(SmcTask.getSmcTaskInstance(), "instance_task_id");
-            meta.getPersistentDataContainer().set(key, PersistentDataType.INTEGER, taskInstanceID);
-
-
-            PreparedStatement psSelectConditionDescription = conn.prepareStatement(selectConditionDescription(prefix, task_id));
+            PreparedStatement psSelectConditionDescription = conn.prepareStatement("SELECT "+
+                    super.prefix + "condition.description FROM " +
+                    super.prefix + "task_condition INNER JOIN " + super.prefix + "condition ON " +
+                    super.prefix + "task_condition.FK_condition_condition_id = " + super.prefix + "condition.condition_id WHERE " +
+                    super.prefix + "task_condition.FK_task_id = '" + task_id + "';");
             ResultSet rsConditionDescription = psSelectConditionDescription.executeQuery();
-
-            PreparedStatement conditionInstanceInsert = conn.prepareStatement(insertConditionInstance(prefix));
 
             while (rsConditionDescription.next()) {
                 lore.add(Component.text(ChatColor.translateAlternateColorCodes('&',
@@ -274,17 +274,12 @@ public class TaskCreator extends UtilsDatabase{
                                         .replace("%q%", "0")
                                         .replace("%t%", "0J 00:00")))
                         .decoration(TextDecoration.ITALIC, false));
-
-                conditionInstanceInsert.setInt(1, taskInstanceID);
-                conditionInstanceInsert.setString(2, rsConditionDescription.getString(2));
-                conditionInstanceInsert.setString(3, task_id);
-                conditionInstanceInsert.addBatch();
             }
-            conditionInstanceInsert.executeBatch();
 
             lore.add(Component.text("    "));
 
-            PreparedStatement psSelectTaskDescription = conn.prepareStatement(selectTaskDescription(prefix, task_id));
+            PreparedStatement psSelectTaskDescription = conn.prepareStatement("SELECT lore FROM "+
+                    super.prefix+"task_description WHERE FK_task_id = '" + task_id + "' ORDER BY id;");
             ResultSet rsTask_description = psSelectTaskDescription.executeQuery();
 
             boolean haveDescription = false;
@@ -312,7 +307,8 @@ public class TaskCreator extends UtilsDatabase{
                 index_reward_line = lore.size() - 1;
             }
 
-            PreparedStatement psSelectTaskRewardItem = conn.prepareStatement(selectTaskRewardItem(prefix, task_id));
+            PreparedStatement psSelectTaskRewardItem = conn.prepareStatement("SELECT item, quantity FROM " +
+                    super.prefix + "task_reward_item WHERE FK_task_id = '" + task_id + "' ORDER BY id;");
             ResultSet rsTaskRewardItem = psSelectTaskRewardItem.executeQuery();
 
             boolean haveRewardItem = false;
@@ -328,7 +324,8 @@ public class TaskCreator extends UtilsDatabase{
                 lore.add(Component.text("    "));
             }
 
-            PreparedStatement psSelectTaskRewardCommand = conn.prepareStatement(selectTaskRewardCommandDescription(prefix, task_id));
+            PreparedStatement psSelectTaskRewardCommand = conn.prepareStatement("SELECT description FROM " +
+                    super.prefix + "task_reward_command WHERE FK_task_id = '" + task_id + "' ORDER BY id;");
             ResultSet rsTaskRewardCommand = psSelectTaskRewardCommand.executeQuery();
 
             boolean haveRewardCommand = false;
@@ -342,7 +339,11 @@ public class TaskCreator extends UtilsDatabase{
                 lore.add(Component.text("    "));
             }
 
-            PreparedStatement psSelectTaskRewardJobsExp = conn.prepareStatement(selectTaskRewardJobsExp(prefix, task_id));
+            PreparedStatement psSelectTaskRewardJobsExp = conn.prepareStatement("SELECT " +
+                    super.prefix + "jobs.name, " + super.prefix + "jobs.color, " + super.prefix + "task_reward_jobs_exp.exp FROM " +
+                    super.prefix + "task_reward_jobs_exp INNER JOIN " + super.prefix + "jobs ON " +
+                    super.prefix + "task_reward_jobs_exp.FK_jobs_id = " + super.prefix + "jobs.id WHERE " +
+                    super.prefix + "task_reward_jobs_exp.FK_task_id = '" + task_id + "';");
             ResultSet rsTaskRewardJobsExp = psSelectTaskRewardJobsExp.executeQuery();
 
             boolean haveRewardJobsExp = false;
@@ -381,8 +382,6 @@ public class TaskCreator extends UtilsDatabase{
     }
 
     public ItemStack getTaskForInventory(final Integer task_instance_id) throws SQLException, TaskCreateException {
-        final String prefix = super.prefix;
-
         ItemStack item;
         ItemMeta meta;
         List<Component> lore = new ArrayList<>();
@@ -393,7 +392,9 @@ public class TaskCreator extends UtilsDatabase{
         final String task_id;
 
         try (Connection conn = getConnection()) {
-            PreparedStatement psSelectTaskId = conn.prepareStatement(selectTaskId(prefix, task_instance_id));
+            PreparedStatement psSelectTaskId = conn.prepareStatement("SELECT id from "+
+                    super.prefix+"task WHERE id = (SELECT FK_task_id FROM " +
+                    super.prefix+"task_instance WHERE id = "+task_instance_id+");");
             ResultSet rsTaskId = psSelectTaskId.executeQuery();
 
             if (rsTaskId.next()) {
@@ -404,7 +405,13 @@ public class TaskCreator extends UtilsDatabase{
 
 
 
-            PreparedStatement psSelectTask = conn.prepareStatement(selectTask(prefix, task_id));
+            PreparedStatement psSelectTask = conn.prepareStatement("SELECT "+
+                    super.prefix+"task.name, "+super.prefix+"task.item, "+super.prefix+"task.color, "+
+                    super.prefix+"task.item_enchant_effect, " +
+                    super.prefix+"task.reward_money, "+super.prefix+"rarity.name, "+super.prefix+"rarity.color" +
+                    " FROM "+super.prefix+"task LEFT OUTER JOIN "+super.prefix+"rarity ON " +
+                    super.prefix+"task.FK_rarity_id = "+super.prefix+"rarity.id WHERE "+
+                    super.prefix+"task.id = '"+task_id+"' LIMIT 1;");
 
             ResultSet rsTask = psSelectTask.executeQuery();
 
@@ -435,10 +442,17 @@ public class TaskCreator extends UtilsDatabase{
             rarity_name = rsTask.getString(6);
             rarity_color = rsTask.getString(7);
 
-            PreparedStatement psSelectConditionDescription = conn.prepareStatement(selectConditionDescription(prefix, task_id));
+            PreparedStatement psSelectConditionDescription = conn.prepareStatement("SELECT "+
+                    super.prefix + "condition.description, " + super.prefix + "task_condition.FK_condition_condition_id, " +
+                    super.prefix+"condition.complete_description FROM " +
+                    super.prefix + "task_condition INNER JOIN " + super.prefix + "condition ON " +
+                    super.prefix + "task_condition.FK_condition_condition_id = " + super.prefix + "condition.condition_id WHERE " +
+                    super.prefix + "task_condition.FK_task_id = '" + task_id + "';");
             ResultSet rsConditionDescription = psSelectConditionDescription.executeQuery();
 
-            PreparedStatement conditionInstanceSelect = conn.prepareStatement(selectConditionInstance(prefix, task_instance_id));
+            PreparedStatement conditionInstanceSelect = conn.prepareStatement("SELECT quantity, complete FROM "+
+                    super.prefix+"condition_instance WHERE FK_task_instance_id = " +
+                    task_instance_id+" AND FK_condition_condition_id = ?;");
 
             while (rsConditionDescription.next()) {
                 conditionInstanceSelect.setString(1, rsConditionDescription.getString(2));
@@ -466,7 +480,8 @@ public class TaskCreator extends UtilsDatabase{
 
             lore.add(Component.text("    "));
 
-            PreparedStatement psSelectTaskDescription = conn.prepareStatement(selectTaskDescription(prefix, task_id));
+            PreparedStatement psSelectTaskDescription = conn.prepareStatement("SELECT lore FROM "+
+                    super.prefix+"task_description WHERE FK_task_id = '" + task_id + "' ORDER BY id;");
             ResultSet rsTask_description = psSelectTaskDescription.executeQuery();
 
             boolean haveDescription = false;
@@ -494,7 +509,8 @@ public class TaskCreator extends UtilsDatabase{
                 index_reward_line = lore.size() - 1;
             }
 
-            PreparedStatement psSelectTaskRewardItem = conn.prepareStatement(selectTaskRewardItem(prefix, task_id));
+            PreparedStatement psSelectTaskRewardItem = conn.prepareStatement("SELECT item, quantity FROM " +
+                    super.prefix + "task_reward_item WHERE FK_task_id = '" + task_id + "' ORDER BY id;");
             ResultSet rsTaskRewardItem = psSelectTaskRewardItem.executeQuery();
 
             boolean haveRewardItem = false;
@@ -510,7 +526,8 @@ public class TaskCreator extends UtilsDatabase{
                 lore.add(Component.text("    "));
             }
 
-            PreparedStatement psSelectTaskRewardCommand = conn.prepareStatement(selectTaskRewardCommandDescription(prefix, task_id));
+            PreparedStatement psSelectTaskRewardCommand = conn.prepareStatement("SELECT description FROM " +
+                    super.prefix + "task_reward_command WHERE FK_task_id = '" + task_id + "' ORDER BY id;");
             ResultSet rsTaskRewardCommand = psSelectTaskRewardCommand.executeQuery();
 
             boolean haveRewardCommand = false;
@@ -524,7 +541,11 @@ public class TaskCreator extends UtilsDatabase{
                 lore.add(Component.text("    "));
             }
 
-            PreparedStatement psSelectTaskRewardJobsExp = conn.prepareStatement(selectTaskRewardJobsExp(prefix, task_id));
+            PreparedStatement psSelectTaskRewardJobsExp = conn.prepareStatement("SELECT " +
+                    super.prefix + "jobs.name, " + super.prefix + "jobs.color, " + super.prefix + "task_reward_jobs_exp.exp FROM " +
+                    super.prefix + "task_reward_jobs_exp INNER JOIN " + super.prefix + "jobs ON " +
+                    super.prefix + "task_reward_jobs_exp.FK_jobs_id = " + super.prefix + "jobs.id WHERE " +
+                    super.prefix + "task_reward_jobs_exp.FK_task_id = '" + task_id + "';");
             ResultSet rsTaskRewardJobsExp = psSelectTaskRewardJobsExp.executeQuery();
 
             boolean haveRewardJobsExp = false;

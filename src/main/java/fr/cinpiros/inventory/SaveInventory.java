@@ -21,7 +21,8 @@ public class SaveInventory extends UtilsDatabase {
         try (Connection conn = getConnection()) {
             String uuid = player.getUniqueId().toString();
 
-            PreparedStatement psDeletePlayerTaskInventory = conn.prepareStatement(deletePlayerTaskInventory(super.prefix, uuid));
+            PreparedStatement psDeletePlayerTaskInventory = conn.prepareStatement("DELETE FROM "+
+                    super.prefix+"player_task_inventory WHERE uuid = '"+uuid+"';");
             psDeletePlayerTaskInventory.executeUpdate();
 
             Map<Integer, Integer> saveInv = new HashMap<>();
@@ -42,7 +43,8 @@ public class SaveInventory extends UtilsDatabase {
             }
 
 
-            PreparedStatement psInsertPlayerTaskInventory = conn.prepareStatement(insertPlayerTaskInventory(super.prefix));
+            PreparedStatement psInsertPlayerTaskInventory = conn.prepareStatement("INSERT INTO "+
+                    super.prefix+"player_task_inventory (FK_task_instance_id, uuid, slot) VALUE (?, ?, ?);");
 
             for (Integer slot : saveInv.keySet()) {
                 psInsertPlayerTaskInventory.setInt(1, saveInv.get(slot));

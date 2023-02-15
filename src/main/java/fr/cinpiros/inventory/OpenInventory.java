@@ -41,7 +41,8 @@ public class OpenInventory extends UtilsDatabase {
         Inventory inv  = Bukkit.createInventory(player, 9*3, invTaskName);
         String uuid = this.player.getUniqueId().toString();
         try (Connection conn = getConnection()) {
-            PreparedStatement psSelectPlayerTaskInventory = conn.prepareStatement(selectPlayerTaskInventory(super.prefix, uuid));
+            PreparedStatement psSelectPlayerTaskInventory = conn.prepareStatement("SELECT FK_task_instance_id, slot FROM "+
+                    super.prefix+"player_task_inventory WHERE uuid = '"+uuid+"' ORDER BY slot;");
             ResultSet rsPlayerTaskInventory = psSelectPlayerTaskInventory.executeQuery();
             TaskCreator getTaskInventory = new TaskCreator();
             while (rsPlayerTaskInventory.next()) {
@@ -177,6 +178,7 @@ public class OpenInventory extends UtilsDatabase {
             TaskCreator getTask = new TaskCreator();
             for (String task_id : task_id_list) {
                 ItemStack item = getTask.getTaskForPanel(task_id);
+                inv.addItem(item);
             }
         } catch (TaskCreateException e) {
             player.sendMessage("Error at panel open");
