@@ -125,7 +125,8 @@ CREATE TABLE `player_daily_task` (
 );
 
 CREATE TABLE `player_daily_task_list` (
-  `FK_uuid` varchar(36) PRIMARY KEY NOT NULL,
+  `id` int UNIQUE PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  `FK_uuid` varchar(36) NOT NULL,
   `FK_task_id` varchar(100) NOT NULL
 );
 

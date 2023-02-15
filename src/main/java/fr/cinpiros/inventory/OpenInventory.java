@@ -8,18 +8,17 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 public class OpenInventory extends UtilsDatabase {
 
@@ -154,38 +153,32 @@ public class OpenInventory extends UtilsDatabase {
             return true;
         }
 
-        boolean allright = true;
+        Inventory inv;
 
         if (number_panel_task <= 9) {
-            allright = taskPanel9x2(task_id_list, daily_pick_up_task, max_daily_pick_up_task);
+            inv = Bukkit.createInventory(player, 9*2, invPanelName);
+            getTaskPanel(task_id_list, inv);
+            getFooterPanel(inv, daily_pick_up_task, max_daily_pick_up_task, 9);
+
         } else if (number_panel_task <= 18) {
-            allright = taskPanel9x3(task_id_list, daily_pick_up_task, max_daily_pick_up_task);
+            inv = Bukkit.createInventory(player, 9*3, invPanelName);
+            getTaskPanel(task_id_list, inv);
+            getFooterPanel(inv, daily_pick_up_task, max_daily_pick_up_task, 18);
+
         } else if (number_panel_task <= 27) {
-            allright = taskPanel9x4(task_id_list, daily_pick_up_task, max_daily_pick_up_task);
+            inv = Bukkit.createInventory(player, 9*4, invPanelName);
+            getTaskPanel(task_id_list, inv);
+            getFooterPanel(inv, daily_pick_up_task, max_daily_pick_up_task, 27);
+
         } else if (number_panel_task <= 36) {
-            allright = taskPanel9x5(task_id_list, daily_pick_up_task, max_daily_pick_up_task);
+            inv = Bukkit.createInventory(player, 9*5, invPanelName);
+            getTaskPanel(task_id_list, inv);
+            getFooterPanel(inv, daily_pick_up_task, max_daily_pick_up_task, 36);
+
         } else {
-            allright = taskPanel9x6(task_id_list, daily_pick_up_task, max_daily_pick_up_task);
-        }
-
-        return allright;
-    }
-
-    private boolean taskPanel9x2(ArrayList<String> task_id_list, int daily_pick_up_task, int max_daily_pick_up_task) {
-        Inventory inv  = Bukkit.createInventory(player, 9*3, invPanelName);
-
-        try {
-            TaskCreator getTask = new TaskCreator();
-            for (String task_id : task_id_list) {
-                ItemStack item = getTask.getTaskForPanel(task_id);
-                inv.addItem(item);
-            }
-        } catch (TaskCreateException e) {
-            player.sendMessage("Error at panel open");
-            return true;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
+            inv = Bukkit.createInventory(player, 9*6, invPanelName);
+            getTaskPanel(task_id_list, inv);
+            getFooterPanel(inv, daily_pick_up_task, max_daily_pick_up_task, 45);
         }
 
 
@@ -193,21 +186,53 @@ public class OpenInventory extends UtilsDatabase {
         return true;
     }
 
-    private boolean taskPanel9x3(ArrayList<String> task_id_list, int daily_pick_up_task, int max_daily_pick_up_task) {
-        return true;
+    private void getTaskPanel(ArrayList<String> task_id_list, Inventory inv) {
+        try {
+            TaskCreator getTask = new TaskCreator();
+            int index = 0;
+            for (String task_id : task_id_list) {
+                inv.setItem(index, getTask.getTaskForPanel(task_id));
+                index = index + 1;
+            }
+        } catch (TaskCreateException e) {
+            Bukkit.getLogger().warning("[SmcTask] error a get task item for panel");
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
-    private boolean taskPanel9x4(ArrayList<String> task_id_list, int daily_pick_up_task, int max_daily_pick_up_task) {
-        return true;
+    private void getFooterPanel(Inventory inv, int daily_pick_up_task, int max_daily_pick_up_task, int start_set_footer) {
+
+        ItemStack item = new ItemStack(Material.PAPER);
+        ItemMeta meta =  item.getItemMeta();
+        meta.displayName(Component.text("Tache récupérer: "+daily_pick_up_task+"/"+max_daily_pick_up_task)
+                .color(NamedTextColor.DARK_AQUA)
+                .decoration(TextDecoration.ITALIC, false));
+        item.setItemMeta(meta);
+
+
+        ItemStack fillItem = new ItemStack(Material.LIGHT_BLUE_STAINED_GLASS_PANE);
+        ItemMeta fillItemMeta = fillItem.getItemMeta();
+        fillItemMeta.displayName(Component.text(" "));
+        fillItem.setItemMeta(fillItemMeta);
+
+
+
+        inv.setItem(start_set_footer, fillItem);
+        inv.setItem(start_set_footer+1, fillItem);
+        inv.setItem(start_set_footer+2, fillItem);
+        inv.setItem(start_set_footer+3, fillItem);
+
+        inv.setItem(start_set_footer+4, item);
+
+        inv.setItem(start_set_footer+5, fillItem);
+        inv.setItem(start_set_footer+6, fillItem);
+        inv.setItem(start_set_footer+7, fillItem);
+        inv.setItem(start_set_footer+8, fillItem);
     }
 
-    private boolean taskPanel9x5(ArrayList<String> task_id_list, int daily_pick_up_task, int max_daily_pick_up_task) {
-        return true;
-    }
 
-    private boolean taskPanel9x6(ArrayList<String> task_id_list, int daily_pick_up_task, int max_daily_pick_up_task) {
-        return true;
-    }
 
         /*
         Inventory inv = Bukkit.createInventory(this.player, 9*6, invPanelName);

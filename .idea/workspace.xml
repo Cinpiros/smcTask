@@ -6,10 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="c88ecbdf-c6a3-4501-bb64-da24307c827b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fr/cinpiros/database/UtilsDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/cinpiros/database/UtilsDatabase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/cinpiros/database/ConfigDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/cinpiros/database/ConfigDatabase.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/fr/cinpiros/inventory/OpenInventory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/cinpiros/inventory/OpenInventory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fr/cinpiros/inventory/SaveInventory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/cinpiros/inventory/SaveInventory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fr/cinpiros/task/TaskCreator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/cinpiros/task/TaskCreator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/bdd.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/bdd.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/smc Site.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/smc Site.sql" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

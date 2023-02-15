@@ -236,7 +236,8 @@ public class ConfigDatabase extends UtilsDatabase {
 
             if (!listTables.contains(prefix+"player_daily_task_list")) {
                 PreparedStatement preRequest = conn.prepareStatement("CREATE TABLE `"+prefix+"player_daily_task_list` (" +
-                        "  `FK_uuid` varchar(36) PRIMARY KEY NOT NULL," +
+                        "  `id` int UNIQUE PRIMARY KEY NOT NULL AUTO_INCREMENT," +
+                        "  `FK_uuid` varchar(36) NOT NULL," +
                         "  `FK_task_id` varchar(100) NOT NULL" +
                         ");");
                 preRequest.execute();
