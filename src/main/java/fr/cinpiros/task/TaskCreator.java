@@ -65,8 +65,6 @@ public class TaskCreator extends UtilsDatabase{
 
             int taskInstanceID;
 
-
-
             PreparedStatement statementInsertTaskInstance = conn.prepareStatement("INSERT INTO " +
                     super.prefix + "task_instance (FK_task_id) VALUE ('" + task_id + "');", Statement.RETURN_GENERATED_KEYS);
 
