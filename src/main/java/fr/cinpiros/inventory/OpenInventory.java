@@ -22,13 +22,16 @@ import java.util.*;
 
 public class OpenInventory extends UtilsDatabase {
 
-    static public final Component invPanelName = Component.text("Task Panel").color(NamedTextColor.YELLOW)
+    static public final Component invPanelName = Component.text("Task Panel")
+            .color(NamedTextColor.YELLOW)
             .decoration(TextDecoration.ITALIC, false);
     static public final Component invTaskName = GiveTaskClasseur.itemName
-            .append(Component.text(" Task").color(NamedTextColor.AQUA)
+            .append(Component.text(" Task")
+                    .color(NamedTextColor.AQUA)
                     .decoration(TextDecoration.ITALIC, false));
     static public final Component invQuestName = GiveTaskClasseur.itemName
-            .append(Component.text(" Quest").color(NamedTextColor.GREEN)
+            .append(Component.text(" Quest")
+                    .color(NamedTextColor.GREEN)
                     .decoration(TextDecoration.ITALIC, false));
     private final Player player;
 
@@ -72,7 +75,7 @@ public class OpenInventory extends UtilsDatabase {
         int daily_pick_up_task;
         final int max_daily_pick_up_task;
         int number_panel_task; // max 45 9*5
-        ArrayList<String> task_id_list = new ArrayList<>();
+        Map<Integer, String> task_id_list = new HashMap<>();
 
         try (Connection conn = getConnection()) {
             PreparedStatement psSelectPlayerDailyTask = conn.prepareStatement(
@@ -116,12 +119,12 @@ public class OpenInventory extends UtilsDatabase {
 
                     task_id_list = generateRandomTask(number_panel_task, uuid);
                 } else {
-                    PreparedStatement psSelectPlayerDailyTaskList = conn.prepareStatement("SELECT FK_task_id FROM " +
+                    PreparedStatement psSelectPlayerDailyTaskList = conn.prepareStatement("SELECT FK_task_id, slot FROM " +
                             super.prefix + "player_daily_task_list WHERE FK_uuid = '" + uuid + "';");
                     ResultSet rsSelectPlayerDailyTaskList = psSelectPlayerDailyTaskList.executeQuery();
 
                     while (rsSelectPlayerDailyTaskList.next()) {
-                        task_id_list.add(rsSelectPlayerDailyTaskList.getString(1));
+                        task_id_list.put(rsSelectPlayerDailyTaskList.getInt(2), rsSelectPlayerDailyTaskList.getString(1));
                     }
                 }
 
@@ -147,7 +150,7 @@ public class OpenInventory extends UtilsDatabase {
             return false;
         }
 
-        if (task_id_list.size() != number_panel_task) {
+        if (task_id_list.size() != number_panel_task - (max_daily_pick_up_task - daily_pick_up_task)) {
             Bukkit.getLogger().warning("[SmcTask] Warn daily task list not equal panel daily task for user: " + uuid);
             player.sendMessage("Une erreur est survenue lors de l'ouverture du paneau");
             return true;
@@ -186,14 +189,13 @@ public class OpenInventory extends UtilsDatabase {
         return true;
     }
 
-    private void getTaskPanel(ArrayList<String> task_id_list, Inventory inv) {
+    private void getTaskPanel(Map<Integer, String> task_id_list, Inventory inv) {
         try {
             TaskCreator getTask = new TaskCreator();
-            int index = 0;
-            for (String task_id : task_id_list) {
-                inv.setItem(index, getTask.getTaskForPanel(task_id));
-                index = index + 1;
+            for (Map.Entry<Integer, String> entry : task_id_list.entrySet()) {
+                inv.setItem(entry.getKey(), getTask.getTaskForPanel(entry.getValue()));
             }
+
         } catch (TaskCreateException e) {
             Bukkit.getLogger().warning("[SmcTask] error a get task item for panel");
             e.printStackTrace();
@@ -266,8 +268,8 @@ public class OpenInventory extends UtilsDatabase {
         */
 
 
-    private ArrayList<String> generateRandomTask(int numberToGenerate, String uuid) {
-        ArrayList<String> taskList = new ArrayList<>();
+    private Map<Integer, String> generateRandomTask(int numberToGenerate, String uuid) {
+        Map<Integer, String> taskList = new HashMap<>();
         Map<String, Integer> mapTaskIdRarity = new LinkedHashMap<>();
         int total_rarity = 0;
 
@@ -292,10 +294,10 @@ public class OpenInventory extends UtilsDatabase {
             }
 
             PreparedStatement psInsertPlayerDailyTaskList = conn.prepareStatement("INSERT INTO " +
-                    super.prefix+"player_daily_task_list (FK_uuid, FK_task_id) VALUE ('"+uuid+"', ?)");
+                    super.prefix+"player_daily_task_list (FK_uuid, FK_task_id, slot) VALUE ('"+uuid+"', ?, ?)");
 
 
-            for (int ct = 0; ct < numberToGenerate; ct++) {
+            for (int slot = 0; slot < numberToGenerate; slot++) {
                 int random = (new Random().nextInt(total_rarity))+1;
 
                 for(String task_id : mapTaskIdRarity.keySet()) {
@@ -304,9 +306,10 @@ public class OpenInventory extends UtilsDatabase {
                     if (random <= 0) {
 
                         psInsertPlayerDailyTaskList.setString(1, task_id);
+                        psInsertPlayerDailyTaskList.setInt(2, slot);
                         psInsertPlayerDailyTaskList.addBatch();
 
-                        taskList.add(task_id);
+                        taskList.put(slot, task_id);
 
                         break;
                     }

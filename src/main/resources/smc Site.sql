@@ -125,9 +125,10 @@ CREATE TABLE `player_daily_task` (
 );
 
 CREATE TABLE `player_daily_task_list` (
-  `id` int UNIQUE PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `FK_uuid` varchar(36) NOT NULL,
-  `FK_task_id` varchar(100) NOT NULL
+  `FK_task_id` varchar(100) NOT NULL,
+  `slot` tinyint NOT NULL,
+  PRIMARY KEY (`FK_uuid`, `slot`)
 );
 
 ALTER TABLE `task` ADD FOREIGN KEY (`FK_rarity_id`) REFERENCES `rarity` (`id`);
