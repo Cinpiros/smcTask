@@ -79,8 +79,21 @@ public class SmcTask extends JavaPlugin {
         Bukkit.getLogger().info("[SmcTask] Disable correctly");
     }
 
+    public void disablePlugin(String msg) {
+        Bukkit.getLogger().info("[SmcTask] Disable Cause: "+msg);
+        Bukkit.getPluginManager().disablePlugin(instance);
+    }
+
 
     public static Plugin getSmcTaskInstance() {
         return instance;
+    }
+
+    public void logInfo(String msg) {
+        Bukkit.getLogger().info("[SmcTask] "+msg);
+    }
+
+    public void logWarn(String msg) {
+        Bukkit.getLogger().warning("[SmcTask] "+msg);
     }
 }
