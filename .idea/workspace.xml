@@ -5,14 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c88ecbdf-c6a3-4501-bb64-da24307c827b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/a refaire.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/fr/cinpiros/database/ConnectionPoolMysql.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/fr/cinpiros/database/ConnectionPoolRedis.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/a refaire.txt" beforeDir="false" afterPath="$PROJECT_DIR$/a refaire.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/fr/cinpiros/SmcTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/cinpiros/SmcTask.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fr/cinpiros/database/UtilsDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/cinpiros/database/UtilsDatabase.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/config.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -277,7 +272,8 @@
       <workItem from="1683878863887" duration="1259000" />
       <workItem from="1683880283924" duration="854000" />
       <workItem from="1683881162263" duration="489000" />
-      <workItem from="1683882786106" duration="7615000" />
+      <workItem from="1683882786106" duration="13301000" />
+      <workItem from="1683903828618" duration="90000" />
     </task>
     <servers />
   </component>

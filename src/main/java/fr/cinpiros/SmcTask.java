@@ -20,17 +20,13 @@ import java.util.ArrayList;
 
 public class SmcTask extends JavaPlugin {
     private static SmcTask instance;
-    private final ConnectionPoolMysql poolMysql;
-    private final ConnectionPoolRedis poolRedis;
-
-    public SmcTask() {
-        this.poolRedis = ConnectionPoolRedis.create();
-        this.poolMysql = ConnectionPoolMysql.create();
-    }
+    private static final ConnectionPoolMysql poolMysql = ConnectionPoolMysql.create();
+    private static final ConnectionPoolRedis poolRedis = ConnectionPoolRedis.create();
 
     @Override
     public void onEnable() {
         instance = this;
+
         PluginCommand command = getCommand("task");
         if (command != null) {
             command.setExecutor(new CommandHandler());
@@ -103,6 +99,9 @@ public class SmcTask extends JavaPlugin {
     public static Plugin getSmcTaskInstance() {
         return instance;
     }
+
+    public static ConnectionPoolMysql getConnectionPoolMysql() {return poolMysql;}
+    public static ConnectionPoolRedis getConnectionPoolRedis() {return poolRedis;}
 
     public static void logInfo(String msg) {
         Bukkit.getLogger().info("[SmcTask] "+msg);

@@ -3,3 +3,30 @@ redo all error ect to not have crash ect
 use minimsg format for all color ect
 
 trouver facon d'utiliser la connection pool dans les évenement
+
+garder le système task + condition + rarity mais a la sauvegarde dans la bdd tout condensser en 1 seul yml
+et sauvegarder cette config directement dans la bdd
+
+a l'activation du plugin pour toute les task vérifier si le yml local assembler (task+condition+rarity)
+est le même que sur la base de donnée si ce n'est pas le cas remplacer
+
+a l'activation du plugin pour toute les nouvelle task ou les task modifier crée la version du yml
+qui ne contien que les information utiliser régulièrement (dans le task inventory et pour la complettion des carte)
+ce sera cette verssion du yml minimiser a l'essentiel qui sera utiliser pour les instance de task
+
+quand un joueur récupère une task on crée une instance de task en récupérant le yml minimiser d'une task
+et en crée un id d'instance de task qu'on lie a l'item et on envois ca sur la table task_instance avec le yml minimiser
+
+a la connection d'un joueur on récupère tout les yml minimiser des instance de task de l'inventaire de task du joueur
+et on envois ca sur redis
+on crée en même temps une liste de toute les différente condision différente (casser pierre, crafter planche, tuer zombie)
+et l'on envois ca sur redis et garde en local
+
+en cas de modification de l'inventaire on refait la même chose on récupère les yml et la liste des différente condition
+et l'on les réenvois sur redis
+
+quand un évent est déclencher si l'évent rentre dans la liste des différente condition d'un joueur crée une delayed task
+si elle n'est pas déja faite si elle est faite on incrémente la donnée de la dalayed task et réinitialise le compteur
+au bout de seconde si la donnée n'est pas incrémenter on ajoute au yml minimiser sur redis
+si le joueur se déconnecte ou ouvre sont inventaire de task envoyer toute les dalayed task en cour sur le redis
+puis afficher l'inventaire de task depuis le yml de redis arpès ca sauvegarder le yml de redis sur la bdd
