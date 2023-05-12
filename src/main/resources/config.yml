@@ -1,8 +1,15 @@
 database:
-  enable: true
   main_config: true #if enable all config  (task, condition, jobs, rarity) will be sync from this server to all other server connected to the same database /!\ enable on just one server or it will make a mess
   host: "localhost:3306"
   user: "root"
   password: "root"
   database: "smctask"
   prefix: "smctask_"
+  max_pool_connection: 10
+
+redis:
+  host: "localhost"
+  port: 6379
+  password: "root"
+  numDatabase: 0 #0-15
+  timeout: 10000

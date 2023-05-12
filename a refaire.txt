@@ -1,0 +1,5 @@
+rework db for task ect (push yml config serction in db no need all this)
+redo all error ect to not have crash ect
+use minimsg format for all color ect
+
+trouver facon d'utiliser la connection pool dans les évenement

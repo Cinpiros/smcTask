@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 
 public class UtilsDatabase {
+
     public final String prefix;
     public final Plugin plugin;
 
@@ -31,14 +32,5 @@ public class UtilsDatabase {
             e.printStackTrace();
         }
         return conn;
-    }
-
-    @Deprecated
-    public void closeConnection(Connection conn) {
-        try {
-            conn.close();
-        }catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 }

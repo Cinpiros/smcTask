@@ -11,8 +11,10 @@ repositories {
 }
 
 dependencies {
+    implementation 'redis.clients:jedis:4.3.1'
+    implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.33'
     testImplementation 'org.junit.jupiter:junit-jupiter:5.8.1'
-    compileOnly("io.papermc.paper:paper-api:1.19.3-R0.1-SNAPSHOT")
+    compileOnly("io.papermc.paper:paper-api:1.19.4-R0.1-SNAPSHOT")
 }
 
 java {
