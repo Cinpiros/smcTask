@@ -6,6 +6,7 @@ import fr.cinpiros.database.ConnectionPoolMysql;
 import fr.cinpiros.database.ConnectionPoolRedis;
 import fr.cinpiros.handlers.InventoryHandler;
 import fr.cinpiros.handlers.PlayerHandler;
+import fr.cinpiros.task.ConditionTable;
 import fr.cinpiros.utils.CommandHandler;
 import fr.cinpiros.utils.ConfigUtil;
 import org.bukkit.Bukkit;
@@ -22,6 +23,7 @@ public class SmcTask extends JavaPlugin {
     private static SmcTask instance;
     private static final ConnectionPoolMysql poolMysql = ConnectionPoolMysql.create();
     private static final ConnectionPoolRedis poolRedis = ConnectionPoolRedis.create();
+    private static final ConditionTable mapCondition = new ConditionTable();
 
     @Override
     public void onEnable() {
@@ -102,6 +104,9 @@ public class SmcTask extends JavaPlugin {
 
     public static ConnectionPoolMysql getConnectionPoolMysql() {return poolMysql;}
     public static ConnectionPoolRedis getConnectionPoolRedis() {return poolRedis;}
+    public static ConditionTable getConditionTable() {
+        return mapCondition;
+    }
 
     public static void logInfo(String msg) {
         Bukkit.getLogger().info("[SmcTask] "+msg);
