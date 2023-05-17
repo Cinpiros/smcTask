@@ -9,18 +9,25 @@ import java.util.TimerTask;
 import java.util.UUID;
 
 /**
- * Class used to save the list of condition of all player and push the data (number) of condition in redis every 10 seconds
+ * Class used to save the list of condition of all player and push the data (number) of condition in redis every 15 seconds
  */
 public class ConditionTable {
 
     /**
-     * Table to save all action during 10 sec then push in redis
+     * Table to save all action during 15 sec then push in redis
      * - fist hashmap = player -> hashmap element
      * - second hashmap = element -> entry contition
      * - Map entry = conditionId -> number
      */
-    private final HashMap<UUID, HashMap<String, Map.Entry<String, Integer>>> mapPlayerCondition = new HashMap<>();
+    public final HashMap<UUID, HashMap<String, Map.Entry<String, Integer>>> mapPlayerCondition = new HashMap<>();
     private final Timer timer = new Timer();
+
+    /**
+     * ad shedule every 15 seconds to push data
+     */
+    public ConditionTable() {
+        timer.schedule(new PushData(), 15000, 15000);
+    }
 
     /**
      * Get the element hashmap of a player by uuid
@@ -99,10 +106,6 @@ public class ConditionTable {
      */
     public void deletePlayerByUUID(UUID uuid) {
         this.mapPlayerCondition.remove(uuid);
-    }
-
-    public void DelayedTaskSystem() {
-        timer.schedule(new PushData(), 10000, 10000);
     }
 
     /**
