@@ -1,0 +1,4 @@
+name: SmcTaskV2
+version: '${version}'
+main: fr.cinpiros.smctaskv2.SmcTaskV2
+api-version: '1.20'
